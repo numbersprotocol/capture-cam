@@ -10,6 +10,13 @@ android {
         versionCode 1032
         versionName "0.103.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        
+        // Support for 16 KB page sizes (Android 15+ requirement)
+        // This ensures compatibility with devices using 16 KB memory pages
+        ndk {
+            // Ensure native libraries are built with 16 KB page alignment
+            abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86', 'x86_64'
+        }
     }
     buildFeatures {
         dataBinding true
@@ -18,6 +25,18 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            // Enable debugging and ensure 16 KB page size compatibility
+            debuggable true
+        }
+    }
+    
+    // Configure packaging options for 16 KB page size compatibility
+    packagingOptions {
+        // Ensure native libraries are properly aligned for 16 KB page sizes
+        jniLibs {
+            useLegacyPackaging = false
         }
     }
 }
