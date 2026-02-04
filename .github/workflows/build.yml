@@ -20,11 +20,6 @@ jobs:
       - name: Install Ionic CLI
         run: npm install -g @ionic/cli
 
-      - name: Generate .npmrc for pintura package
-        env:
-          NUMBERS_PQINA_NPM_KEY: ${{ secrets.NUMBERS_PQINA_NPM_KEY }}
-        run: npm run preconfig.npmrc
-
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
@@ -36,7 +31,6 @@ jobs:
           NUMBERS_BUBBLE_IFRAME_URL: ${{ secrets.NUMBERS_BUBBLE_IFRAME_URL }}
           BUBBLE_API_URL: ${{ secrets.BUBBLE_API_URL }}
           APPS_FLYER_DEV_KEY: ${{ secrets.APPS_FLYER_DEV_KEY }}
-          NUMBERS_PQINA_NPM_KEY: ${{ secrets.NUMBERS_PQINA_NPM_KEY }}
           GOOGLE_IOS_CLIENT_ID: ${{ secrets.GOOGLE_IOS_CLIENT_ID }}
           GOOGLE_WEB_CLIENT_ID: ${{ secrets.GOOGLE_WEB_CLIENT_ID }}
         run: npm run build
@@ -79,11 +73,6 @@ jobs:
       - name: Install Ionic CLI
         run: npm install -g @ionic/cli
 
-      - name: Generate .npmrc for pintura package
-        env:
-          NUMBERS_PQINA_NPM_KEY: ${{ secrets.NUMBERS_PQINA_NPM_KEY }}
-        run: npm run preconfig.npmrc
-
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
@@ -95,7 +84,6 @@ jobs:
           NUMBERS_BUBBLE_IFRAME_URL: ${{ secrets.NUMBERS_BUBBLE_IFRAME_URL }}
           BUBBLE_API_URL: ${{ secrets.BUBBLE_API_URL }}
           APPS_FLYER_DEV_KEY: ${{ secrets.APPS_FLYER_DEV_KEY }}
-          NUMBERS_PQINA_NPM_KEY: ${{ secrets.NUMBERS_PQINA_NPM_KEY }}
           GOOGLE_IOS_CLIENT_ID: ${{ secrets.GOOGLE_IOS_CLIENT_ID }}
           GOOGLE_WEB_CLIENT_ID: ${{ secrets.GOOGLE_WEB_CLIENT_ID }}
         run: npm run build

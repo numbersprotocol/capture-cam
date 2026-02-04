@@ -61,7 +61,7 @@ PODS:
     - FBSDKCoreKit (= 17.4.0)
     - FBSDKLoginKit (= 17.4.0)
     - GoogleSignIn (~> 8.0.0)
-  - CordovaPlugins (7.4.3):
+  - CordovaPlugins (7.4.5):
     - CapacitorCordova
   - FalconetaCapacitorWifiConnect (7.0.0):
     - Capacitor
@@ -281,7 +281,7 @@ SPEC CHECKSUMS:
   CapacitorShare: d94c53d7656f1ce8f6712ae8d19ab0c18a69259f
   CapacitorSplashScreen: 7e7a0a1113833032f196b3af6fa437baccacf5bc
   CapgoCapacitorSocialLogin: 0fcf5cf6d447ec4992c3e9e4fcae70c19d12919b
-  CordovaPlugins: 32fa8833e41de121e3f185b0c033815b1be91a13
+  CordovaPlugins: 4e4b10b11bd2b55de8912c6d5459f0904c0c2864
   FalconetaCapacitorWifiConnect: c8c26550fe3fca67cf7aac174b09f0805aabf107
   FBAEMKit: 58cb5f302cdd715a56d4c1d0dfdd2e423ac1421a
   FBSDKCoreKit: 94d7461d0cecf441b1ba7c41acfff41daa8ccd41
