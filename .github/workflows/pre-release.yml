@@ -15,7 +15,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20.11.1'
+          node-version: '22'
 
       - name: Get release version
         id: version_check
@@ -29,11 +29,9 @@ jobs:
           NUMBERS_BUBBLE_IFRAME_URL: ${{ secrets.NUMBERS_BUBBLE_IFRAME_URL_QA_RELEASE }}
           BUBBLE_API_URL: ${{ secrets.BUBBLE_API_URL }}
           APPS_FLYER_DEV_KEY: ${{ secrets.APPS_FLYER_DEV_KEY }}
-          NUMBERS_PQINA_NPM_KEY: ${{ secrets.NUMBERS_PQINA_NPM_KEY }}
           GOOGLE_IOS_CLIENT_ID: ${{ secrets.GOOGLE_IOS_CLIENT_ID }}
           GOOGLE_WEB_CLIENT_ID: ${{ secrets.GOOGLE_WEB_CLIENT_ID }}
         run: |
-          npm run preconfig.npmrc
           npm install -g @ionic/cli
           npm install --legacy-peer-deps
           npm run build
@@ -94,7 +92,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20.11.1'
+          node-version: '22'
 
       - name: Get release version
         id: version_check
@@ -108,11 +106,9 @@ jobs:
           NUMBERS_BUBBLE_IFRAME_URL: ${{ secrets.NUMBERS_BUBBLE_IFRAME_URL }}
           BUBBLE_API_URL: ${{ secrets.BUBBLE_API_URL }}
           APPS_FLYER_DEV_KEY: ${{ secrets.APPS_FLYER_DEV_KEY }}
-          NUMBERS_PQINA_NPM_KEY: ${{ secrets.NUMBERS_PQINA_NPM_KEY }}
           GOOGLE_IOS_CLIENT_ID: ${{ secrets.GOOGLE_IOS_CLIENT_ID }}
           GOOGLE_WEB_CLIENT_ID: ${{ secrets.GOOGLE_WEB_CLIENT_ID }}
         run: |
-          npm run preconfig.npmrc
           npm install -g @ionic/cli
           npm install --legacy-peer-deps
           npm run build
@@ -183,7 +179,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20.11.1'
+          node-version: '22'
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -202,11 +198,9 @@ jobs:
           NUMBERS_BUBBLE_IFRAME_URL: ${{ secrets.NUMBERS_BUBBLE_IFRAME_URL }}
           BUBBLE_API_URL: ${{ secrets.BUBBLE_API_URL }}
           APPS_FLYER_DEV_KEY: ${{ secrets.APPS_FLYER_DEV_KEY }}
-          NUMBERS_PQINA_NPM_KEY: ${{ secrets.NUMBERS_PQINA_NPM_KEY }}
           GOOGLE_IOS_CLIENT_ID: ${{ secrets.GOOGLE_IOS_CLIENT_ID }}
           GOOGLE_WEB_CLIENT_ID: ${{ secrets.GOOGLE_WEB_CLIENT_ID }}
         run: |
-          npm run preconfig.npmrc
           npm install -g @ionic/cli
           npm install --legacy-peer-deps
           npm run build

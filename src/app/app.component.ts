@@ -136,7 +136,6 @@ export class AppComponent {
       'capture-rebrand-camera-hq',
       'capture-rebrand-camera-low',
       'capture-rebrand-camera-auto-enhance',
-      'capture-rebrand-camera-crop',
       'capture',
       'profile',
       'collection',

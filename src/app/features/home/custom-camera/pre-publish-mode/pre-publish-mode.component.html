@@ -15,48 +15,24 @@
 
 <div class="preview">
   <app-media
-    *ngIf="isVideo$ | ngrxPush"
     [src]="curCaptureSrc$ | ngrxPush"
     [filePath]="curCaptureFilePath$ | ngrxPush"
     [mimeType]="curCaptureMimeType$ | ngrxPush"
+    [class.grayscale]="
+      (isImage$ | ngrxPush) && (isBlackAndWhiteEnabled$ | ngrxPush)
+    "
   ></app-media>
 
-  <div
-    *ngIf="curImageBase64$ | ngrxPush as curImageBase64"
-    class="image-editor-container"
-  >
-    <pintura-editor
-      #pinturaEditor
-      [src]="curImageBase64"
-      [options]="pinturaEditorOptions$ | ngrxPush"
-      (processstart)="handleEditorProcessStart()"
-      (processabort)="handleEditorProcessAbort()"
-      (processerror)="handelEditorProcessError()"
-      (process)="handleEditorProcess($event)"
-      (update)="handleEditorUpdate($event)"
-    ></pintura-editor>
-  </div>
-
-  <div class="image-editor-custom-buttons">
+  <div class="image-editor-custom-buttons" *ngIf="isImage$ | ngrxPush">
     <button
-      (click)="applyBlackAndWhiteFilter()"
+      (click)="toggleBlackAndWhiteFilter()"
       class="image-editor-button"
+      [class.active]="isBlackAndWhiteEnabled$ | ngrxPush"
       mat-mini-fab
     >
       <mat-icon
         class="black-and-white-filter-button"
         svgIcon="capture-rebrand-camera-auto-enhance"
-      ></mat-icon>
-    </button>
-
-    <button
-      (click)="toggleCropImageFeature()"
-      class="image-editor-button"
-      mat-mini-fab
-    >
-      <mat-icon
-        class="black-and-white-filter-button"
-        svgIcon="capture-rebrand-camera-crop"
       ></mat-icon>
     </button>
   </div>

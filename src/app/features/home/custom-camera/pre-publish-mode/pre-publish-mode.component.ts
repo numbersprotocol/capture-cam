@@ -5,12 +5,10 @@ import {
   Inject,
   Input,
   Output,
-  ViewChild,
 } from '@angular/core';
 import { Directory, FilesystemPlugin } from '@capacitor/filesystem';
 import { AlertController, Platform } from '@ionic/angular';
 import { TranslocoService } from '@ngneat/transloco';
-import { ColorMatrix, getEditorDefaults } from '@pqina/pintura';
 import {
   BehaviorSubject,
   ReplaySubject,
@@ -19,14 +17,16 @@ import {
   iif,
   of,
 } from 'rxjs';
-import { catchError, filter, first, map, switchMap, tap } from 'rxjs/operators';
+import { catchError, first, map, switchMap, tap } from 'rxjs/operators';
 import { FILESYSTEM_PLUGIN } from '../../../../shared/capacitor-plugins/capacitor-plugins.module';
 import { ErrorService } from '../../../../shared/error/error.service';
-import { blobToBase64 } from '../../../../utils/encoding/encoding';
 import { calculateBase64Size } from '../../../../utils/memory';
 import { MAX_ALLOWED_UPLOAD_SIZE_IN_BYTES } from '../custom-camera';
 
 type CaptureMimeType = 'image/jpeg' | 'video/mp4';
+
+// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+const JPEG_QUALITY = 0.92;
 
 @Component({
   selector: 'app-pre-publish-mode',
@@ -35,28 +35,9 @@ type CaptureMimeType = 'image/jpeg' | 'video/mp4';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PrePublishModeComponent {
-  readonly pinturaEditorOptions: any = {
-    ...getEditorDefaults({
-      enableUtils: false,
-      enableZoomControls: false,
-      cropEnableRotationInput: false,
-      cropEnableZoomInput: false,
-      cropEnableButtonFlipHorizontal: false,
-      cropEnableButtonRotateLeft: false,
-      cropEnableImageSelection: false,
-      enableToolbar: false,
-    }),
-  };
+  private isBlackAndWhiteEnabled = false;
 
-  readonly pinturaEditorOptions$: any = new BehaviorSubject<any>(
-    this.pinturaEditorOptions
-  );
-
-  private editorImageState: any;
-
-  private isCropFeatureEnabled = false;
-
-  private toggleBlackAndWhiteFilter = true;
+  readonly isBlackAndWhiteEnabled$ = new BehaviorSubject<boolean>(false);
 
   readonly curCaptureFileSize$ = new ReplaySubject<number>(1);
 
@@ -76,15 +57,6 @@ export class PrePublishModeComponent {
 
   readonly isImage$ = this.curCaptureMimeType$.pipe(
     map(mimeType => mimeType === 'image/jpeg')
-  );
-
-  readonly curImageBase64$ = combineLatest([
-    this.isImage$,
-    this.curCaptureFilePath$,
-  ]).pipe(
-    filter(([isImage, _]) => isImage),
-    switchMap(([_, path]) => this.filesystemPlugin.readFile({ path })),
-    map(result => `data:image/jpeg;base64,${result.data}`)
   );
 
   readonly curFileBase64Size$ = this.curCaptureFileSize$.pipe(
@@ -129,8 +101,6 @@ export class PrePublishModeComponent {
 
   @Output() confirm: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild('pinturaEditor') pintura?: any;
-
   constructor(
     @Inject(FILESYSTEM_PLUGIN)
     private readonly filesystemPlugin: FilesystemPlugin,
@@ -140,77 +110,9 @@ export class PrePublishModeComponent {
     private readonly platform: Platform
   ) {}
 
-  handleEditorUpdate(imageState: any): void {
-    this.editorImageState = imageState;
-  }
-
-  handleEditorProcessStart() {
-    this.isProcessingImage$.next(true);
-  }
-
-  handleEditorProcessAbort() {
-    this.isProcessingImage$.next(false);
-  }
-
-  handelEditorProcessError() {
-    this.isProcessingImage$.next(false);
-  }
-
-  async handleEditorProcess(imageWriterResult: any): Promise<void> {
-    const base64 = await blobToBase64(imageWriterResult.dest as File);
-    combineLatest([
-      this.curCaptureFilePath$,
-      of(base64),
-      this.isImage$,
-      this.curCaptureFileName$,
-    ])
-      .pipe(
-        first(),
-        switchMap(([path, data, isImage, fileName]) => {
-          if (this.platform.is('android') && isImage) {
-            return this.filesystemPlugin.writeFile({
-              path: fileName,
-              data: data,
-              directory: Directory.Cache,
-            });
-          }
-          return this.filesystemPlugin.writeFile({ path, data });
-        }),
-        tap(() => this.isProcessingImage$.next(false)),
-        tap(() => this.confirm.emit(true)),
-        catchError((error: unknown) => {
-          this.isProcessingImage$.next(false);
-          return this.errorService.toastError$(error);
-        })
-      )
-      .subscribe();
-  }
-
-  async applyBlackAndWhiteFilter() {
-    const monoFilter: ColorMatrix = [
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-      0.212, 0.715, 0.114, 0, 0, 0.212, 0.715, 0.114, 0, 0, 0.212, 0.715, 0.114,
-      0, 0, 0, 0, 0, 1, 0,
-    ];
-    const filter = this.toggleBlackAndWhiteFilter ? monoFilter : undefined;
-    this.pintura.editor.imageColorMatrix = { filter };
-    this.toggleBlackAndWhiteFilter = !this.toggleBlackAndWhiteFilter;
-  }
-
-  async toggleCropImageFeature() {
-    this.isCropFeatureEnabled = !this.isCropFeatureEnabled;
-    this.pinturaEditorOptions$.next({
-      ...getEditorDefaults({
-        enableUtils: false,
-        enableZoomControls: false,
-        cropEnableRotationInput: false,
-        cropEnableZoomInput: false,
-        cropEnableButtonFlipHorizontal: false,
-        cropEnableButtonRotateLeft: false,
-        cropEnableImageSelection: this.isCropFeatureEnabled,
-        enableToolbar: false,
-      }),
-    });
+  toggleBlackAndWhiteFilter() {
+    this.isBlackAndWhiteEnabled = !this.isBlackAndWhiteEnabled;
+    this.isBlackAndWhiteEnabled$.next(this.isBlackAndWhiteEnabled);
   }
 
   onDiscard() {
@@ -242,13 +144,122 @@ export class PrePublishModeComponent {
       .subscribe();
   }
 
-  private confirmImage() {
-    /**
-     * `this.confirm.emit()` for images will be called from
-     * `handleEditorProcess` method which is triggered by
-     * `this.pintura.editor.processImage(this.editorImageState)`
-     */
-    this.pintura.editor.processImage(this.editorImageState);
+  private async confirmImage() {
+    if (!this.isBlackAndWhiteEnabled) {
+      // No processing needed, just confirm
+      this.confirm.emit(true);
+      return;
+    }
+
+    this.isProcessingImage$.next(true);
+
+    try {
+      // Read the image from file
+      const path = await this.getFilePath();
+      const result = await this.filesystemPlugin.readFile({ path });
+      const base64WithPrefix = `data:image/jpeg;base64,${result.data}`;
+
+      // Apply black & white filter using Canvas
+      const processedBase64 = await this.applyBlackAndWhiteToBase64(
+        base64WithPrefix
+      );
+      await this.saveProcessedImage(processedBase64);
+    } catch (error) {
+      this.isProcessingImage$.next(false);
+      this.errorService.toastError$(error).subscribe();
+    }
+  }
+
+  private async getFilePath(): Promise<string> {
+    return new Promise(resolve => {
+      this.curCaptureFilePath$.pipe(first()).subscribe(path => resolve(path));
+    });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  private async applyBlackAndWhiteToBase64(
+    base64Data: string
+  ): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        try {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+
+          if (!ctx) {
+            reject(new Error('Could not get canvas context'));
+            return;
+          }
+
+          canvas.width = img.naturalWidth;
+          canvas.height = img.naturalHeight;
+
+          // Draw the original image
+          ctx.drawImage(img, 0, 0);
+
+          // Get image data and apply grayscale manually
+          // (ctx.filter is not fully supported on iOS Safari)
+          const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          const data = imageData.data;
+
+          // Convert to grayscale using Rec. 601 luminance formula
+          /* eslint-disable @typescript-eslint/no-magic-numbers */
+          for (let i = 0; i < data.length; i += 4) {
+            const gray =
+              data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114;
+            data[i] = gray; // Red
+            data[i + 1] = gray; // Green
+            data[i + 2] = gray; // Blue
+            // Alpha (data[i + 3]) remains unchanged
+          }
+          /* eslint-enable @typescript-eslint/no-magic-numbers */
+
+          // Put the modified image data back
+          ctx.putImageData(imageData, 0, 0);
+
+          // Get base64 data
+          const processedBase64 = canvas.toDataURL('image/jpeg', JPEG_QUALITY);
+          resolve(processedBase64);
+        } catch (error) {
+          reject(error);
+        }
+      };
+      img.onerror = () => reject(new Error('Failed to load image'));
+      img.src = base64Data;
+    });
+  }
+
+  private async saveProcessedImage(base64: string): Promise<void> {
+    combineLatest([
+      this.curCaptureFilePath$,
+      of(base64),
+      this.isImage$,
+      this.curCaptureFileName$,
+    ])
+      .pipe(
+        first(),
+        switchMap(([path, data, isImage, fileName]) => {
+          // Android: Use Cache directory because copyResultIfNeeded already moved
+          // the file there (Android 13 workaround requires directory parameter)
+          if (this.platform.is('android') && isImage) {
+            return this.filesystemPlugin.writeFile({
+              path: fileName,
+              data: data,
+              directory: Directory.Cache,
+            });
+          }
+          // iOS and web: Write to original path so upload uses correct file
+          return this.filesystemPlugin.writeFile({ path, data });
+        }),
+        tap(() => this.isProcessingImage$.next(false)),
+        tap(() => this.confirm.emit(true)),
+        catchError((error: unknown) => {
+          this.isProcessingImage$.next(false);
+          return this.errorService.toastError$(error);
+        })
+      )
+      .subscribe();
   }
 
   private confirmVideo() {

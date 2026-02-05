@@ -13,16 +13,18 @@ $footer-total-height: calc(
 );
 $image-editor-custom-buttons-height: calc(24px + 48px);
 
-$image-editor-container-height: calc(
-  100vh - #{$action-buttons-total-height} - #{$footer-padding-bottom} - #{$image-editor-custom-buttons-height}
-);
-
 $video-preview-container-height: calc(
   100vh - #{$action-buttons-total-height} - #{$footer-total-height}
 );
 
 :host {
   background-color: transparent !important; /* stylelint-disable-line declaration-no-important */
+}
+
+:host-context(.grayscale-filter) {
+  app-media {
+    filter: grayscale(100%);
+  }
 }
 
 .h-space-12 {
@@ -69,6 +71,10 @@ $video-preview-container-height: calc(
   backdrop-filter: blur(4px);
   box-shadow: none;
   margin: 0 16px;
+
+  &.active {
+    background: #486cd9 !important; /* stylelint-disable-line declaration-no-important */
+  }
 }
 
 .confirm-button {
@@ -91,11 +97,11 @@ $video-preview-container-height: calc(
     transform: translateY(-12px);
     width: 100vw;
     background-color: transparent !important; /* stylelint-disable-line declaration-no-important */
+    transition: filter 0.3s ease;
   }
 
-  .image-editor-container {
-    height: $image-editor-container-height;
-    width: 100vw;
+  app-media.grayscale {
+    filter: grayscale(100%);
   }
 
   .image-editor-custom-buttons {
