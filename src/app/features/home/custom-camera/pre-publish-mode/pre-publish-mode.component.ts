@@ -204,8 +204,8 @@ export class PrePublishModeComponent {
           const data = imageData.data;
 
           // Convert to grayscale using Rec. 601 luminance formula
+          /* eslint-disable @typescript-eslint/no-magic-numbers */
           for (let i = 0; i < data.length; i += 4) {
-            // eslint-disable-next-line @typescript-eslint/no-magic-numbers
             const gray =
               data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114;
             data[i] = gray; // Red
@@ -213,6 +213,7 @@ export class PrePublishModeComponent {
             data[i + 2] = gray; // Blue
             // Alpha (data[i + 3]) remains unchanged
           }
+          /* eslint-enable @typescript-eslint/no-magic-numbers */
 
           // Put the modified image data back
           ctx.putImageData(imageData, 0, 0);
