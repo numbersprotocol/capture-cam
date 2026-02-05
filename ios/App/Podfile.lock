@@ -10,12 +10,12 @@ PODS:
     - GoogleUtilities/Environment (~> 8.0)
     - GoogleUtilities/UserDefaults (~> 8.0)
     - PromisesObjC (~> 2.4)
-  - AppsflyerCapacitorPlugin (6.15.2):
-    - AppsFlyerFramework (= 6.15.3)
+  - AppsflyerCapacitorPlugin (6.17.8):
+    - AppsFlyerFramework (= 6.17.8)
     - Capacitor
-  - AppsFlyerFramework (6.15.3):
-    - AppsFlyerFramework/Main (= 6.15.3)
-  - AppsFlyerFramework/Main (6.15.3)
+  - AppsFlyerFramework (6.17.8):
+    - AppsFlyerFramework/Main (= 6.17.8)
+  - AppsFlyerFramework/Main (6.17.8)
   - Capacitor (7.4.3):
     - CapacitorCordova
   - CapacitorApp (7.0.0):
@@ -259,8 +259,8 @@ SPEC CHECKSUMS:
   Alamofire: 7193b3b92c74a07f85569e1a6c4f4237291e7496
   AppAuth: d4f13a8fe0baf391b2108511793e4b479691fb73
   AppCheckCore: cc8fd0a3a230ddd401f326489c99990b013f0c4f
-  AppsflyerCapacitorPlugin: 3510699914dd2f25ca7ed47c9bfe833f402be053
-  AppsFlyerFramework: ad7ff0d22aa36c7f8cc4f71a5424e19b89ccb8ae
+  AppsflyerCapacitorPlugin: bb320adfb3fcde436a53e6e9132a03e2fbd60d91
+  AppsFlyerFramework: 63577b60d6b9fcdab60135289979e7d1c9ec79b9
   Capacitor: 28d6c01026a9a3f7156529498ec1f389a2a28dbc
   CapacitorApp: 9cb31064a6c6bb2b1438583733a7bf45557fc1da
   CapacitorBlobWriter: d709e5d22ab9989afd730eb4773873d1ded5fd08

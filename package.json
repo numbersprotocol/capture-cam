@@ -65,7 +65,7 @@
     "@numbersprotocol/preview-camera": "github:numbersprotocol/preview-camera#0.0.20",
     "@numbersprotocol/preview-video": "github:numbersprotocol/preview-video#0.0.5",
     "@techiediaries/ngx-qrcode": "^9.1.0",
-    "appsflyer-capacitor-plugin": "github:numbersprotocol/appsflyer-capacitor-plugin#cd8acd2",
+    "appsflyer-capacitor-plugin": "^6.17.8",
     "async-mutex": "^0.3.2",
     "buffer": "^5.7.1",
     "capacitor-blob-writer": "^1.1.19",
