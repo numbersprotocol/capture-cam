@@ -24,7 +24,7 @@
         />
         <div mat-line>{{ order.network_app_name }}</div>
         <div mat-line>{{ order.action_args.nid || order.action_args.cid }}</div>
-        <div mat-line>{{ order.created_at | date: 'short' }}</div>
+        <div mat-line>{{ order.created_at | date : 'short' }}</div>
         <button [class]="order.status" mat-stroked-button disableRipple>
           {{ t('networkActionOrderState.' + order.status) }}
         </button>

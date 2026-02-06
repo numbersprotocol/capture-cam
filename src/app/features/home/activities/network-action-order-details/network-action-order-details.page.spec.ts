@@ -7,18 +7,16 @@ describe('NetworkActionOrderDetailsPage', () => {
   let component: NetworkActionOrderDetailsPage;
   let fixture: ComponentFixture<NetworkActionOrderDetailsPage>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [NetworkActionOrderDetailsPage],
-        imports: [IonicModule.forRoot(), SharedTestingModule],
-      }).compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [NetworkActionOrderDetailsPage],
+      imports: [IonicModule.forRoot(), SharedTestingModule],
+    }).compileComponents();
 
-      fixture = TestBed.createComponent(NetworkActionOrderDetailsPage);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-    })
-  );
+    fixture = TestBed.createComponent(NetworkActionOrderDetailsPage);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();

@@ -9,18 +9,16 @@ describe('CaptureDetailsWithIframeComponent', () => {
   let component: CaptureDetailsWithIframeComponent;
   let fixture: ComponentFixture<CaptureDetailsWithIframeComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [CaptureDetailsWithIframeComponent],
-        imports: [SharedTestingModule],
-      }).compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [CaptureDetailsWithIframeComponent],
+      imports: [SharedTestingModule],
+    }).compileComponents();
 
-      fixture = TestBed.createComponent(CaptureDetailsWithIframeComponent);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-    })
-  );
+    fixture = TestBed.createComponent(CaptureDetailsWithIframeComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();

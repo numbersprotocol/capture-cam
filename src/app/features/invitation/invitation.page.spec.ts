@@ -7,18 +7,16 @@ describe('InvitationPage', () => {
   let component: InvitationPage;
   let fixture: ComponentFixture<InvitationPage>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [InvitationPage],
-        imports: [IonicModule.forRoot(), SharedTestingModule],
-      }).compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [InvitationPage],
+      imports: [IonicModule.forRoot(), SharedTestingModule],
+    }).compileComponents();
 
-      fixture = TestBed.createComponent(InvitationPage);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-    })
-  );
+    fixture = TestBed.createComponent(InvitationPage);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();

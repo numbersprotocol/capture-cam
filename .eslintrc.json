@@ -12,8 +12,7 @@
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:@angular-eslint/recommended",
-        "plugin:@angular-eslint/template/process-inline-templates",
-        "plugin:rxjs/recommended"
+        "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
         "no-console": "error",
@@ -111,9 +110,7 @@
             "prefix": "app",
             "style": "camelCase"
           }
-        ],
-        "rxjs/finnish": "error",
-        "rxjs/no-ignored-notifier": "off"
+        ]
       }
     },
     {

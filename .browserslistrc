@@ -5,8 +5,9 @@
 # You can see what browsers were selected by your queries by running:
 #   npx browserslist
 
-> 0.5%
-last 2 versions
-Firefox ESR
-not dead
-not IE 9-11 # For IE 9-11 support, remove 'not'.
+# Ionic 8 minimum browser requirements
+Chrome >= 89
+Firefox >= 75
+Edge >= 89
+Safari >= 15
+iOS >= 15

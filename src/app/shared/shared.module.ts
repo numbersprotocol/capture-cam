@@ -27,6 +27,7 @@ import { OrderDetailDialogComponent } from './order-detail-dialog/order-detail-d
 import { SafeResourceUrlPipe } from './pipes/safe-resource-url/safe-resource-url.pipe';
 import { StartsWithPipe } from './pipes/starts-with/starts-with.pipe';
 import { SocialLoginButtonComponent } from './social-login-button/social-login-button.component';
+import { LongPressDirective } from './directives/long-press.directive';
 import { UserGuideService } from './user-guide/user-guide.service';
 
 const declarations = [
@@ -43,6 +44,7 @@ const declarations = [
   CaptureBackButtonComponent,
   OnboardingPopUpDialogComponent,
   SocialLoginButtonComponent,
+  LongPressDirective,
 ];
 
 const imports = [

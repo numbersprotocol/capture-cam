@@ -64,13 +64,13 @@ export class AppComponent {
 
   static setDarkMode(forceDarkMode = false) {
     if (forceDarkMode) {
-      document.body.classList.toggle('dark', true);
+      document.documentElement.classList.toggle('dark', true);
       return;
     }
     const dark =
       window.navigator.userAgent.includes('AndroidDarkMode') ||
       window.matchMedia('(prefers-color-scheme: dark)').matches;
-    document.body.classList.toggle('dark', dark);
+    document.documentElement.classList.toggle('dark', dark);
   }
 
   async initializeApp() {

@@ -9,24 +9,22 @@ describe('TransferPage', () => {
   let component: TransferPage;
   let fixture: ComponentFixture<TransferPage>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [TransferPage],
-        imports: [
-          IonicModule.forRoot(),
-          SharedTestingModule,
-          RouterTestingModule.withRoutes([
-            { path: 'wallets', component: WalletsPage },
-          ]),
-        ],
-      }).compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [TransferPage],
+      imports: [
+        IonicModule.forRoot(),
+        SharedTestingModule,
+        RouterTestingModule.withRoutes([
+          { path: 'wallets', component: WalletsPage },
+        ]),
+      ],
+    }).compileComponents();
 
-      fixture = TestBed.createComponent(TransferPage);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-    })
-  );
+    fixture = TestBed.createComponent(TransferPage);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();

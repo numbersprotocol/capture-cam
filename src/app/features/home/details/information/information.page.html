@@ -10,7 +10,7 @@
       <mat-icon mat-list-icon>access_time</mat-icon>
       <div mat-line>{{ t('timestamp') }}</div>
       <div mat-line>
-        {{ timestamp$ | ngrxPush | date: 'long' }}
+        {{ timestamp$ | ngrxPush | date : 'long' }}
       </div>
     </mat-list-item>
     <mat-list-item>

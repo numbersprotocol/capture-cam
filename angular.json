@@ -32,10 +32,10 @@
             ],
             "styles": [
               {
-                "input": "src/theme/variables.scss"
+                "input": "src/global.scss"
               },
               {
-                "input": "src/global.scss"
+                "input": "src/theme/variables.scss"
               },
               {
                 "input": "node_modules/material-design-icons-iconfont/dist/material-design-icons.css"

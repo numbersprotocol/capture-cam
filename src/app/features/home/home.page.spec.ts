@@ -10,26 +10,24 @@ describe('HomePage', () => {
   let component: HomePage;
   let fixture: ComponentFixture<HomePage>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          HomePage,
-          CaptureTabComponent,
-          PostCaptureTabComponent,
-          UploadingBarComponent,
-        ],
-        imports: [SharedTestingModule],
-      }).compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        HomePage,
+        CaptureTabComponent,
+        PostCaptureTabComponent,
+        UploadingBarComponent,
+      ],
+      imports: [SharedTestingModule],
+    }).compileComponents();
 
-      const router = TestBed.inject(Router);
-      spyOn(router, 'navigate').and.resolveTo(true);
+    const router = TestBed.inject(Router);
+    spyOn(router, 'navigate').and.resolveTo(true);
 
-      fixture = TestBed.createComponent(HomePage);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-    })
-  );
+    fixture = TestBed.createComponent(HomePage);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }));
 
   it('should create', () => expect(component).toBeTruthy());
 });

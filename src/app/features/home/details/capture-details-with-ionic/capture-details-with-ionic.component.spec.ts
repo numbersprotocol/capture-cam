@@ -8,19 +8,17 @@ describe('CaptureDetailsWithIonicComponent', () => {
   let component: CaptureDetailsWithIonicComponent;
   let fixture: ComponentFixture<CaptureDetailsWithIonicComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [CaptureDetailsWithIonicComponent],
-        imports: [SharedTestingModule],
-        providers: [DatePipe],
-      }).compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [CaptureDetailsWithIonicComponent],
+      imports: [SharedTestingModule],
+      providers: [DatePipe],
+    }).compileComponents();
 
-      fixture = TestBed.createComponent(CaptureDetailsWithIonicComponent);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-    })
-  );
+    fixture = TestBed.createComponent(CaptureDetailsWithIonicComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();
