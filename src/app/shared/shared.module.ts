@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
 import { IonicModule } from '@ionic/angular';
 import { TranslocoModule } from '@ngneat/transloco';
-import { ReactiveComponentModule } from '@ngrx/component';
+import { LetModule, PushModule } from '@ngrx/component';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
 import { GoProBluetoothService } from '../features/settings/go-pro/services/go-pro-bluetooth.service';
@@ -54,7 +54,8 @@ const imports = [
   TranslocoModule,
   MaterialModule,
   CapacitorPluginsModule,
-  ReactiveComponentModule,
+  LetModule,
+  PushModule,
   MatDialogModule,
   FormlyModule,
   FormlyMaterialModule,
