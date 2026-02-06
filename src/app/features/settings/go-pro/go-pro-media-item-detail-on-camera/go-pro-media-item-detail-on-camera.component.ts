@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   AlertController,
@@ -23,6 +23,8 @@ export class GoProMediaItemDetailOnCameraComponent implements OnInit {
 
   showTutorialForMobileDataOnlyApps = false;
   dontShowAgainTutorialForMobileDataOnlyApps = false;
+
+  @ViewChild('swiper') swiperRef?: ElementRef;
 
   constructor(
     private readonly location: Location,
@@ -124,5 +126,9 @@ export class GoProMediaItemDetailOnCameraComponent implements OnInit {
 
   goBack() {
     this.location.back();
+  }
+
+  slideNext() {
+    this.swiperRef?.nativeElement?.swiper?.slideNext();
   }
 }

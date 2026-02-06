@@ -1,5 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectorRef, Component } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  ViewChild,
+} from '@angular/core';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -31,7 +36,7 @@ import {
   takeUntil,
   tap,
 } from 'rxjs/operators';
-import SwiperCore, { Swiper, Virtual } from 'swiper';
+import { Swiper } from 'swiper';
 import { BlockingActionService } from '../../../shared/blocking-action/blocking-action.service';
 import { CaptureAppWebCryptoApiSignatureProvider } from '../../../shared/collector/signature/capture-app-web-crypto-api-signature-provider/capture-app-web-crypto-api-signature-provider.service';
 import { ConfirmAlert } from '../../../shared/confirm-alert/confirm-alert.service';
@@ -64,8 +69,6 @@ import {
   InformationSessionService,
 } from './information/session/information-session.service';
 
-SwiperCore.use([Virtual]);
-
 @UntilDestroy()
 @Component({
   selector: 'app-details',
@@ -75,6 +78,8 @@ SwiperCore.use([Virtual]);
 export class DetailsPage {
   captionOn = true;
   expanded = false;
+  activeSlideIndex = 0;
+  @ViewChild('swiper') swiperRef?: ElementRef;
   private readonly type$ = this.route.paramMap.pipe(
     map(params => params.get('type')),
     isNonNullable()
@@ -158,10 +163,14 @@ export class DetailsPage {
   ]).pipe(
     first(),
     map(([initialId, initialHash, detailedCaptures]) => {
-      if (initialId) return detailedCaptures.findIndex(c => c.id === initialId);
-      if (initialHash)
-        return detailedCaptures.findIndex(c => c.hash === initialHash);
-      return 0;
+      let index = 0;
+      if (initialId) {
+        index = detailedCaptures.findIndex(c => c.id === initialId);
+      } else if (initialHash) {
+        index = detailedCaptures.findIndex(c => c.hash === initialHash);
+      }
+      // Return 0 if not found (instead of -1)
+      return index >= 0 ? index : 0;
     })
   );
 
@@ -182,8 +191,6 @@ export class DetailsPage {
       this._activeDetailedCapture$.next(initialDetailedCapture)
     )
   );
-
-  private readonly swiper$ = new ReplaySubject<Swiper>(1);
 
   private readonly _activeDetailedCapture$ = new ReplaySubject<DetailedCapture>(
     1
@@ -256,6 +263,13 @@ export class DetailsPage {
       .pipe(untilDestroyed(this))
       .subscribe();
 
+    this.initialSlideIndex$
+      .pipe(
+        tap(index => (this.activeSlideIndex = index)),
+        untilDestroyed(this)
+      )
+      .subscribe();
+
     this.diaBackendAuthService.token$
       .pipe(
         distinctUntilChanged(),
@@ -307,19 +321,20 @@ export class DetailsPage {
     return item.id;
   }
 
-  onSwiperCreated(swiper: Swiper) {
-    this.swiper$.next(swiper);
-  }
-
   onSlidesChanged() {
-    return combineLatest([this.swiper$, this.detailedCaptures$])
+    const swiper = this.swiperRef?.nativeElement?.swiper as Swiper | undefined;
+    if (!swiper) return;
+
+    const activeIndex = swiper.activeIndex;
+    this.activeSlideIndex = activeIndex;
+    this.detailedCaptures$
       .pipe(
         first(),
-        tap(([swiper, detailedCaptures]) =>
-          this._activeDetailedCapture$.next(
-            detailedCaptures[swiper.activeIndex]
-          )
-        ),
+        tap(detailedCaptures => {
+          if (activeIndex >= 0 && activeIndex < detailedCaptures.length) {
+            this._activeDetailedCapture$.next(detailedCaptures[activeIndex]);
+          }
+        }),
         untilDestroyed(this)
       )
       .subscribe();

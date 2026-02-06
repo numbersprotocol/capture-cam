@@ -1,7 +1,6 @@
 import { DatePipe } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { JoyrideModule } from 'ngx-joyride';
-import { SwiperModule } from 'swiper/angular';
 import { SharedModule } from '../../../shared/shared.module';
 import { CaptureDetailsWithIframeComponent } from './capture-details-with-iframe/capture-details-with-iframe.component';
 import { CaptureDetailsWithIonicComponent } from './capture-details-with-ionic/capture-details-with-ionic.component';
@@ -10,12 +9,7 @@ import { DetailsUploadingBarComponent } from './details-uploading-bar/details-up
 import { DetailsPage } from './details.page';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    DetailsPageRoutingModule,
-    SwiperModule,
-    JoyrideModule.forChild(),
-  ],
+  imports: [SharedModule, DetailsPageRoutingModule, JoyrideModule.forChild()],
   providers: [DatePipe],
   declarations: [
     DetailsPage,
@@ -23,5 +17,6 @@ import { DetailsPage } from './details.page';
     CaptureDetailsWithIonicComponent,
     DetailsUploadingBarComponent,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class DetailsPageModule {}

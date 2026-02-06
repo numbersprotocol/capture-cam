@@ -1,5 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
-import { IonSlides, NavController } from '@ionic/angular';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { NavController } from '@ionic/angular';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { OnboardingService } from '../../../../shared/onboarding/onboarding.service';
 
@@ -12,7 +12,7 @@ import { OnboardingService } from '../../../../shared/onboarding/onboarding.serv
 export class TutorialPage {
   isLastSlide = false;
 
-  @ViewChild('slides') slides?: IonSlides;
+  @ViewChild('swiper') swiperRef?: ElementRef;
 
   constructor(
     private readonly onboardingService: OnboardingService,
@@ -21,20 +21,22 @@ export class TutorialPage {
     this.onboardingService.onboard$().pipe(untilDestroyed(this)).subscribe();
   }
 
-  async ionSlideDidChange(_: any) {
-    if (!this.slides) return;
+  onSlideChange() {
+    if (!this.swiperRef?.nativeElement?.swiper) return;
 
-    const curSlideIndex = await this.slides.getActiveIndex();
-    const totalSlides = await this.slides.length();
+    const swiper = this.swiperRef.nativeElement.swiper;
+    const curSlideIndex = swiper.activeIndex;
+    const totalSlides = swiper.slides.length;
 
     this.isLastSlide = curSlideIndex === totalSlides - 1;
   }
 
-  async skipSlides() {
-    if (!this.slides) return;
+  skipSlides() {
+    if (!this.swiperRef?.nativeElement?.swiper) return;
 
-    const totalSlides = await this.slides.length();
-    await this.slides.slideTo(totalSlides - 1);
+    const swiper = this.swiperRef.nativeElement.swiper;
+    const totalSlides = swiper.slides.length;
+    swiper.slideTo(totalSlides - 1);
   }
 
   closeTutorialPage() {

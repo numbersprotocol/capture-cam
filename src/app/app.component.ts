@@ -6,6 +6,7 @@ import { App, URLOpenListenerEvent } from '@capacitor/app';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { Platform } from '@ionic/angular';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { register } from 'swiper/element/bundle';
 import { catchError, concatMap } from 'rxjs/operators';
 import { AppsFlyerService } from './shared/apps-flyer/apps-flyer.service';
 import { CameraService } from './shared/camera/camera.service';
@@ -21,6 +22,9 @@ import { InAppStoreService } from './shared/in-app-store/in-app-store.service';
 import { LanguageService } from './shared/language/service/language.service';
 import { NotificationService } from './shared/notification/notification.service';
 import { PushNotificationService } from './shared/push-notification/push-notification.service';
+
+// Register Swiper custom elements
+register();
 
 @UntilDestroy({ checkProperties: true })
 @Component({

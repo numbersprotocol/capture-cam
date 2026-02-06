@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { NgxLongPress2Module } from 'ngx-long-press2';
 import { SharedModule } from '../../../shared/shared.module';
 import { GoProMediaItemDetailOnCameraComponent } from './go-pro-media-item-detail-on-camera/go-pro-media-item-detail-on-camera.component';
@@ -19,5 +19,6 @@ import { GoProPage } from './go-pro.page';
     GoProMediaLoadingBarComponent,
     GoProMediaViewerWithNativePlayerComponent,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class GoProPageModule {}

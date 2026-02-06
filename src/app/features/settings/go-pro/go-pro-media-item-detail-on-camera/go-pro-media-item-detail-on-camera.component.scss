@@ -26,10 +26,10 @@ video {
 }
 
 ion-content {
-  ion-slides {
-    --bullet-background-active: white;
+  swiper-container {
+    --swiper-pagination-color: white;
 
-    ion-slide {
+    swiper-slide {
       flex-direction: column;
       background-color: #36393f;
       height: 93vh;

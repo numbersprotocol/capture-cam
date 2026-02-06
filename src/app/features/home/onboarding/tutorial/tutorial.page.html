@@ -5,12 +5,12 @@
       {{ t('onboarding.skip') }}
     </button>
   </div>
-  <ion-slides
-    #slides
-    [pager]="isLastSlide === false"
-    (ionSlideDidChange)="ionSlideDidChange($event)"
+  <swiper-container
+    #swiper
+    [pagination]="!isLastSlide"
+    (swiperslidechange)="onSlideChange()"
   >
-    <ion-slide>
+    <swiper-slide>
       <img src="/assets/images/onboarding/image-1.jpeg" class="slide-image" />
       <div class="slide-text">
         <div class="title">{{ t('onboarding.slide1.title') }}</div>
@@ -18,8 +18,8 @@
         <div class="subtitle">{{ t('onboarding.slide1.subtitle') }}</div>
       </div>
       <div class="mat-button-height-placeholder"></div>
-    </ion-slide>
-    <ion-slide>
+    </swiper-slide>
+    <swiper-slide>
       <img src="/assets/images/onboarding/image-2.jpeg" class="slide-image" />
       <div class="slide-text">
         <div class="title">{{ t('onboarding.slide2.title') }}</div>
@@ -27,8 +27,8 @@
         <div class="subtitle">{{ t('onboarding.slide2.subtitle') }}</div>
       </div>
       <div class="mat-button-height-placeholder"></div>
-    </ion-slide>
-    <ion-slide>
+    </swiper-slide>
+    <swiper-slide>
       <img src="/assets/images/onboarding/image-3.jpeg" class="slide-image" />
       <div class="slide-text">
         <div class="title">{{ t('onboarding.slide3.title') }}</div>
@@ -36,8 +36,8 @@
         <div class="subtitle">{{ t('onboarding.slide3.subtitle') }}</div>
       </div>
       <div class="mat-button-height-placeholder"></div>
-    </ion-slide>
-    <ion-slide>
+    </swiper-slide>
+    <swiper-slide>
       <img src="/assets/images/onboarding/image-4.jpeg" class="slide-image" />
       <div class="slide-text">
         <div class="title">{{ t('onboarding.slide4.title') }}</div>
@@ -52,8 +52,8 @@
       >
         {{ t('onboarding.exploreCapture') | uppercase }}
       </button>
-    </ion-slide>
-  </ion-slides>
+    </swiper-slide>
+  </swiper-container>
 
   <div class="bottom-section"></div>
 </ion-content>

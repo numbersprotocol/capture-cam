@@ -1,9 +1,9 @@
 $top-section-height: calc(64px + env(safe-area-inset-top));
 $bottom-section-height: calc(56px + env(safe-area-inset-bottom));
-$ion-slides-height: calc(
+$swiper-height: calc(
   100vh - #{$top-section-height} - #{$bottom-section-height}
 );
-$ion-slide-img-height: 50vh;
+$slide-img-height: 50vh;
 
 ion-content {
   .top-section {
@@ -33,19 +33,19 @@ ion-content {
     }
   }
 
-  ion-slides {
-    height: $ion-slides-height;
+  swiper-container {
+    height: $swiper-height;
 
-    --bullet-background: white;
-    --bullet-background-active: #486cd9;
+    --swiper-pagination-bullet-inactive-color: white;
+    --swiper-pagination-color: #486cd9;
 
-    ion-slide {
+    swiper-slide {
       flex-direction: column;
       justify-content: space-around;
       background-color: var(--noir-primary);
 
       .slide-image {
-        height: $ion-slide-img-height;
+        height: $slide-img-height;
         width: 100vw;
         object-fit: cover;
       }
