@@ -1,5 +1,5 @@
 import { Injectable, NgZone } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { fromEvent } from 'rxjs';
 import { mapTo, tap } from 'rxjs/operators';
 

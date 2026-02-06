@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import {
+  MatLegacyDialog as MatDialog,
+  MatLegacyDialogRef as MatDialogRef,
+} from '@angular/material/legacy-dialog';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { catchError, pluck } from 'rxjs/operators';
 import { isNonNullable } from '../../utils/rx-operators/rx-operators';

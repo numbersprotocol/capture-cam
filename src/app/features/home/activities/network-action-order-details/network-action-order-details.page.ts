@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { Clipboard } from '@capacitor/clipboard';
 import { NavController } from '@ionic/angular';
