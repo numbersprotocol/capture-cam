@@ -113,7 +113,7 @@ ion-button {
 .snackbar-error {
   background-color: #eb445a;
 
-  .mat-simple-snackbar-action {
+  .mat-mdc-snack-bar-action {
     color: white;
   }
 }
@@ -132,7 +132,7 @@ body.dark .mat-sidenav {
   background-color: var(--noir-primary);
 }
 
-body.dark .mat-dialog-container {
+body.dark .mat-mdc-dialog-container {
   background-color: var(--noir-primary);
 }
 
@@ -154,11 +154,11 @@ body.dark .order-detail-dialog mat-dialog-container {
   margin: auto;
 }
 
-body.dark .mat-card {
+body.dark .mat-mdc-card {
   background-color: var(--ion-color-light-shade);
 }
 
-body.dark .mat-tab-group {
+body.dark .mat-mdc-tab-group {
   background-color: var(--ion-background-color);
 }
 

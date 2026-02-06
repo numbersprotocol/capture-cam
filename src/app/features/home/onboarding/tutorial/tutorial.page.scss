@@ -73,12 +73,11 @@ ion-content {
           font-size: 16px;
         }
       }
-
-      .mat-button-height-placeholder {
+      .app-button-height-placeholder {
         height: 36px;
       }
 
-      .mat-raised-button.mat-primary {
+      .mat-mdc-raised-button.mat-primary {
         color: white;
         width: calc(100vw - 32px);
         border-radius: 37px;

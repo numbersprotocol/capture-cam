@@ -55,6 +55,6 @@ mat-tab-group {
 }
 
 /* stylelint-disable-next-line selector-pseudo-element-no-unknown */
-:host ::ng-deep .mat-tab-body-wrapper {
+:host ::ng-deep .mat-mdc-tab-body-wrapper {
   flex-grow: 1;
 }

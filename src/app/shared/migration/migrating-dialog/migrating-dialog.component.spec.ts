@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { SharedTestingModule } from '../../shared-testing.module';
 import { MigratingDialogComponent } from './migrating-dialog.component';
 
@@ -7,19 +7,17 @@ describe('MigratingDialogComponent', () => {
   let component: MigratingDialogComponent;
   let fixture: ComponentFixture<MigratingDialogComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [MigratingDialogComponent],
-        imports: [SharedTestingModule],
-        providers: [{ provide: MatDialogRef, useValue: {} }],
-      }).compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [MigratingDialogComponent],
+      imports: [SharedTestingModule],
+      providers: [{ provide: MatDialogRef, useValue: {} }],
+    }).compileComponents();
 
-      fixture = TestBed.createComponent(MigratingDialogComponent);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-    })
-  );
+    fixture = TestBed.createComponent(MigratingDialogComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();

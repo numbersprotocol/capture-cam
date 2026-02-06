@@ -1,8 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import {
-  MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA,
-  MatLegacyDialogRef as MatDialogRef,
-} from '@angular/material/legacy-dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NetworkAppOrder } from '../dia-backend/store/dia-backend-store.service';
 import { DiaBackendWalletService } from '../dia-backend/wallet/dia-backend-wallet.service';
 

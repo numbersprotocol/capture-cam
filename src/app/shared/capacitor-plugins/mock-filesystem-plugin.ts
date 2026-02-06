@@ -139,4 +139,8 @@ export class MockFilesystemPlugin implements FilesystemPlugin {
   async removeAllListeners(): Promise<void> {
     throw new Error('Method not implemented.');
   }
+
+  async readFileInChunks(_options: any, _callback: any): Promise<string> {
+    throw new Error('Method not implemented.');
+  }
 }

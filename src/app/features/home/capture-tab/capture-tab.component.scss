@@ -2,7 +2,7 @@
   margin-bottom: 128px;
 }
 
-div.mat-title {
+div.mat-headline-6 {
   margin: 26px 0 0;
   font-size: medium;
 }
@@ -27,7 +27,7 @@ mat-card {
       background: #ffffff40;
       backdrop-filter: blur(2px);
 
-      &.mat-mini-fab {
+      &.mat-mdc-mini-fab {
         box-shadow: none;
       }
 
