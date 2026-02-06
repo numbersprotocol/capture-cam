@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { DatePipe } from '@angular/common';
-import { SharedModule } from '../../../../shared/shared.module';
+import { SharedTestingModule } from '../../../../shared/shared-testing.module';
 import { CaptureDetailsWithIonicComponent } from './capture-details-with-ionic.component';
 
 describe('CaptureDetailsWithIonicComponent', () => {
@@ -12,7 +12,7 @@ describe('CaptureDetailsWithIonicComponent', () => {
     waitForAsync(() => {
       TestBed.configureTestingModule({
         declarations: [CaptureDetailsWithIonicComponent],
-        imports: [SharedModule],
+        imports: [SharedTestingModule],
         providers: [DatePipe],
       }).compileComponents();
 

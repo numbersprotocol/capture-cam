@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { SharedModule } from '../../../shared/shared.module';
+import { SharedTestingModule } from '../../../shared/shared-testing.module';
 import { EditProfilePage } from './edit-profile.page';
 
 describe('EditProfilePage', () => {
@@ -11,7 +11,7 @@ describe('EditProfilePage', () => {
     waitForAsync(() => {
       TestBed.configureTestingModule({
         declarations: [EditProfilePage],
-        imports: [SharedModule],
+        imports: [SharedTestingModule],
       }).compileComponents();
 
       fixture = TestBed.createComponent(EditProfilePage);

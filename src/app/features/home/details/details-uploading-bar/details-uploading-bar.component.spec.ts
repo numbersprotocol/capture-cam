@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { SharedModule } from '../../../../shared/shared.module';
+import { SharedTestingModule } from '../../../../shared/shared-testing.module';
 import { DetailsUploadingBarComponent } from './details-uploading-bar.component';
 
 describe('DetailsUploadingBarComponent', () => {
@@ -11,7 +11,7 @@ describe('DetailsUploadingBarComponent', () => {
     waitForAsync(() => {
       TestBed.configureTestingModule({
         declarations: [DetailsUploadingBarComponent],
-        imports: [SharedModule],
+        imports: [SharedTestingModule],
       }).compileComponents();
 
       fixture = TestBed.createComponent(DetailsUploadingBarComponent);

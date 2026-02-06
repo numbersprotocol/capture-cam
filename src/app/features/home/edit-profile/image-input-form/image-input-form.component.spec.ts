@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { SharedModule } from '../../../../shared/shared.module';
+import { SharedTestingModule } from '../../../../shared/shared-testing.module';
 import { ImageInputFormComponent } from './image-input-form.component';
 
 describe('ImageInputFormComponent', () => {
@@ -11,7 +11,7 @@ describe('ImageInputFormComponent', () => {
     waitForAsync(() => {
       TestBed.configureTestingModule({
         declarations: [ImageInputFormComponent],
-        imports: [SharedModule],
+        imports: [SharedTestingModule],
       }).compileComponents();
 
       fixture = TestBed.createComponent(ImageInputFormComponent);
