@@ -7,9 +7,9 @@ import { Clipboard } from '@capacitor/clipboard';
 import { NavController, Platform } from '@ionic/angular';
 import { TranslocoService } from '@ngneat/transloco';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { NgxQrcodeElementTypes } from '@techiediaries/ngx-qrcode';
-import { BehaviorSubject, merge, ObservableInput } from 'rxjs';
-import { catchError, finalize, mapTo, startWith, tap } from 'rxjs/operators';
+import { QRCodeElementType } from 'angularx-qrcode';
+import { BehaviorSubject, firstValueFrom, merge, ObservableInput } from 'rxjs';
+import { catchError, finalize, map, startWith, tap } from 'rxjs/operators';
 import { BlockingActionService } from '../../../shared/blocking-action/blocking-action.service';
 import { DiaBackendStoreService } from '../../../shared/dia-backend/store/dia-backend-store.service';
 import { DiaBackendWalletService } from '../../../shared/dia-backend/wallet/dia-backend-wallet.service';
@@ -25,7 +25,7 @@ import { TransferRequestSentComponent } from './transfer-request-sent/transfer-r
 })
 export class TransferPage {
   mode = '';
-  elementType = NgxQrcodeElementTypes.URL;
+  elementType: QRCodeElementType = 'url';
 
   readonly assetWalletAddr$ = this.diaBackendWalletService.assetWalletAddr$;
   readonly assetWalletMainnetNumBalance$ =
@@ -45,8 +45,12 @@ export class TransferPage {
   private orderId = '';
 
   readonly keyboardIsHidden$ = merge(
-    <ObservableInput<boolean>>this.platform.keyboardDidHide.pipe(mapTo(true)),
-    <ObservableInput<boolean>>this.platform.keyboardDidShow.pipe(mapTo(false))
+    <ObservableInput<boolean>>(
+      this.platform.keyboardDidHide.pipe(map(() => true))
+    ),
+    <ObservableInput<boolean>>(
+      this.platform.keyboardDidShow.pipe(map(() => false))
+    )
   ).pipe(startWith(true));
 
   constructor(
@@ -189,10 +193,9 @@ export class TransferPage {
         panelClass: 'num-transfer-dialog',
       }
     );
-    dialogRef
-      .afterClosed()
-      .toPromise()
-      .then(() => this.navCtrl.navigateBack('/wallets'));
+    firstValueFrom(dialogRef.afterClosed()).then(() =>
+      this.navCtrl.navigateBack('/wallets')
+    );
   }
 
   async copyToClipboard(value: string) {

@@ -5,7 +5,7 @@ import { Clipboard } from '@capacitor/clipboard';
 import { NavController } from '@ionic/angular';
 import { TranslocoService } from '@ngneat/transloco';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { NgxQrcodeElementTypes } from '@techiediaries/ngx-qrcode';
+import { QRCodeElementType } from 'angularx-qrcode';
 import { BehaviorSubject, fromEvent } from 'rxjs';
 import { concatMap, first, map, tap } from 'rxjs/operators';
 import { CaptureAppWebCryptoApiSignatureProvider } from '../../shared/collector/signature/capture-app-web-crypto-api-signature-provider/capture-app-web-crypto-api-signature-provider.service';
@@ -35,7 +35,7 @@ export class WalletsPage {
   );
   readonly iframeLoaded$ = new BehaviorSubject(false);
 
-  elementType = NgxQrcodeElementTypes.URL;
+  elementType: QRCodeElementType = 'url';
   shouldHideDepositButton = false;
   private reload = false;
 

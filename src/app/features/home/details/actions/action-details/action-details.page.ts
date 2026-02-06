@@ -8,7 +8,14 @@ import { NavController } from '@ionic/angular';
 import { TranslocoService } from '@ngneat/transloco';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { FormlyFieldConfig } from '@ngx-formly/core';
-import { ReplaySubject, combineLatest, forkJoin, iif, of } from 'rxjs';
+import {
+  ReplaySubject,
+  combineLatest,
+  firstValueFrom,
+  forkJoin,
+  iif,
+  of,
+} from 'rxjs';
 import {
   catchError,
   concatMap,
@@ -141,7 +148,7 @@ export class ActionDetailsPage {
         formFields.push({
           key: param.name_text,
           type: 'select',
-          templateOptions: {
+          props: {
             options:
               param.default_values_list_text?.map(value => ({
                 label: value.trim(),
@@ -157,7 +164,7 @@ export class ActionDetailsPage {
         formFields.push({
           key: param.name_text,
           type: 'input',
-          templateOptions: {
+          props: {
             type: 'number',
             label: param.display_text_text,
             placeholder: param.placeholder_text,
@@ -172,7 +179,7 @@ export class ActionDetailsPage {
         formFields.push({
           key: param.name_text,
           type: 'input',
-          templateOptions: {
+          props: {
             type: 'text',
             label: param.display_text_text,
             placeholder: param.placeholder_text,
@@ -218,9 +225,12 @@ export class ActionDetailsPage {
           let currentOffset = 0;
           const limit = 100;
           while (true) {
-            const response = await this.diaBackendSeriesRepository
-              .fetchAll$({ offset: currentOffset, limit })
-              .toPromise();
+            const response = await firstValueFrom(
+              this.diaBackendSeriesRepository.fetchAll$({
+                offset: currentOffset,
+                limit,
+              })
+            );
             const listedAsSeries = response.results.some(serie =>
               serie.collections.some(collection =>
                 collection.assets.some(asset => asset.cid === cid)

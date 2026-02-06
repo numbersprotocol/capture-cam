@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { defer } from 'rxjs';
-import { concatMapTo } from 'rxjs/operators';
+import { concatMap } from 'rxjs/operators';
 import { Assets, isFacts } from '../../../repositories/proof/proof';
 import { SharedTestingModule } from '../../../shared-testing.module';
 import { CapacitorFactsProvider } from './capacitor-facts-provider.service';
@@ -39,7 +39,7 @@ describe('CapacitorFactsProvider', () => {
     const expected = true;
 
     defer(() => provider.setDeviceInfoCollection(expected))
-      .pipe(concatMapTo(provider.isDeviceInfoCollectionEnabled$))
+      .pipe(concatMap(() => provider.isDeviceInfoCollectionEnabled$))
       .subscribe(result => {
         expect(result).toEqual(expected);
         done();
@@ -60,7 +60,7 @@ describe('CapacitorFactsProvider', () => {
     const expected = true;
 
     defer(() => provider.setGeolocationInfoCollection(expected))
-      .pipe(concatMapTo(provider.isGeolocationInfoCollectionEnabled$))
+      .pipe(concatMap(() => provider.isGeolocationInfoCollectionEnabled$))
       .subscribe(result => {
         expect(result).toEqual(expected);
         done();

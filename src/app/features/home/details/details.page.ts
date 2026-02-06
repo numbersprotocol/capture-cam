@@ -17,11 +17,11 @@ import {
   Subject,
   combineLatest,
   defer,
+  firstValueFrom,
 } from 'rxjs';
 import {
   catchError,
   concatMap,
-  concatMapTo,
   distinctUntilChanged,
   finalize,
   first,
@@ -646,14 +646,14 @@ export class DetailsPage {
   }
 
   private async handleOpenProofAction(id: string) {
-    await defer(() =>
-      Browser.open({
-        url: getAssetProfileForNSE(id),
-        toolbarColor: browserToolbarColor,
-      })
-    )
-      .pipe(untilDestroyed(this), takeUntil(this.shareMenuDismissed$))
-      .toPromise();
+    await firstValueFrom(
+      defer(() =>
+        Browser.open({
+          url: getAssetProfileForNSE(id),
+          toolbarColor: browserToolbarColor,
+        })
+      ).pipe(untilDestroyed(this), takeUntil(this.shareMenuDismissed$))
+    );
   }
 
   private async handleUnpublishAction() {
@@ -762,7 +762,7 @@ export class DetailsPage {
         return VOID$;
       }),
       catchError((err: unknown) => this.errorService.toastError$(err)),
-      concatMapTo(defer(() => this.router.navigate(['..'])))
+      concatMap(() => defer(() => this.router.navigate(['..'])))
     );
 
     const confirmed = await this.confirmAlert.present();
@@ -828,7 +828,7 @@ export class DetailsPage {
         return VOID$;
       }),
       catchError((err: unknown) => this.errorService.toastError$(err)),
-      concatMapTo(defer(() => this.router.navigate(['..'])))
+      concatMap(() => defer(() => this.router.navigate(['..'])))
     );
     const result = await this.confirmAlert.present();
     if (result) {

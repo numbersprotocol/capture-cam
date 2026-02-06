@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
   catchError,
-  concatMapTo,
+  concatMap,
   first,
   pluck,
   shareReplay,
@@ -34,9 +34,10 @@ export class InboxPage {
   ) {}
 
   accept(id: string) {
-    const action$ = this.diaBackendTransactionRepository
-      .accept$(id)
-      .pipe(concatMapTo(this.diaBackendTransactionRepository.inbox$), first());
+    const action$ = this.diaBackendTransactionRepository.accept$(id).pipe(
+      concatMap(() => this.diaBackendTransactionRepository.inbox$),
+      first()
+    );
 
     this.blockingActionService
       .run$(action$)

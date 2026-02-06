@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { first } from 'rxjs/operators';
+import { firstValueFrom } from 'rxjs';
 import { blobToBase64 } from '../../../../utils/encoding/encoding';
 import { OnConflictStrategy } from '../../../database/table/table';
 import { HttpErrorCode } from '../../../error/error.service';
@@ -48,10 +48,12 @@ export class DiaBackendAssetDownloadingService {
     if (!diaBackendAsset.information.proof) {
       return;
     }
-    const thumbnailBlob = await this.assetRepository
-      .downloadFile$({ id: diaBackendAsset.id, field: 'asset_file_thumbnail' })
-      .pipe(first())
-      .toPromise();
+    const thumbnailBlob = await firstValueFrom(
+      this.assetRepository.downloadFile$({
+        id: diaBackendAsset.id,
+        field: 'asset_file_thumbnail',
+      })
+    );
     return this.mediaStore.storeThumbnail(
       diaBackendAsset.proof_hash,
       await blobToBase64(thumbnailBlob),

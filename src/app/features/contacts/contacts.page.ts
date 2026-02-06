@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
   catchError,
-  concatMapTo,
+  concatMap,
   first,
   pluck,
   shareReplay,
@@ -36,7 +36,10 @@ export class ContactsPage {
   delete(contact: DiaBackendContact) {
     const action$ = this.diaBackendContactRepository
       .deleteByEmail$(contact.contact_email)
-      .pipe(concatMapTo(this.diaBackendContactRepository.all$), first());
+      .pipe(
+        concatMap(() => this.diaBackendContactRepository.all$),
+        first()
+      );
     return this.blockingActionService
       .run$(action$)
       .pipe(

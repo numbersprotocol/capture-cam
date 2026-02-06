@@ -67,7 +67,7 @@ export class EditProfilePage {
             {
               key: 'profileName',
               type: 'input',
-              templateOptions: {
+              props: {
                 label: profileNameTranslation,
                 placeholder: profileNameTranslation,
                 appearance: 'outline',
@@ -86,7 +86,7 @@ export class EditProfilePage {
             {
               key: 'description',
               type: 'textarea',
-              templateOptions: {
+              props: {
                 label: descriptionTranslation,
                 placeholder: descriptionTranslation,
                 appearance: 'outline',

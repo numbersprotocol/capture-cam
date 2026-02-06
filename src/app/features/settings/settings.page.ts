@@ -8,7 +8,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { EMPTY, Subject, defer, forkJoin } from 'rxjs';
 import {
   catchError,
-  concatMapTo,
+  concatMap,
   count,
   first,
   map,
@@ -183,10 +183,10 @@ export class SettingsPage {
   async deleteAccount() {
     const action$ = this.diaBackendAuthService.deleteAccount$().pipe(
       // logout
-      concatMapTo(defer(() => this.mediaStore.clear())),
-      concatMapTo(defer(() => this.database.clear())),
-      concatMapTo(defer(() => this.preferenceManager.clear())),
-      concatMapTo(defer(reloadApp)),
+      concatMap(() => defer(() => this.mediaStore.clear())),
+      concatMap(() => defer(() => this.database.clear())),
+      concatMap(() => defer(() => this.preferenceManager.clear())),
+      concatMap(() => defer(reloadApp)),
       catchError((err: unknown) => this.errorService.toastError$(err))
     );
 

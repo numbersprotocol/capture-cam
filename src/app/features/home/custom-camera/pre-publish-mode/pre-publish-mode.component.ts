@@ -11,6 +11,7 @@ import { AlertController, Platform } from '@ionic/angular';
 import { TranslocoService } from '@ngneat/transloco';
 import {
   BehaviorSubject,
+  EMPTY,
   ReplaySubject,
   combineLatest,
   defer,
@@ -290,5 +291,6 @@ export class PrePublishModeComponent {
         tap(alertElement => alertElement.present())
       )
       .subscribe();
+    return EMPTY;
   }
 }

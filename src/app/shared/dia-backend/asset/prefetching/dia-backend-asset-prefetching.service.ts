@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
 import { MediaStore } from '../../../media/media-store/media-store.service';
 import { DiaBackendAssetRepository } from '../dia-backend-asset-repository.service';
 import { DiaBackendAssetDownloadingService } from '../downloading/dia-backend-downloading.service';
@@ -21,9 +22,12 @@ export class DiaBackendAssetPrefetchingService {
     const limit = 100;
     while (true) {
       const { results: diaBackendAssets, count: totalCount } =
-        await this.assetRepository
-          .fetchOriginallyOwned$({ offset: currentOffset, limit })
-          .toPromise();
+        await firstValueFrom(
+          this.assetRepository.fetchOriginallyOwned$({
+            offset: currentOffset,
+            limit,
+          })
+        );
 
       if (diaBackendAssets.length === 0) {
         break;

@@ -8,7 +8,6 @@ import { combineLatest, defer, Observable, of } from 'rxjs';
 import {
   catchError,
   concatMap,
-  concatMapTo,
   first,
   map,
   pluck,
@@ -185,7 +184,7 @@ export class SendingPostCapturePage {
         })
       ),
       concatMap(([asset]) => this.removeAsset$(asset)),
-      concatMapTo(defer(() => this.router.navigate(['/home']))),
+      concatMap(() => defer(() => this.router.navigate(['/home']))),
       catchError((err: unknown) => this.errorService.toastError$(err))
     );
 

@@ -21,7 +21,6 @@ import { BehaviorSubject, combineLatest, interval } from 'rxjs';
 import {
   finalize,
   map,
-  mapTo,
   scan,
   switchMap,
   take,
@@ -332,7 +331,7 @@ export class CustomCameraPage implements OnInit, OnDestroy {
             takeWhile(([isRecording]) => isRecording),
             take(this.maxRecordTimeInMilliseconds / intervalRate),
             untilDestroyed(this),
-            mapTo(intervalRate),
+            map(() => intervalRate),
             scan((acc: number, curr: number) => acc + curr, 0),
             tap(recordTime => {
               this.curRecordTimeInPercent$.next(

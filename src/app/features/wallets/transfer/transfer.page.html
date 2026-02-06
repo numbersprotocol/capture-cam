@@ -14,14 +14,14 @@
         {{ t('wallets.myAssetWalletQRCodeInfo') }}
       </div>
       <div class="vertical-pacing-12"></div>
-      <ngx-qrcode
+      <qrcode
         [elementType]="elementType"
-        [value]="(assetWalletAddr$ | ngrxPush)!"
+        [qrdata]="(assetWalletAddr$ | ngrxPush)!"
         cssClass="qr-code"
         [margin]="0"
         [width]="150"
       >
-      </ngx-qrcode>
+      </qrcode>
     </div>
 
     <mat-list>

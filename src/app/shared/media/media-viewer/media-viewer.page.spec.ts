@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { PinchZoomModule } from 'ngx-pinch-zoom';
+import { PinchZoomModule } from '@meddv/ngx-pinch-zoom';
 import { SharedTestingModule } from '../../shared-testing.module';
 import { MediaViewerPage } from './media-viewer.page';
 

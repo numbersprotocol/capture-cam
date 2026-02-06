@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { iif } from 'rxjs';
+import { EMPTY, iif } from 'rxjs';
 import { catchError, pluck, switchMap } from 'rxjs/operators';
 import {
   DiaBackendAsset,
@@ -25,7 +25,8 @@ export class PostCaptureTabComponent {
     switchMap(isConnected =>
       iif(
         () => isConnected,
-        this.diaBackendAssetRepository.postCaptures$.pipe(pluck('results'))
+        this.diaBackendAssetRepository.postCaptures$.pipe(pluck('results')),
+        EMPTY
       )
     ),
     catchError((err: unknown) => this.errorService.toastError$(err))
@@ -38,7 +39,8 @@ export class PostCaptureTabComponent {
         this.diaBackendSeriesRepository.fetchCollectedSeriesList$.pipe(
           pluck('results'),
           catchError((err: unknown) => this.errorService.toastError$(err))
-        )
+        ),
+        EMPTY
       )
     )
   );

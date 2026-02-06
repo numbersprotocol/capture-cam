@@ -7,7 +7,7 @@ import {
 import { Mutex } from 'async-mutex';
 import { differenceWith, intersectionWith, isEqual, uniqWith } from 'lodash-es';
 import { BehaviorSubject, defer } from 'rxjs';
-import { concatMapTo } from 'rxjs/operators';
+import { concatMap } from 'rxjs/operators';
 import { isNonNullable } from '../../../../utils/rx-operators/rx-operators';
 import { OnConflictStrategy, Table, Tuple } from '../table';
 
@@ -20,7 +20,7 @@ export class CapacitorFilesystemTable<T extends Tuple> implements Table<T> {
   private readonly tuples$ = new BehaviorSubject<T[] | undefined>(undefined);
 
   readonly queryAll$ = defer(() => this.initialize()).pipe(
-    concatMapTo(this.tuples$.asObservable()),
+    concatMap(() => this.tuples$.asObservable()),
     isNonNullable()
   );
 

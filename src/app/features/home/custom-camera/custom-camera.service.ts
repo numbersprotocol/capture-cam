@@ -7,7 +7,7 @@ import { FilesystemPlugin } from '@capacitor/filesystem';
 import { Platform } from '@ionic/angular';
 import { TranslocoService } from '@ngneat/transloco';
 import { PreviewCamera } from '@numbersprotocol/preview-camera';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, firstValueFrom } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CameraService } from '../../../shared/camera/camera.service';
 import { FILESYSTEM_PLUGIN } from '../../../shared/capacitor-plugins/capacitor-plugins.module';
@@ -135,10 +135,14 @@ export class CustomCameraService {
     if (error instanceof Error && error.message.startsWith('Tuples existed')) {
       const translation = 'customCamera.error.duplicateAsset';
       const errorMsg = this.translocoService.translate(translation);
-      await this.errorService.toastError$(errorMsg).toPromise();
+      await firstValueFrom(this.errorService.toastError$(errorMsg), {
+        defaultValue: undefined,
+      });
     } else {
       const errMsg = this.translocoService.translate('error.unknownError');
-      await this.errorService.toastError$(errMsg).toPromise();
+      await firstValueFrom(this.errorService.toastError$(errMsg), {
+        defaultValue: undefined,
+      });
     }
   }
 

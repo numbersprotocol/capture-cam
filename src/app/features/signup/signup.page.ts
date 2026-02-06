@@ -7,7 +7,7 @@ import { TranslocoService } from '@ngneat/transloco';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { combineLatest, defer } from 'rxjs';
-import { catchError, concatMap, concatMapTo, first, tap } from 'rxjs/operators';
+import { catchError, concatMap, first, tap } from 'rxjs/operators';
 import { BlockingActionService } from '../../shared/blocking-action/blocking-action.service';
 import { DiaBackendAuthService } from '../../shared/dia-backend/auth/dia-backend-auth.service';
 import { ErrorService } from '../../shared/error/error.service';
@@ -118,7 +118,7 @@ export class SignupPage {
           {
             key: 'email',
             type: 'input',
-            templateOptions: {
+            props: {
               type: 'email',
               placeholder: emailTranslation,
               required: true,
@@ -137,7 +137,7 @@ export class SignupPage {
           {
             key: 'username',
             type: 'input',
-            templateOptions: {
+            props: {
               type: 'text',
               placeholder: usernameTranslation,
               required: true,
@@ -147,7 +147,7 @@ export class SignupPage {
           {
             key: 'password',
             type: 'input',
-            templateOptions: {
+            props: {
               type: 'password',
               placeholder: passwordTranslation,
               required: true,
@@ -157,12 +157,12 @@ export class SignupPage {
             },
             validation: {
               messages: {
-                minlength: (_, field: FormlyFieldConfig) =>
+                minLength: (_, field: FormlyFieldConfig) =>
                   this.translocoService.translate(
                     'message.passwordMustBeBetween',
                     {
-                      min: field.templateOptions?.minLength,
-                      max: field.templateOptions?.maxLength,
+                      min: field.props?.minLength,
+                      max: field.props?.maxLength,
                     }
                   ),
               },
@@ -171,7 +171,7 @@ export class SignupPage {
           {
             key: 'confirmPassword',
             type: 'input',
-            templateOptions: {
+            props: {
               type: 'password',
               placeholder: confirmPasswordTranslation,
               required: true,
@@ -181,13 +181,13 @@ export class SignupPage {
           {
             key: 'referralCodeOptional',
             type: 'input',
-            templateOptions: {
+            props: {
               type: 'text',
               placeholder: referralCodeOptionalTranslation,
               required: false,
               hideRequiredMarker: true,
             },
-            expressionProperties: {
+            expressions: {
               'model.referralCodeOptional': 'model.referralCodeOptional',
             },
             parsers: [(value: any) => value?.toUpperCase()],
@@ -219,7 +219,7 @@ export class SignupPage {
     );
     const action$ = createUser$.pipe(
       first(),
-      concatMapTo(
+      concatMap(() =>
         defer(() =>
           this.router.navigate(
             [
