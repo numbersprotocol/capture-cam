@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import {
   AlertController,
   LoadingController,
@@ -26,7 +26,6 @@ export class GoProMediaItemDetailOnCameraComponent implements OnInit {
 
   constructor(
     private readonly location: Location,
-    private readonly route: ActivatedRoute,
     private readonly router: Router,
     public toastController: ToastController,
     public alertController: AlertController,
@@ -34,12 +33,10 @@ export class GoProMediaItemDetailOnCameraComponent implements OnInit {
     public goProMediaService: GoProMediaService,
     public goProWiFiService: GoProWifiService
   ) {
-    this.route.queryParams.subscribe(_ => {
-      const state = this.router.getCurrentNavigation()?.extras.state;
-      if (state) {
-        this.mediaFile = state.goProMediaFile;
-      }
-    });
+    const state = history.state;
+    if (state) {
+      this.mediaFile = state.goProMediaFile;
+    }
   }
 
   ngOnInit() {

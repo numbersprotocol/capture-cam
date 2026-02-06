@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { NavController, Platform } from '@ionic/angular';
 import { GoProFile } from '../go-pro-media-file';
 
@@ -16,17 +15,13 @@ export class GoProMediaViewerWithNativePlayerComponent
   onIOSPlayerDismissedListener?: any;
 
   constructor(
-    private readonly route: ActivatedRoute,
-    private readonly router: Router,
     private readonly navController: NavController,
     private readonly platform: Platform
   ) {
-    this.route.queryParams.subscribe(_ => {
-      const state = this.router.getCurrentNavigation()?.extras.state;
-      if (state) {
-        this.mediaFile = state.goProMediaFile;
-      }
-    });
+    const state = history.state;
+    if (state) {
+      this.mediaFile = state.goProMediaFile;
+    }
   }
 
   ngOnInit(): void {

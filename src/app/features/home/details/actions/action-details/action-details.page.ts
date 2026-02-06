@@ -109,7 +109,7 @@ export class ActionDetailsPage {
   }
 
   private getActionFromRouterState() {
-    const routerState = this.router.getCurrentNavigation()?.extras.state;
+    const routerState = history.state;
 
     if (routerState) {
       this.networkAction$.next(routerState as Action);
