@@ -11,7 +11,7 @@
     "module": "es2020",
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2020",
+    "target": "ES2022",
     "lib": ["es2019", "dom"],
     "strict": true,
     "resolveJsonModule": true,
@@ -24,7 +24,8 @@
       "os": ["node_modules/os-browserify"],
       "stream": ["node_modules/stream-browserify"],
       "process": ["node_modules/process"]
-    }
+    },
+    "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
