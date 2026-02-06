@@ -156,7 +156,7 @@ Add a new release section with:
 #### 5. Update package-lock.json
 
 ```bash
-npm install --legacy-peer-deps
+npm install
 ```
 
 **Version Number Guidelines:**

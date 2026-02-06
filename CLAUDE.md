@@ -13,9 +13,9 @@ The app enables users to capture media with provenance tracking, connect to bloc
 ### Setup and Development
 
 ```bash
-npm install --legacy-peer-deps  # Install dependencies (required for compatibility)
+npm install                     # Install dependencies
 npm run serve                   # Start development server (includes preconfig)
-npm run serve.prod             # Start dev server with production config
+npm run serve.prod              # Start dev server with production config
 ```
 
 ### Building

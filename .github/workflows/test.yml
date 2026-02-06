@@ -19,7 +19,7 @@ jobs:
         run: npm install -g @ionic/cli
 
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: npm install
 
       - name: Lint
         run: npm run lint
@@ -40,7 +40,7 @@ jobs:
         run: npm install -g @ionic/cli
 
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: npm install
 
       - name: Test
         run: npm run test.ci
