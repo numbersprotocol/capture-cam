@@ -94,7 +94,7 @@ mat-toolbar.mat-toolbar {
   color: var(--ion-color-primary);
   min-height: 56px;
 
-  span {
+  > span {
     flex-grow: 1;
     text-align: center;
   }

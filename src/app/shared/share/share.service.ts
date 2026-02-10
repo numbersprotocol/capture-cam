@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Share } from '@capacitor/share';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { firstValueFrom } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { urlToDownloadApp } from '../../utils/constants';

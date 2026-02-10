@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EMPTY, Observable, defer } from 'rxjs';
-import { concatMap, map } from 'rxjs/operators';
+import { EMPTY, Observable, defer, of } from 'rxjs';
+import { catchError, concatMap, map } from 'rxjs/operators';
 import { DiaBackendAssetRepository } from '../asset/dia-backend-asset-repository.service';
 import { DiaBackendAuthService } from '../auth/dia-backend-auth.service';
 import { PaginatedResponse } from '../pagination';
@@ -80,12 +80,13 @@ export class DiaBackendStoreService {
     }
 
     if (id) {
-      return this.diaBackendAssetRepository
-        .fetchById$(id)
-        .pipe(map(asset => asset.asset_file_thumbnail));
+      return this.diaBackendAssetRepository.fetchById$(id).pipe(
+        map(asset => asset.asset_file_thumbnail),
+        catchError(() => of(undefined))
+      );
     }
 
-    return EMPTY;
+    return of(undefined);
   }
 
   retrieveNetworkAppOrder$(id: string) {
@@ -180,7 +181,7 @@ export interface NetworkAppOrder {
 }
 
 export interface NetworkAppOrderWithThumbnail extends NetworkAppOrder {
-  assetThumbnailUrl$?: Observable<string>;
+  assetThumbnailUrl$?: Observable<string | undefined>;
 }
 
 export interface Product {

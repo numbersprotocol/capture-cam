@@ -9,7 +9,7 @@ import {
   NavController,
   Platform,
 } from '@ionic/angular';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { EMPTY, combineLatest, defer, firstValueFrom, iif, of } from 'rxjs';
 import {

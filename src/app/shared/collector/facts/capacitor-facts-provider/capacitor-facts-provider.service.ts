@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { App, AppInfo } from '@capacitor/app';
 import { Device } from '@capacitor/device';
 import { isPlatform } from '@ionic/core';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { firstValueFrom } from 'rxjs';
 import { ErrorService } from '../../../error/error.service';
 import { BaseError } from '../../../error/errors';

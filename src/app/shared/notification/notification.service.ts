@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { LocalNotificationsPlugin } from '@capacitor/local-notifications';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { LOCAL_NOTIFICATIONS_PLUGIN } from '../capacitor-plugins/capacitor-plugins.module';
 import { NotificationItem } from './notification-item';
 

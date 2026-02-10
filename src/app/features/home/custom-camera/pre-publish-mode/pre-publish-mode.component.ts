@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { Directory, FilesystemPlugin } from '@capacitor/filesystem';
 import { AlertController, Platform } from '@ionic/angular';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import {
   BehaviorSubject,
   EMPTY,

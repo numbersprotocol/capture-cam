@@ -1,14 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, NgModule } from '@angular/core';
+import { inject, Injectable, NgModule } from '@angular/core';
 import {
   getBrowserCultureLang,
+  provideTransloco,
   Translation,
-  translocoConfig,
   TranslocoLoader,
   TranslocoModule,
-  TRANSLOCO_CONFIG,
-  TRANSLOCO_LOADER,
-} from '@ngneat/transloco';
+} from '@jsverse/transloco';
 import { environment } from '../../../../environments/environment';
 
 export const languages: { [key: string]: string } = {
@@ -23,7 +21,7 @@ export const defaultLanguage =
 
 @Injectable({ providedIn: 'root' })
 export class TranslocoHttpLoader implements TranslocoLoader {
-  constructor(private readonly http: HttpClient) {}
+  private http = inject(HttpClient);
 
   getTranslation(lang: string) {
     return this.http.get<Translation>(`./assets/i18n/${lang}.json`);
@@ -33,18 +31,20 @@ export class TranslocoHttpLoader implements TranslocoLoader {
 @NgModule({
   exports: [TranslocoModule],
   providers: [
-    {
-      provide: TRANSLOCO_CONFIG,
-      useValue: translocoConfig({
+    provideTransloco({
+      config: {
         availableLangs: Object.keys(languages),
         defaultLang: defaultLanguage[0],
         fallbackLang: defaultLanguage[0],
-        missingHandler: { useFallbackTranslation: true },
+        missingHandler: {
+          useFallbackTranslation: true,
+          logMissingKey: !environment.production,
+        },
         reRenderOnLangChange: true,
         prodMode: environment.production,
-      }),
-    },
-    { provide: TRANSLOCO_LOADER, useClass: TranslocoHttpLoader },
+      },
+      loader: TranslocoHttpLoader,
+    }),
   ],
 })
 export class TranslocoRootModule {}

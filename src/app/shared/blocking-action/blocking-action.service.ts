@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { LoadingOptions } from '@ionic/core';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { defer, Observable } from 'rxjs';
 import { concatMap, finalize } from 'rxjs/operators';
 

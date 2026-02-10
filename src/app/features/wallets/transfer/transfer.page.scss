@@ -4,6 +4,28 @@ mat-toolbar {
   }
 }
 
+mat-list-item.wallet-list-item {
+  height: auto;
+  min-height: auto;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  align-items: center;
+
+  mat-icon {
+    margin-top: 0;
+    margin-bottom: 0;
+    align-self: center;
+  }
+
+  .mdc-list-item__content {
+    align-self: center;
+  }
+
+  button {
+    align-self: center;
+  }
+}
+
 ion-content > * {
   color: initial;
 }
@@ -196,4 +218,24 @@ ion-card {
 
 .vertical-pacing-12 {
   height: 12px;
+}
+
+mat-list-item.wallet-list-item {
+  height: auto;
+  min-height: auto;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  align-items: center;
+
+  mat-icon {
+    align-self: center;
+  }
+
+  .mdc-list-item__content {
+    align-self: center;
+  }
+
+  button {
+    align-self: center;
+  }
 }

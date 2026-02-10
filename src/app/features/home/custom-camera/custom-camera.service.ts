@@ -5,7 +5,7 @@ import { CameraSource } from '@capacitor/camera';
 import { Capacitor } from '@capacitor/core';
 import { FilesystemPlugin } from '@capacitor/filesystem';
 import { Platform } from '@ionic/angular';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { PreviewCamera } from '@numbersprotocol/preview-camera';
 import { BehaviorSubject, firstValueFrom } from 'rxjs';
 import { map } from 'rxjs/operators';

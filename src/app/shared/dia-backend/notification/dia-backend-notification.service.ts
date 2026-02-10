@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { AppPlugin } from '@capacitor/app';
 import { Capacitor } from '@capacitor/core';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { combineLatest, defer, EMPTY, Observable } from 'rxjs';
 import { concatMap, filter, tap } from 'rxjs/operators';
 import { APP_PLUGIN } from '../../capacitor-plugins/capacitor-plugins.module';

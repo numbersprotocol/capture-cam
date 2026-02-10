@@ -19,17 +19,19 @@
         last as isLast
       "
     >
-      <mat-list-item>
+      <mat-list-item class="inbox-list-item">
         <img
           decoding="async"
           loading="lazy"
-          matListAvatar
+          matListItemAvatar
           [src]="postCapture.asset.asset_file_thumbnail"
         />
-        <div mat-line>{{ postCapture.asset.id }}</div>
-        <div mat-line>{{ t('sentFrom') + ' ' + postCapture.sender_name }}</div>
-        <div mat-line>{{ postCapture.created_at | date : 'short' }}</div>
-        <div class="action" mat-line>
+        <div matListItemLine>{{ postCapture.asset.id }}</div>
+        <div matListItemLine>
+          {{ t('sentFrom') + ' ' + postCapture.sender_name }}
+        </div>
+        <div matListItemLine>{{ postCapture.created_at | date : 'short' }}</div>
+        <div class="action" matListItemMeta>
           <button
             (click)="ignore(postCapture.id)"
             mat-stroked-button

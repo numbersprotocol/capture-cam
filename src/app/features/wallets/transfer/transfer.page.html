@@ -25,9 +25,9 @@
     </div>
 
     <mat-list>
-      <mat-list-item>
-        <mat-icon svgIcon="wallet" mat-list-icon></mat-icon>
-        <div mat-line>
+      <mat-list-item class="wallet-list-item">
+        <mat-icon svgIcon="wallet" matListItemIcon></mat-icon>
+        <div matListItemLine>
           {{ t('wallets.myAssetWallet') }}
           <ion-icon
             class="info-icon"
@@ -37,11 +37,12 @@
             [matTooltip]="t('wallets.myAssetWalletTooltip')"
           ></ion-icon>
         </div>
-        <div mat-line>{{ assetWalletAddr$ | ngrxPush }}</div>
+        <div matListItemLine>{{ assetWalletAddr$ | ngrxPush }}</div>
         <button
           mat-icon-button
           *ngIf="assetWalletAddr$ | ngrxPush as assetWalletAddr"
           (click)="copyToClipboard(assetWalletAddr)"
+          matListItemMeta
         >
           <mat-icon>content_copy</mat-icon>
         </button>
