@@ -28,7 +28,6 @@ import {
   catchError,
   concatMap,
   distinctUntilChanged,
-  finalize,
   first,
   map,
   pluck,
@@ -41,10 +40,7 @@ import { BlockingActionService } from '../../../shared/blocking-action/blocking-
 import { CaptureAppWebCryptoApiSignatureProvider } from '../../../shared/collector/signature/capture-app-web-crypto-api-signature-provider/capture-app-web-crypto-api-signature-provider.service';
 import { ConfirmAlert } from '../../../shared/confirm-alert/confirm-alert.service';
 import { ContactSelectionDialogComponent } from '../../../shared/contact-selection-dialog/contact-selection-dialog.component';
-import {
-  DiaBackendAsset,
-  DiaBackendAssetRepository,
-} from '../../../shared/dia-backend/asset/dia-backend-asset-repository.service';
+import { DiaBackendAssetRepository } from '../../../shared/dia-backend/asset/dia-backend-asset-repository.service';
 import { DiaBackendAuthService } from '../../../shared/dia-backend/auth/dia-backend-auth.service';
 import { BUBBLE_IFRAME_URL } from '../../../shared/dia-backend/secret';
 import { DiaBackendStoreService } from '../../../shared/dia-backend/store/dia-backend-store.service';
@@ -57,7 +53,6 @@ import { ProofRepository } from '../../../shared/repositories/proof/proof-reposi
 import { ShareService } from '../../../shared/share/share.service';
 import { UserGuideService } from '../../../shared/user-guide/user-guide.service';
 import { browserToolbarColor } from '../../../utils/constants';
-import { MimeType } from '../../../utils/mime-type';
 import {
   VOID$,
   isNonNullable,
@@ -280,31 +275,6 @@ export class DetailsPage {
       .subscribe();
   }
 
-  private static isSupportC2paDownloadFormat(mimeType: MimeType) {
-    // https://github.com/contentauth/c2patool?tab=readme-ov-file#supported-file-formats
-    return [
-      'video/msvideo',
-      'video/avi',
-      'application-msvideo', // avi
-      'image/avif', // avif
-      'application/x-c2pa-manifest-store', // c2pa
-      'image/x-adobe-dng', // dng
-      'image/heic', // heic
-      'image/heif', // heif
-      'image/jpeg', // jpg, jpeg
-      'audio/mp4', // m4a
-      'audio/mpeg', // mp3
-      'video/mp4',
-      'application/mp4', // mp4
-      'video/quicktime', // mov
-      'image/png', // png
-      'image/svg+xml', // svg
-      'image/tiff', // tif, tiff
-      'audio/x-wav', // wav
-      'image/webp', // webp
-    ].includes(mimeType);
-  }
-
   iframeUrlFor(detailedCapture: any) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(
       `${BUBBLE_IFRAME_URL}/asset_page?nid=${detailedCapture.id}`
@@ -372,7 +342,6 @@ export class DetailsPage {
       this.activeDetailedCapture$.pipe(switchMap(c => c.diaBackendAsset$)),
       this.capAppWebCryptoApiSignatureProvider.publicKey$,
       this.translocoService.selectTranslateObject({
-        'details.shares.downloadC2pa': null,
         'details.shares.viewBlockchainProof': null,
         'details.shares.shareCapturePage': null,
         'details.shares.copyNid': null,
@@ -384,24 +353,11 @@ export class DetailsPage {
           ([
             diaBackendAsset,
             publicKey,
-            [downloadC2paText, viewProofText, shareCaptureText, copyNidText],
+            [viewProofText, shareCaptureText, copyNidText],
           ]) =>
             new Promise<void>(resolve => {
               const buttons: ActionSheetButton[] = [];
-              if (
-                diaBackendAsset &&
-                DetailsPage.isSupportC2paDownloadFormat(
-                  diaBackendAsset.asset_file_mime_type
-                )
-              ) {
-                buttons.push({
-                  text: downloadC2paText,
-                  handler: async () => {
-                    await this.handleDownloadC2paAction(diaBackendAsset);
-                    resolve();
-                  },
-                });
-              }
+              // C2PA download feature removed - API no longer supported
               if (
                 diaBackendAsset?.owner_addresses.asset_wallet_address ===
                 publicKey
@@ -538,60 +494,6 @@ export class DetailsPage {
               .then(sheet => sheet.present());
           }
         )
-      )
-      .subscribe();
-  }
-
-  private async handleDownloadC2paAction(diaBackendAsset: DiaBackendAsset) {
-    let fileUrl: string | undefined = undefined;
-    const downloadC2paDismissed$ = new Subject<void>();
-    const alert = await this.alertController.create({
-      header: this.translocoService.translate(
-        'details.downloadC2paProgressHeader'
-      ),
-      message: `<ion-spinner></ion-spinner><br>${this.translocoService.translate(
-        'details.downloadC2paProgressMessage'
-      )}`,
-      backdropDismiss: false,
-      buttons: [
-        { text: this.translocoService.translate('cancel'), role: 'cancel' },
-      ],
-    });
-
-    alert.onDidDismiss().then(async () => {
-      downloadC2paDismissed$.next();
-      if (fileUrl) {
-        const from = encodeURIComponent(this.router.url);
-        const url = encodeURIComponent(fileUrl);
-        const link = document.createElement('a');
-        link.href = `${BUBBLE_IFRAME_URL}/download?from=${from}&url=${url}`;
-        link.hidden = true;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      }
-    });
-
-    defer(() => alert.present())
-      .pipe(
-        switchMap(() =>
-          this.diaBackendAssetRepository.downloadC2pa$(diaBackendAsset.id)
-        ),
-        catchError((err: unknown) => {
-          if (err instanceof HttpErrorResponse) {
-            const errorMessage = err.error?.error?.message;
-            if (errorMessage) {
-              return this.errorService.toastError$(errorMessage);
-            }
-          }
-          return this.errorService.toastError$(err);
-        }),
-        map(c2paResult => {
-          fileUrl = c2paResult.url;
-        }),
-        finalize(() => alert.dismiss()),
-        untilDestroyed(this),
-        takeUntil(downloadC2paDismissed$)
       )
       .subscribe();
   }
