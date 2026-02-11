@@ -1,7 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { fromEvent } from 'rxjs';
-import { mapTo, tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +18,7 @@ export class AndroidBackButtonService {
           this.zone.run(() => dialogRef.close())
         )
       ),
-      mapTo(dialogRef)
+      map(() => dialogRef)
     );
   }
 

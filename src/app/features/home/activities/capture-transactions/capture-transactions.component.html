@@ -7,21 +7,23 @@
     </h5>
     <ng-container *ngFor="let transaction of transactions; last as isLast">
       <mat-list-item
+        class="transaction-list-item"
         [routerLink]="['capture-transaction-details', { id: transaction.id }]"
       >
         <img
           decoding="async"
           loading="lazy"
-          matListAvatar
+          matListItemAvatar
           [src]="transaction.asset.asset_file_thumbnail"
         />
-        <div mat-line>{{ transaction.asset.id }}</div>
-        <div mat-line>{{ transaction.created_at | date: 'short' }}</div>
+        <div matListItemLine>{{ transaction.asset.id }}</div>
+        <div matListItemLine>{{ transaction.created_at | date : 'short' }}</div>
         <button
           *ngrxLet="transaction.status as status"
           [class]="status"
           mat-stroked-button
           disableRipple
+          matListItemMeta
         >
           {{ t('transactionState.' + status) }}
         </button>

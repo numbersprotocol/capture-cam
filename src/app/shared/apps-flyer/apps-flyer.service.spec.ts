@@ -12,24 +12,22 @@ describe('AppsFlyerService', () => {
   let platformReadySpy: Promise<void>;
   let platformSpy: Platform;
 
-  beforeEach(
-    waitForAsync(async () => {
-      platformReadySpy = Promise.resolve();
-      platformIs = _ => false;
+  beforeEach(waitForAsync(async () => {
+    platformReadySpy = Promise.resolve();
+    platformIs = _ => false;
 
-      platformSpy = jasmine.createSpyObj('Platform', {
-        ready: platformReadySpy,
-        is: platformIs,
-      });
+    platformSpy = jasmine.createSpyObj('Platform', {
+      ready: platformReadySpy,
+      is: platformIs,
+    });
 
-      await TestBed.configureTestingModule({
-        imports: [SharedTestingModule],
-        providers: [{ provide: Platform, useValue: platformSpy }],
-      }).compileComponents();
+    await TestBed.configureTestingModule({
+      imports: [SharedTestingModule],
+      providers: [{ provide: Platform, useValue: platformSpy }],
+    }).compileComponents();
 
-      service = TestBed.inject(AppsFlyerService);
-    })
-  );
+    service = TestBed.inject(AppsFlyerService);
+  }));
 
   it('should be created', () => {
     expect(service).toBeTruthy();

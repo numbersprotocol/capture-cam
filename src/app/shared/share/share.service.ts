@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Share } from '@capacitor/share';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
+import { firstValueFrom } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { urlToDownloadApp } from '../../utils/constants';
 import { getCapturePage } from '../../utils/url';
@@ -41,10 +42,14 @@ export class ShareService {
     if (!asset.public_access) {
       const formData = new FormData();
       formData.append('public_access', 'true');
-      await this.diaBackendAssetRepository
-        .updateCapture$(asset.id, formData)
-        .pipe(catchError((err: unknown) => this.errorService.toastError$(err)))
-        .toPromise();
+      await firstValueFrom(
+        this.diaBackendAssetRepository
+          .updateCapture$(asset.id, formData)
+          .pipe(
+            catchError((err: unknown) => this.errorService.toastError$(err))
+          ),
+        { defaultValue: undefined }
+      );
     }
     return getCapturePage(asset);
   }

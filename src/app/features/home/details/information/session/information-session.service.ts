@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { TranslocoService } from '@ngneat/transloco';
-import { defer, iif, of } from 'rxjs';
+import { TranslocoService } from '@jsverse/transloco';
+import { defer, firstValueFrom, iif, of } from 'rxjs';
 import {
   catchError,
   concatMap,
@@ -56,14 +56,20 @@ export class DetailedCapture {
       return defer(async () => {
         const [index, meta] = Object.entries(proof.indexedAssets)[0];
         if (!(await this.mediaStore.exists(index)) && proof.diaBackendAssetId) {
-          const mediaBlob = await this.diaBackendAssetRepository
-            .downloadFile$({ id: proof.diaBackendAssetId, field: 'asset_file' })
-            .pipe(
-              first(),
-              catchError((err: unknown) => this.errorService.toastError$(err))
-            )
-            .toPromise();
-          await proof.setAssets({ [await blobToBase64(mediaBlob)]: meta });
+          const mediaBlob = await firstValueFrom(
+            this.diaBackendAssetRepository
+              .downloadFile$({
+                id: proof.diaBackendAssetId,
+                field: 'asset_file',
+              })
+              .pipe(
+                catchError((err: unknown) => this.errorService.toastError$(err))
+              ),
+            { defaultValue: undefined }
+          );
+          if (mediaBlob) {
+            await proof.setAssets({ [await blobToBase64(mediaBlob)]: meta });
+          }
         }
         return proof.getFirstAssetUrl();
       });
@@ -110,7 +116,7 @@ export class DetailedCapture {
         return `${geolocation.latitude.toFixed(
           fixedLength
         )}, ${geolocation.longitude.toFixed(fixedLength)}`;
-      return this.translocoService.translate<string>('notDisclosed');
+      return this.translocoService.translate('notDisclosed');
     })
   );
 

@@ -8,22 +8,20 @@ describe('LoginPage', () => {
   let component: LoginPage;
   let fixture: ComponentFixture<LoginPage>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [LoginPage],
-        imports: [
-          SharedTestingModule,
-          FormlyModule.forRoot(),
-          FormlyMaterialModule,
-        ],
-      }).compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [LoginPage],
+      imports: [
+        SharedTestingModule,
+        FormlyModule.forRoot(),
+        FormlyMaterialModule,
+      ],
+    }).compileComponents();
 
-      fixture = TestBed.createComponent(LoginPage);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-    })
-  );
+    fixture = TestBed.createComponent(LoginPage);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();

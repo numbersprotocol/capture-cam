@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, defer, forkJoin, Subject } from 'rxjs';
 import {
   concatMap,
-  concatMapTo,
   distinctUntilChanged,
   first,
   map,
@@ -126,7 +125,7 @@ export class DiaBackendTransactionRepository {
   private list$({ offset, limit }: { offset?: number; limit?: number }) {
     // eslint-disable-next-line @typescript-eslint/require-await
     return defer(async () => this._isFetching$.next(true)).pipe(
-      concatMapTo(defer(() => this.authService.getAuthHeaders())),
+      concatMap(() => defer(() => this.authService.getAuthHeaders())),
       concatMap(headers => {
         let params = new HttpParams();
 

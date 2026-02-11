@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { PreferenceManager } from '../../preference-manager/preference-manager.service';
 import { defaultLanguage, languages } from '../transloco/transloco-root.module';
 

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { defer } from 'rxjs';
-import { concatMap, concatMapTo, tap } from 'rxjs/operators';
+import { concatMap, tap } from 'rxjs/operators';
 import { MimeType } from '../../../utils/mime-type';
 import { MediaStore } from '../../media/media-store/media-store.service';
 import { SharedTestingModule } from '../../shared-testing.module';
@@ -51,7 +51,7 @@ describe('ProofRepository', () => {
 
   it('should emit new query on adding proof', done => {
     defer(() => repo.add(proof1))
-      .pipe(concatMapTo(repo.all$))
+      .pipe(concatMap(() => repo.all$))
       .subscribe(proofs => {
         expect(proofs.map(p => p.indexedAssets)).toEqual(
           [proof1].map(p => p.indexedAssets)
@@ -73,7 +73,7 @@ describe('ProofRepository', () => {
 
       await repo.remove(sameProof1);
     })
-      .pipe(concatMapTo(repo.all$))
+      .pipe(concatMap(() => repo.all$))
       .subscribe(proofs => {
         expect(proofs.map(p => p.indexedAssets)).toEqual(
           [proof2].map(p => p.indexedAssets)
@@ -100,7 +100,7 @@ describe('ProofRepository', () => {
               (x, y) => x.timestamp === y.timestamp
             );
           }).pipe(
-            concatMapTo(repo.all$),
+            concatMap(() => repo.all$),
             tap(proofs =>
               expect(proofs.map(p => p.indexedAssets)).toEqual(
                 [sameTimestampProof].map(p => p.indexedAssets)

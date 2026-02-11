@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { JoyrideService } from 'ngx-joyride';
 import { PreferenceManager } from '../preference-manager/preference-manager.service';
 

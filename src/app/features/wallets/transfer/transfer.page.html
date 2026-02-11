@@ -14,20 +14,20 @@
         {{ t('wallets.myAssetWalletQRCodeInfo') }}
       </div>
       <div class="vertical-pacing-12"></div>
-      <ngx-qrcode
+      <qrcode
         [elementType]="elementType"
-        [value]="(assetWalletAddr$ | ngrxPush)!"
+        [qrdata]="(assetWalletAddr$ | ngrxPush)!"
         cssClass="qr-code"
         [margin]="0"
         [width]="150"
       >
-      </ngx-qrcode>
+      </qrcode>
     </div>
 
     <mat-list>
-      <mat-list-item>
-        <mat-icon svgIcon="wallet" mat-list-icon></mat-icon>
-        <div mat-line>
+      <mat-list-item class="wallet-list-item">
+        <mat-icon svgIcon="wallet" matListItemIcon></mat-icon>
+        <div matListItemLine>
           {{ t('wallets.myAssetWallet') }}
           <ion-icon
             class="info-icon"
@@ -37,11 +37,12 @@
             [matTooltip]="t('wallets.myAssetWalletTooltip')"
           ></ion-icon>
         </div>
-        <div mat-line>{{ assetWalletAddr$ | ngrxPush }}</div>
+        <div matListItemLine>{{ assetWalletAddr$ | ngrxPush }}</div>
         <button
           mat-icon-button
           *ngIf="assetWalletAddr$ | ngrxPush as assetWalletAddr"
           (click)="copyToClipboard(assetWalletAddr)"
+          matListItemMeta
         >
           <mat-icon>content_copy</mat-icon>
         </button>
@@ -141,7 +142,7 @@
             <h6 class="gas-fee-text">
               {{ t('wallets.estimatedGasFee') }}:
               {{
-                gasFee > 0 ? (gasFee | number: '1.2-2') : t('wallets.pending')
+                gasFee > 0 ? (gasFee | number : '1.2-2') : t('wallets.pending')
               }}
             </h6>
             <h4 class="wallet-total-text">

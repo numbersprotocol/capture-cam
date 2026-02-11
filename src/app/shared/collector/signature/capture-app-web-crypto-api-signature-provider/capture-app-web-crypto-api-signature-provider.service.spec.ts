@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { defer } from 'rxjs';
-import { concatMapTo } from 'rxjs/operators';
+import { concatMap } from 'rxjs/operators';
 import { sortObjectDeeplyByKey } from '../../../../utils/immutable/immutable';
 import {
   ProofMetadata,
@@ -33,7 +33,7 @@ describe('CaptureAppWebCryptoApiSignatureProvider', () => {
 
   it('should get public key by Observable after initialization', done => {
     defer(() => provider.initialize())
-      .pipe(concatMapTo(provider.publicKey$))
+      .pipe(concatMap(() => provider.publicKey$))
       .subscribe(result => {
         expect(result).toBeTruthy();
         done();
@@ -42,7 +42,7 @@ describe('CaptureAppWebCryptoApiSignatureProvider', () => {
 
   it('should get private key by Observable after initialization', done => {
     defer(() => provider.initialize())
-      .pipe(concatMapTo(provider.privateKey$))
+      .pipe(concatMap(() => provider.privateKey$))
       .subscribe(result => {
         expect(result).toBeTruthy();
         done();

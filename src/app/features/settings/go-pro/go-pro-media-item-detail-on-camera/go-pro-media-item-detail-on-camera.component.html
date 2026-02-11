@@ -36,8 +36,12 @@
     </ion-button>
   </div>
 
-  <ion-slides #slides pager *ngIf="showTutorialForMobileDataOnlyApps">
-    <ion-slide>
+  <swiper-container
+    #swiper
+    [pagination]="true"
+    *ngIf="showTutorialForMobileDataOnlyApps"
+  >
+    <swiper-slide>
       <ng-container>
         <svg
           version="1.1"
@@ -58,11 +62,11 @@
           ></image>
         </svg>
       </ng-container>
-      <button (click)="slides.slideNext()" mat-stroked-button>
+      <button (click)="slideNext()" mat-stroked-button>
         {{ t('next') }}
       </button>
-    </ion-slide>
-    <ion-slide>
+    </swiper-slide>
+    <swiper-slide>
       <ng-container>
         <svg
           version="1.1"
@@ -83,11 +87,11 @@
           ></image>
         </svg>
       </ng-container>
-      <button (click)="slides.slideNext()" mat-stroked-button>
+      <button (click)="slideNext()" mat-stroked-button>
         {{ t('next') }}
       </button>
-    </ion-slide>
-    <ion-slide>
+    </swiper-slide>
+    <swiper-slide>
       <ng-container>
         <svg
           version="1.1"
@@ -108,11 +112,11 @@
           ></image>
         </svg>
       </ng-container>
-      <button (click)="slides.slideNext()" mat-stroked-button>
+      <button (click)="slideNext()" mat-stroked-button>
         {{ t('next') }}
       </button>
-    </ion-slide>
-    <ion-slide>
+    </swiper-slide>
+    <swiper-slide>
       <ng-container>
         <svg
           version="1.1"
@@ -133,11 +137,11 @@
           ></image>
         </svg>
       </ng-container>
-      <button (click)="slides.slideNext()" mat-stroked-button>
+      <button (click)="slideNext()" mat-stroked-button>
         {{ t('next') }}
       </button>
-    </ion-slide>
-    <ion-slide>
+    </swiper-slide>
+    <swiper-slide>
       <ng-container>
         <svg
           version="1.1"
@@ -158,11 +162,11 @@
           ></image>
         </svg>
       </ng-container>
-      <button (click)="slides.slideNext()" mat-stroked-button>
+      <button (click)="slideNext()" mat-stroked-button>
         {{ t('next') }}
       </button>
-    </ion-slide>
-    <ion-slide>
+    </swiper-slide>
+    <swiper-slide>
       <ng-container>
         <svg
           version="1.1"
@@ -183,12 +187,12 @@
           ></image>
         </svg>
       </ng-container>
-      <button (click)="slides.slideNext()" mat-stroked-button>
+      <button (click)="slideNext()" mat-stroked-button>
         {{ t('next') }}
       </button>
-    </ion-slide>
+    </swiper-slide>
 
-    <ion-slide>
+    <swiper-slide>
       <ion-item lines="none">
         <ion-checkbox
           [checked]="dontShowAgainTutorialForMobileDataOnlyApps"
@@ -200,6 +204,6 @@
       <button (click)="hideTutorialForMobileDataOnlyApps()" mat-stroked-button>
         {{ t('next') }}
       </button>
-    </ion-slide>
-  </ion-slides>
+    </swiper-slide>
+  </swiper-container>
 </ion-content>

@@ -4,8 +4,8 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { IonicModule } from '@ionic/angular';
-import { TranslocoModule } from '@ngneat/transloco';
-import { ReactiveComponentModule } from '@ngrx/component';
+import { TranslocoModule } from '@jsverse/transloco';
+import { LetDirective, PushPipe } from '@ngrx/component';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
 import { GoProBluetoothService } from '../features/settings/go-pro/services/go-pro-bluetooth.service';
@@ -16,6 +16,7 @@ import { CapacitorPluginsModule } from './capacitor-plugins/capacitor-plugins.mo
 import { CaptureBackButtonComponent } from './capture-back-button/capture-back-button.component';
 import { ContactSelectionDialogComponent } from './contact-selection-dialog/contact-selection-dialog.component';
 import { FriendInvitationDialogComponent } from './contact-selection-dialog/friend-invitation-dialog/friend-invitation-dialog.component';
+import { LongPressDirective } from './directives/long-press.directive';
 import { ExportPrivateKeyModalComponent } from './export-private-key-modal/export-private-key-modal.component';
 import { IframeService } from './iframe/iframe.service';
 import { MaterialModule } from './material/material.module';
@@ -43,6 +44,7 @@ const declarations = [
   CaptureBackButtonComponent,
   OnboardingPopUpDialogComponent,
   SocialLoginButtonComponent,
+  LongPressDirective,
 ];
 
 const imports = [
@@ -54,7 +56,8 @@ const imports = [
   TranslocoModule,
   MaterialModule,
   CapacitorPluginsModule,
-  ReactiveComponentModule,
+  LetDirective,
+  PushPipe,
   MatDialogModule,
   FormlyModule,
   FormlyMaterialModule,

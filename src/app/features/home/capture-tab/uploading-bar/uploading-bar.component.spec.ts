@@ -6,18 +6,16 @@ describe('UploadingBarComponent', () => {
   let component: UploadingBarComponent;
   let fixture: ComponentFixture<UploadingBarComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [UploadingBarComponent],
-        imports: [SharedTestingModule],
-      }).compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [UploadingBarComponent],
+      imports: [SharedTestingModule],
+    }).compileComponents();
 
-      fixture = TestBed.createComponent(UploadingBarComponent);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-    })
-  );
+    fixture = TestBed.createComponent(UploadingBarComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();

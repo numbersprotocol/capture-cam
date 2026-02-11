@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CameraSource } from '@capacitor/camera';
-import { defer, forkJoin, iif } from 'rxjs';
+import { defer, firstValueFrom, forkJoin, iif } from 'rxjs';
 import {
   catchError,
   concatMap,
@@ -84,12 +84,13 @@ export class MigrationService {
     if (skip) {
       return;
     }
-    if (!(await this.networkService.connected$.pipe(first()).toPromise())) {
+    if (!(await firstValueFrom(this.networkService.connected$))) {
       throw new Error('No network connection, aborting migration.');
     }
     const dialogRef = this.dialog.open(MigratingDialogComponent, {
       disableClose: true,
       data: { progress: 0 },
+      panelClass: 'migrating-dialog',
     });
 
     try {
@@ -139,6 +140,7 @@ export class MigrationService {
       const dialogRef = this.dialog.open(MigratingDialogComponent, {
         disableClose: true,
         data: { progress: 0 },
+        panelClass: 'migrating-dialog',
       });
 
       try {
@@ -197,7 +199,7 @@ export class MigrationService {
             this.diaBackendAssetRepository.updateCaptureSignature$(proof)
           )
         ).pipe(
-          defaultIfEmpty(),
+          defaultIfEmpty(undefined),
           concatMap(() =>
             this.proofRepository.update(
               proofs,
@@ -212,7 +214,7 @@ export class MigrationService {
   async updatePreviousVersion() {
     return this.preferences.setString(
       PrefKeys.PREVIOUS_VERSION,
-      await this.versionService.version$.pipe(first()).toPromise()
+      await firstValueFrom(this.versionService.version$)
     );
   }
 
@@ -245,9 +247,12 @@ export class MigrationService {
     const limit = 100;
     const ret: DiaBackendAsset[] = [];
     while (true) {
-      const { results: diaBackendAssets } = await this.diaBackendAssetRepository
-        .fetchOriginallyOwned$({ offset: currentOffset, limit })
-        .toPromise();
+      const { results: diaBackendAssets } = await firstValueFrom(
+        this.diaBackendAssetRepository.fetchOriginallyOwned$({
+          offset: currentOffset,
+          limit,
+        })
+      );
       if (diaBackendAssets.length === 0) {
         break;
       }
@@ -274,9 +279,9 @@ export class MigrationService {
   }
 
   private async fetchAllPostCaptures() {
-    return this.diaBackendAssetRepository.postCaptures$
-      .pipe(first(), pluck('results'))
-      .toPromise();
+    return firstValueFrom(
+      this.diaBackendAssetRepository.postCaptures$.pipe(pluck('results'))
+    );
   }
 }
 

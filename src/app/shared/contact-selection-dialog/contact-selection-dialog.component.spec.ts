@@ -7,22 +7,20 @@ describe('ContactSelectionDialogComponent', () => {
   let component: ContactSelectionDialogComponent;
   let fixture: ComponentFixture<ContactSelectionDialogComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [ContactSelectionDialogComponent],
-        imports: [SharedTestingModule],
-        providers: [
-          { provide: MatDialogRef, useValue: {} },
-          { provide: MAT_DIALOG_DATA, useValue: {} },
-        ],
-      }).compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [ContactSelectionDialogComponent],
+      imports: [SharedTestingModule],
+      providers: [
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+      ],
+    }).compileComponents();
 
-      fixture = TestBed.createComponent(ContactSelectionDialogComponent);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-    })
-  );
+    fixture = TestBed.createComponent(ContactSelectionDialogComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();

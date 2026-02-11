@@ -15,7 +15,7 @@ The app enables users to capture media with provenance tracking, connect to bloc
 - **Internationalization**: Transloco
 - **Testing**: Karma/Jasmine (unit tests)
 - **Build System**: Angular CLI with Ionic CLI
-- **Package Manager**: NPM with `--legacy-peer-deps` flag required
+- **Package Manager**: NPM
 
 ## Project Structure
 
@@ -42,9 +42,9 @@ The app enables users to capture media with provenance tracking, connect to bloc
 ### Setup and Development
 
 ```bash
-npm install --legacy-peer-deps  # Required for dependency compatibility
+npm install                     # Install dependencies
 npm run serve                   # Start development server
-npm run serve.prod             # Start dev server with production config
+npm run serve.prod              # Start dev server with production config
 ```
 
 ### Building
@@ -130,7 +130,6 @@ npx cap open ios              # Open in Xcode
 
 ## Common Issues
 
-- Always use `npm install --legacy-peer-deps` for dependency installation
 - Environment-specific configurations may cause local limitations
 - Performance considerations due to raw file system usage for proofs
 - Platform-specific setup required for Android Studio path on Linux

@@ -7,18 +7,16 @@ describe('MediaRebrandedComponent', () => {
   let component: MediaRebrandedComponent;
   let fixture: ComponentFixture<MediaRebrandedComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [MediaRebrandedComponent],
-        imports: [SharedTestingModule],
-      }).compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [MediaRebrandedComponent],
+      imports: [SharedTestingModule],
+    }).compileComponents();
 
-      fixture = TestBed.createComponent(MediaRebrandedComponent);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-    })
-  );
+    fixture = TestBed.createComponent(MediaRebrandedComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();

@@ -7,19 +7,20 @@
   ></mat-spinner>
   <mat-action-list>
     <mat-list-item
+      class="contact-list-item"
       *ngFor="let contact of contacts$ | ngrxPush"
       [mat-dialog-close]="contact.contact_email"
     >
       <img
         decoding="async"
         loading="lazy"
-        matListAvatar
+        matListItemAvatar
         [attr.src]="
           contact.contact_profile_picture_thumbnail ||
           '/assets/images/avatar-placeholder.png'
         "
       />
-      <div mat-line>
+      <div matListItemLine>
         {{
           contact.contact_profile_display_name ||
             contact.contact_name ||
@@ -27,9 +28,12 @@
         }}
       </div>
     </mat-list-item>
-    <mat-list-item (click)="openFriendInvitationDialog()">
-      <mat-icon mat-list-icon>share</mat-icon>
-      <div mat-line>{{ t('inviteFriend') }}</div>
+    <mat-list-item
+      class="contact-list-item"
+      (click)="openFriendInvitationDialog()"
+    >
+      <mat-icon matListItemIcon>share</mat-icon>
+      <div matListItemLine>{{ t('inviteFriend') }}</div>
     </mat-list-item>
   </mat-action-list>
 </div>

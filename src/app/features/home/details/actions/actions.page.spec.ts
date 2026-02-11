@@ -6,18 +6,16 @@ describe('ActionsPage', () => {
   let component: ActionsPage;
   let fixture: ComponentFixture<ActionsPage>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [ActionsPage],
-        imports: [SharedTestingModule],
-      }).compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [ActionsPage],
+      imports: [SharedTestingModule],
+    }).compileComponents();
 
-      fixture = TestBed.createComponent(ActionsPage);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-    })
-  );
+    fixture = TestBed.createComponent(ActionsPage);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();

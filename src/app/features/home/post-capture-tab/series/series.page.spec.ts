@@ -6,18 +6,16 @@ describe('SeriesPage', () => {
   let component: SeriesPage;
   let fixture: ComponentFixture<SeriesPage>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [SeriesPage],
-        imports: [SharedTestingModule],
-      }).compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [SeriesPage],
+      imports: [SharedTestingModule],
+    }).compileComponents();
 
-      fixture = TestBed.createComponent(SeriesPage);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-    })
-  );
+    fixture = TestBed.createComponent(SeriesPage);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();

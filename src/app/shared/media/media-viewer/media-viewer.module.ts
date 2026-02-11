@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { PinchZoomModule } from 'ngx-pinch-zoom';
+import { PinchZoomModule } from '@meddv/ngx-pinch-zoom';
 import { SharedModule } from '../../shared.module';
 import { MediaViewerPageRoutingModule } from './media-viewer-routing.module';
 import { MediaViewerPage } from './media-viewer.page';

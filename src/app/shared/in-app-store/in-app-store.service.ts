@@ -1,9 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 import { Platform, ToastController } from '@ionic/angular';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import 'cordova-plugin-purchase';
-import { BehaviorSubject, combineLatest } from 'rxjs';
+import { BehaviorSubject, combineLatest, firstValueFrom } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
   generateMockInAppProducts,
@@ -71,7 +71,9 @@ export class InAppStoreService implements OnDestroy {
       const errorMessage = this.translocoService.translate(
         'inAppPurchase.failedToInitInAppStore'
       );
-      this.errorService.toastError$(errorMessage).toPromise();
+      firstValueFrom(this.errorService.toastError$(errorMessage), {
+        defaultValue: undefined,
+      });
     }
   }
 
@@ -81,9 +83,9 @@ export class InAppStoreService implements OnDestroy {
 
   async refreshNumPointsPricing() {
     try {
-      const result = await this.diaBackendNumService
-        .numPointsPriceList$()
-        .toPromise();
+      const result = await firstValueFrom(
+        this.diaBackendNumService.numPointsPriceList$()
+      );
       const priceListFromRestApi = result.response.price_list;
 
       const numPointPricesById: NumPointPricesById = {};
@@ -125,9 +127,9 @@ export class InAppStoreService implements OnDestroy {
         this.numPointPricesById$.value
       );
 
-      await this.diaBackendNumService
-        .purchaseNumPoints$(pointsToAdd, storeReceipt)
-        .toPromise();
+      await firstValueFrom(
+        this.diaBackendNumService.purchaseNumPoints$(pointsToAdd, storeReceipt)
+      );
 
       receipt.finish();
       this.isProcessingOrder$.next(false);
@@ -156,13 +158,14 @@ export class InAppStoreService implements OnDestroy {
         receipt.finish();
         this.isProcessingOrder$.next(false);
       } else {
-        this.errorService
-          .toastError$(
+        firstValueFrom(
+          this.errorService.toastError$(
             this.translocoService.translate(
               'wallets.buyCredits.failedToAddCredits'
             )
-          )
-          .toPromise();
+          ),
+          { defaultValue: undefined }
+        );
       }
     }
   }
@@ -247,7 +250,9 @@ export class InAppStoreService implements OnDestroy {
     const errorMessage = this.translocoService.translate(
       'inAppPurchase.inAppPurchaseErrorOcurred'
     );
-    this.errorService.toastError$(errorMessage).toPromise();
+    firstValueFrom(this.errorService.toastError$(errorMessage), {
+      defaultValue: undefined,
+    });
     // TODO: report to remote error service
   };
 

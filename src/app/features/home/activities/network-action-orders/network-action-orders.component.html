@@ -11,21 +11,29 @@
       "
     >
       <mat-list-item
+        class="order-list-item"
         [routerLink]="['network-action-order-details', { order_id: order.id }]"
       >
         <img
           decoding="async"
           loading="lazy"
-          matListAvatar
+          matListItemAvatar
           [src]="
             (order.assetThumbnailUrl$ | ngrxPush) ||
             '/assets/images/image-placeholder.png'
           "
         />
-        <div mat-line>{{ order.network_app_name }}</div>
-        <div mat-line>{{ order.action_args.nid || order.action_args.cid }}</div>
-        <div mat-line>{{ order.created_at | date: 'short' }}</div>
-        <button [class]="order.status" mat-stroked-button disableRipple>
+        <div matListItemLine>{{ order.network_app_name }}</div>
+        <div matListItemLine>
+          {{ order.action_args.nid || order.action_args.cid }}
+        </div>
+        <div matListItemLine>{{ order.created_at | date : 'short' }}</div>
+        <button
+          [class]="order.status"
+          mat-stroked-button
+          disableRipple
+          matListItemMeta
+        >
           {{ t('networkActionOrderState.' + order.status) }}
         </button>
       </mat-list-item>

@@ -4,18 +4,11 @@ import { UntypedFormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, Platform } from '@ionic/angular';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { combineLatest, defer } from 'rxjs';
-import {
-  catchError,
-  concatMap,
-  concatMapTo,
-  map,
-  tap,
-  timeout,
-} from 'rxjs/operators';
+import { catchError, concatMap, map, tap, timeout } from 'rxjs/operators';
 import { BlockingActionService } from '../../shared/blocking-action/blocking-action.service';
 import { DiaBackendAuthService } from '../../shared/dia-backend/auth/dia-backend-auth.service';
 import { ErrorService } from '../../shared/error/error.service';
@@ -68,7 +61,7 @@ export class LoginPage {
             {
               key: 'email',
               type: 'input',
-              templateOptions: {
+              props: {
                 type: 'email',
                 placeholder: emailTranslation,
                 required: true,
@@ -87,7 +80,7 @@ export class LoginPage {
             {
               key: 'password',
               type: 'input',
-              templateOptions: {
+              props: {
                 type: 'password',
                 placeholder: passwordTranslation,
                 required: true,
@@ -137,7 +130,7 @@ export class LoginPage {
         message: this.translocoService.translate('message.pleaseWait'),
       })
       .pipe(
-        concatMapTo(
+        concatMap(() =>
           defer(() => this.router.navigate(['home'], { replaceUrl: true }))
         ),
         untilDestroyed(this)
@@ -209,7 +202,7 @@ export class LoginPage {
     const action$ = defer(() =>
       this.diaBackendAuthService.resetPassword$(email)
     ).pipe(
-      concatMapTo(
+      concatMap(() =>
         defer(() =>
           this.alertController.create({
             header: this.translocoService.translate('resetPassword'),

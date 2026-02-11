@@ -2,9 +2,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastController } from '@ionic/angular';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { EMPTY, TimeoutError } from 'rxjs';
-import { concatMap, concatMapTo, first, map } from 'rxjs/operators';
+import { concatMap, first, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -60,7 +60,7 @@ export class ErrorService {
                 })
             )
         ),
-        concatMapTo(EMPTY)
+        concatMap(() => EMPTY)
       );
   }
 

@@ -3,7 +3,7 @@ import {
   LocalNotifications,
   LocalNotificationsPlugin,
 } from '@capacitor/local-notifications';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { LOCAL_NOTIFICATIONS_PLUGIN } from '../capacitor-plugins/capacitor-plugins.module';
 import { SharedTestingModule } from '../shared-testing.module';
 import { NotificationItem } from './notification-item';

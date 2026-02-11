@@ -4,9 +4,9 @@
 </mat-toolbar>
 <div *transloco="let t" class="page-content">
   <h4 class="datetime">
-    {{ (transaction$ | ngrxPush)?.created_at | date: 'short' }}
+    {{ (transaction$ | ngrxPush)?.created_at | date : 'short' }}
   </h4>
-  <mat-card class="transaction-card">
+  <mat-card appearance="outlined" class="transaction-card">
     <mat-card-content class="row wrap-text">
       <mat-label>
         {{ t('digitalAsset') }} ID:

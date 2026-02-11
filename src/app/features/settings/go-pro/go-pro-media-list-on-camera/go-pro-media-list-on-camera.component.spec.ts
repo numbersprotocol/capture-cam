@@ -6,18 +6,16 @@ describe('GoProMediaListOnCameraComponent', () => {
   let component: GoProMediaListOnCameraComponent;
   let fixture: ComponentFixture<GoProMediaListOnCameraComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [GoProMediaListOnCameraComponent],
-        imports: [SharedTestingModule],
-      }).compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [GoProMediaListOnCameraComponent],
+      imports: [SharedTestingModule],
+    }).compileComponents();
 
-      fixture = TestBed.createComponent(GoProMediaListOnCameraComponent);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-    })
-  );
+    fixture = TestBed.createComponent(GoProMediaListOnCameraComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();

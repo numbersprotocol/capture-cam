@@ -383,7 +383,6 @@
   "invitation": {
     "invitation": "Invitation",
     "inviteFriends": "Invite friends",
-    "inviteFriendsBenefit": "Get 3 credits for each accepted invitation",
     "shareInvitationCode": "Share invitation code",
     "shareToGetRewarded": "Share to get rewarded",
     "useMyReferralCodeToSignUpForCaptureCamPassVerificationAndWeBothGetNumCreditsReward": "Use my referral code {{referralCode}} to sign up for Capture Cam, pass verification and we both get NUM Credits reward!"

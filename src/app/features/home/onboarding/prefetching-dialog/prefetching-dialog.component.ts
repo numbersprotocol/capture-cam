@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AlertController } from '@ionic/angular';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { DiaBackendAssetPrefetchingService } from '../../../../shared/dia-backend/asset/prefetching/dia-backend-asset-prefetching.service';
 import { MigrationService } from '../../../../shared/migration/service/migration.service';

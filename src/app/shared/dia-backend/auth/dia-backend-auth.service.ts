@@ -13,7 +13,6 @@ import {
 } from 'rxjs';
 import {
   concatMap,
-  concatMapTo,
   distinctUntilChanged,
   filter,
   map,
@@ -126,7 +125,7 @@ export class DiaBackendAuthService {
       })
       .pipe(
         concatMap(response => this.setToken(response.auth_token)),
-        concatMapTo(this.syncUser$()),
+        concatMap(() => this.syncUser$()),
         map(([username, _email]) => ({ username, email: _email }))
       );
   }

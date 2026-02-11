@@ -2,7 +2,7 @@ import { Component, HostListener, Input } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ReplaySubject, combineLatest, iif, of } from 'rxjs';
+import { EMPTY, ReplaySubject, combineLatest, iif, of } from 'rxjs';
 import {
   catchError,
   concatMap,
@@ -104,7 +104,8 @@ export class CaptureItemComponent {
                   { relativeTo: this.route }
                 )
               )
-            )
+            ),
+            EMPTY
           )
         ),
         untilDestroyed(this)

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, UntypedFormGroup } from '@angular/forms';
 import { NavController } from '@ionic/angular';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { combineLatest } from 'rxjs';
@@ -67,7 +67,7 @@ export class EditProfilePage {
             {
               key: 'profileName',
               type: 'input',
-              templateOptions: {
+              props: {
                 label: profileNameTranslation,
                 placeholder: profileNameTranslation,
                 appearance: 'outline',
@@ -86,7 +86,7 @@ export class EditProfilePage {
             {
               key: 'description',
               type: 'textarea',
-              templateOptions: {
+              props: {
                 label: descriptionTranslation,
                 placeholder: descriptionTranslation,
                 appearance: 'outline',

@@ -8,7 +8,7 @@ import {
 import { Mutex } from 'async-mutex';
 import write_blob from 'capacitor-blob-writer';
 import Compressor from 'compressorjs';
-import { defer, merge } from 'rxjs';
+import { defer, firstValueFrom, merge } from 'rxjs';
 import { concatMap, map } from 'rxjs/operators';
 import { sha256WithBase64 } from '../../../utils/crypto/crypto';
 import { base64ToBlob, blobToBase64 } from '../../../utils/encoding/encoding';
@@ -67,9 +67,9 @@ export class MediaStore {
     const extension = await this.getExtension(index);
     if (!extension) throw new Error(`Cannot get extension of ${index}.`);
     const url = await this.getUrl(index, fromExtension(extension));
-    const blob = await this.httpClient
-      .get(url, { responseType: 'blob' })
-      .toPromise();
+    const blob = await firstValueFrom(
+      this.httpClient.get(url, { responseType: 'blob' })
+    );
     return blobToBase64(blob);
   }
 

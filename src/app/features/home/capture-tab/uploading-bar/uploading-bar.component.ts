@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { combineLatest } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { DiaBackendAssetUploadingService } from '../../../../shared/dia-backend/asset/uploading/dia-backend-asset-uploading.service';

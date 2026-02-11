@@ -1,24 +1,22 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { SharedModule } from '../../../shared/shared.module';
+import { SharedTestingModule } from '../../../shared/shared-testing.module';
 import { EditProfilePage } from './edit-profile.page';
 
 describe('EditProfilePage', () => {
   let component: EditProfilePage;
   let fixture: ComponentFixture<EditProfilePage>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [EditProfilePage],
-        imports: [SharedModule],
-      }).compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [EditProfilePage],
+      imports: [SharedTestingModule],
+    }).compileComponents();
 
-      fixture = TestBed.createComponent(EditProfilePage);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-    })
-  );
+    fixture = TestBed.createComponent(EditProfilePage);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();

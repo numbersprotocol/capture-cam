@@ -27,7 +27,7 @@ Setup steps needed:
 
 **Important Note**: Some commands require environment-specific configurations and commercial package licenses that may not be available locally:
 
-3. Install dependencies: npm install --legacy-peer-deps
+3. Install dependencies: npm install
    *Note: Requires commercial package authentication for some dependencies*
 4. Start development server: npm run serve
    *Note: Limited functionality without full environment setup*
@@ -63,7 +63,7 @@ cd capture-lite
 Install the dependencies:
 
 ```bash
-npm install --legacy-peer-deps
+npm install
 # Note: Requires commercial package authentication
 ```
 

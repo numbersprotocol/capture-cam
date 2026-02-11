@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { SharedModule } from '../shared.module';
+import { SharedTestingModule } from '../shared-testing.module';
 
 import { InAppStoreService } from './in-app-store.service';
 
@@ -8,7 +8,7 @@ describe('InAppStoreService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SharedModule],
+      imports: [SharedTestingModule],
     });
     service = TestBed.inject(InAppStoreService);
   });

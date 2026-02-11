@@ -7,19 +7,17 @@ describe('PrefetchingDialogComponent', () => {
   let component: PrefetchingDialogComponent;
   let fixture: ComponentFixture<PrefetchingDialogComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [PrefetchingDialogComponent],
-        imports: [SharedTestingModule],
-        providers: [{ provide: MatDialogRef, useValue: {} }],
-      }).compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [PrefetchingDialogComponent],
+      imports: [SharedTestingModule],
+      providers: [{ provide: MatDialogRef, useValue: {} }],
+    }).compileComponents();
 
-      fixture = TestBed.createComponent(PrefetchingDialogComponent);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-    })
-  );
+    fixture = TestBed.createComponent(PrefetchingDialogComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();

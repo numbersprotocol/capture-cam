@@ -11,19 +11,19 @@
       <ion-item>
         <ion-label>{{ t('payment.price') }}</ion-label>
         <ion-label class="no-right-margin" slot="end">
-          {{ orderStatus.price | number: '1.4-4' }} NUM
+          {{ orderStatus.price | number : '1.4-4' }} NUM
         </ion-label>
       </ion-item>
       <ion-item>
         <ion-label>{{ t('payment.estimatedFee') }}</ion-label>
         <ion-label class="no-right-margin" slot="end">
-          {{ orderStatus.fee | number: '1.4-4' }} NUM
+          {{ orderStatus.fee | number : '1.4-4' }} NUM
         </ion-label>
       </ion-item>
       <ion-item>
         <ion-label>{{ t('payment.totalCost') }}</ion-label>
         <ion-label class="no-right-margin" slot="end">
-          {{ orderStatus.total_cost | number: '1.4-4' }} NUM
+          {{ orderStatus.total_cost | number : '1.4-4' }} NUM
         </ion-label>
       </ion-item>
     </ion-list>

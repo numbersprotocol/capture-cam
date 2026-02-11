@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { App, AppInfo } from '@capacitor/app';
 import { Device } from '@capacitor/device';
 import { isPlatform } from '@ionic/core';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
+import { firstValueFrom } from 'rxjs';
 import { ErrorService } from '../../../error/error.service';
 import { BaseError } from '../../../error/errors';
 import {
@@ -126,25 +127,28 @@ export class CapacitorFactsProvider implements FactsProvider {
       })
       .catch((err: unknown) => {
         if (err instanceof GeolocationPermissionDeniedError)
-          this.errorService
-            .toastError$(
+          firstValueFrom(
+            this.errorService.toastError$(
               this.translocoService.translate(
                 'error.geolocation.permissionDeniedError'
               )
-            )
-            .toPromise();
+            ),
+            { defaultValue: undefined }
+          );
         if (err instanceof GeolocationTimeoutError)
-          this.errorService
-            .toastError$(
+          firstValueFrom(
+            this.errorService.toastError$(
               this.translocoService.translate('error.geolocation.timeoutError')
-            )
-            .toPromise();
+            ),
+            { defaultValue: undefined }
+          );
         if (err instanceof GeolocationUnknownError)
-          this.errorService
-            .toastError$(
+          firstValueFrom(
+            this.errorService.toastError$(
               this.translocoService.translate('error.geolocation.unknownError')
-            )
-            .toPromise();
+            ),
+            { defaultValue: undefined }
+          );
         return undefined;
       });
   }

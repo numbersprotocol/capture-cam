@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
 import { DiaBackendAuthService } from '../../shared/dia-backend/auth/dia-backend-auth.service';
 import { ShareService } from '../../shared/share/share.service';
 
@@ -21,7 +22,8 @@ export class InvitationPage implements OnInit {
 
   async refetchReferralCode() {
     const referralCode = await this.diaBackendAuthService.getReferralCode();
-    if (!referralCode) await this.diaBackendAuthService.syncUser$().toPromise();
+    if (!referralCode)
+      await firstValueFrom(this.diaBackendAuthService.syncUser$());
   }
 
   async shareReferralCode() {

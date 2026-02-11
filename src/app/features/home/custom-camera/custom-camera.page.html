@@ -106,8 +106,6 @@
 
           <circle-progress
             (click)="onPress()"
-            ngxLongPress2
-            [maxTime]="maxRecordTimeInMilliseconds"
             [percent]="(curRecordTimeInPercent$ | ngrxPush) ?? 0"
             [outerStrokeColor]="
               (curRecordTimeInPercent$ | ngrxPush) === 0

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import { Filesystem } from '@capacitor/filesystem';
 import { defer } from 'rxjs';
-import { concatMapTo } from 'rxjs/operators';
+import { concatMap } from 'rxjs/operators';
 import { OnConflictStrategy, Table, Tuple } from '../table';
 import { CapacitorFilesystemTable } from './capacitor-filesystem-table';
 
@@ -34,7 +34,7 @@ describe('CapacitorFilesystemTable', () => {
       await table.insert([TUPLE1]);
       await table.insert([TUPLE2]);
     })
-      .pipe(concatMapTo(table.queryAll$))
+      .pipe(concatMap(() => table.queryAll$))
       .subscribe(tuples => {
         expect(tuples).toEqual([TUPLE1, TUPLE2]);
         done();
@@ -134,7 +134,7 @@ describe('CapacitorFilesystemTable', () => {
       await table.insert([TUPLE1]);
       await table.delete([sameTuple]);
     })
-      .pipe(concatMapTo(table.queryAll$))
+      .pipe(concatMap(() => table.queryAll$))
       .subscribe(tuples => {
         expect(tuples).toEqual([]);
         done();
@@ -148,7 +148,7 @@ describe('CapacitorFilesystemTable', () => {
       await table.insert([TUPLE1, TUPLE2]);
       await table.delete([sameTuple1]);
     })
-      .pipe(concatMapTo(table.queryAll$))
+      .pipe(concatMap(() => table.queryAll$))
       .subscribe(tuples => {
         expect(tuples).toEqual([TUPLE2]);
         done();
@@ -162,7 +162,7 @@ describe('CapacitorFilesystemTable', () => {
       await table.insert([TUPLE1, TUPLE2]);
       await table.delete([sameIdTuple1], (x, y) => x.id === y.id);
     })
-      .pipe(concatMapTo(table.queryAll$))
+      .pipe(concatMap(() => table.queryAll$))
       .subscribe(tuples => {
         expect(tuples).toEqual([TUPLE2]);
         done();
@@ -192,7 +192,7 @@ describe('CapacitorFilesystemTable', () => {
     );
 
     defer(() => Promise.all(expectedTuples.map(tuple => table.insert([tuple]))))
-      .pipe(concatMapTo(table.queryAll$))
+      .pipe(concatMap(() => table.queryAll$))
       .subscribe(tuples => {
         expect(tuples).toEqual(expectedTuples);
         done();
@@ -215,7 +215,7 @@ describe('CapacitorFilesystemTable', () => {
       await table.insert(sourceTuple);
       await Promise.all(sourceTuple.map(tuple => table.delete([tuple])));
     })
-      .pipe(concatMapTo(table.queryAll$))
+      .pipe(concatMap(() => table.queryAll$))
       .subscribe(tuples => {
         expect(tuples).toEqual([]);
         done();
@@ -294,7 +294,7 @@ describe('CapacitorFilesystemTable', () => {
       await table.insert(sourceTuple);
       await table.update(expectedTuple, (x, y) => x.id === y.id);
     })
-      .pipe(concatMapTo(table.queryAll$))
+      .pipe(concatMap(() => table.queryAll$))
       .subscribe(tuples => {
         expect(tuples).toEqual(expectedTuple);
         done();

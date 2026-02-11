@@ -8,11 +8,11 @@
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
-    "module": "es2020",
+    "module": "ES2022",
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2020",
-    "lib": ["es2019", "dom"],
+    "target": "ES2022",
+    "lib": ["ES2022", "dom"],
     "strict": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
@@ -24,7 +24,8 @@
       "os": ["node_modules/os-browserify"],
       "stream": ["node_modules/stream-browserify"],
       "process": ["node_modules/process"]
-    }
+    },
+    "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

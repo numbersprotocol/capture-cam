@@ -6,43 +6,46 @@
 <div class="page-content">
   <mat-list *transloco="let t">
     <div mat-subheader>{{ t('digitalAsset') }}</div>
-    <mat-list-item>
-      <mat-icon mat-list-icon>access_time</mat-icon>
-      <div mat-line>{{ t('timestamp') }}</div>
-      <div mat-line>
-        {{ timestamp$ | ngrxPush | date: 'long' }}
+    <mat-list-item class="info-list-item">
+      <mat-icon matListItemIcon>access_time</mat-icon>
+      <div matListItemLine>{{ t('timestamp') }}</div>
+      <div matListItemLine>
+        {{ timestamp$ | ngrxPush | date : 'long' }}
       </div>
     </mat-list-item>
-    <mat-list-item>
-      <mat-icon mat-list-icon>code</mat-icon>
-      <div mat-line>{{ t('hash') }}</div>
-      <div mat-line>{{ oldProofHash$ | ngrxPush }}</div>
+    <mat-list-item class="info-list-item">
+      <mat-icon matListItemIcon>code</mat-icon>
+      <div matListItemLine>{{ t('hash') }}</div>
+      <div matListItemLine>{{ oldProofHash$ | ngrxPush }}</div>
     </mat-list-item>
-    <mat-list-item>
-      <mat-icon mat-list-icon>image</mat-icon>
-      <div mat-line>{{ t('mimeType') }}</div>
-      <div mat-line>{{ mimeType$ | ngrxPush }}</div>
+    <mat-list-item class="info-list-item">
+      <mat-icon matListItemIcon>image</mat-icon>
+      <div matListItemLine>{{ t('mimeType') }}</div>
+      <div matListItemLine>{{ mimeType$ | ngrxPush }}</div>
     </mat-list-item>
 
     <ng-container *ngrxLet="facts$ as facts">
       <div mat-subheader>{{ t('information') }}</div>
-      <mat-list-item *ngFor="let fact of facts | keyvalue">
-        <mat-icon mat-list-icon>information</mat-icon>
-        <div mat-line>{{ fact.key }}</div>
-        <div mat-line>{{ fact.value }}</div>
+      <mat-list-item
+        class="info-list-item"
+        *ngFor="let fact of facts | keyvalue"
+      >
+        <mat-icon matListItemIcon>information</mat-icon>
+        <div matListItemLine>{{ fact.key }}</div>
+        <div matListItemLine>{{ fact.value }}</div>
       </mat-list-item>
     </ng-container>
 
     <div mat-subheader>{{ t('signature') }}</div>
-    <mat-list-item>
-      <mat-icon mat-list-icon>policy</mat-icon>
-      <div mat-line>{{ t('signature') }}</div>
-      <div mat-line>{{ (signature$ | ngrxPush)?.signature }}</div>
+    <mat-list-item class="info-list-item">
+      <mat-icon matListItemIcon>policy</mat-icon>
+      <div matListItemLine>{{ t('signature') }}</div>
+      <div matListItemLine>{{ (signature$ | ngrxPush)?.signature }}</div>
     </mat-list-item>
-    <mat-list-item>
-      <mat-icon mat-list-icon>lock</mat-icon>
-      <div mat-line>{{ t('publicKey') }}</div>
-      <div mat-line>{{ (signature$ | ngrxPush)?.publicKey }}</div>
+    <mat-list-item class="info-list-item">
+      <mat-icon matListItemIcon>lock</mat-icon>
+      <div matListItemLine>{{ t('publicKey') }}</div>
+      <div matListItemLine>{{ (signature$ | ngrxPush)?.publicKey }}</div>
     </mat-list-item>
   </mat-list>
 </div>

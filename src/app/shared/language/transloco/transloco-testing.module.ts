@@ -1,4 +1,4 @@
-import { TranslocoConfig, TranslocoTestingModule } from '@ngneat/transloco';
+import { TranslocoConfig, TranslocoTestingModule } from '@jsverse/transloco';
 import enUs from '../../../../assets/i18n/en-us.json';
 import zhTw from '../../../../assets/i18n/zh-tw.json';
 import { defaultLanguage, languages } from './transloco-root.module';

@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { BehaviorSubject, EMPTY, Observable, combineLatest, defer } from 'rxjs';
-import { concatMap, first, map, pluck, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, combineLatest, defer, of } from 'rxjs';
+import { catchError, concatMap, first, map, pluck, tap } from 'rxjs/operators';
 import { CaptureAppWebCryptoApiSignatureProvider } from '../../collector/signature/capture-app-web-crypto-api-signature-provider/capture-app-web-crypto-api-signature-provider.service';
 import { DiaBackendAssetRepository } from '../../dia-backend/asset/dia-backend-asset-repository.service';
 import { BUBBLE_DB_URL } from '../../dia-backend/secret';
@@ -103,8 +103,12 @@ export class OrderHistoryService {
       if (order.result_tx_text)
         return this.diaBackendTransactionRepository
           .fetchById$(order.result_tx_text)
-          .pipe(pluck('asset'), pluck('asset_file_thumbnail'));
-      return EMPTY;
+          .pipe(
+            pluck('asset'),
+            pluck('asset_file_thumbnail'),
+            catchError(() => of(undefined))
+          );
+      return of(undefined);
     }
 
     const proof = proofs.find(
@@ -115,12 +119,14 @@ export class OrderHistoryService {
       ? proof.thumbnailUrl$.pipe(
           map(url => {
             if (url) return this.sanitizer.bypassSecurityTrustUrl(url);
-            return EMPTY;
-          })
+            return undefined;
+          }),
+          catchError(() => of(undefined))
         )
-      : this.diaBackendAssetRepository
-          .fetchById$(order.asset_id_text)
-          .pipe(pluck('asset_file_thumbnail'));
+      : this.diaBackendAssetRepository.fetchById$(order.asset_id_text).pipe(
+          pluck('asset_file_thumbnail'),
+          catchError(() => of(undefined))
+        );
   }
 }
 
@@ -150,7 +156,7 @@ export interface BubbleOrderHistoryRecord {
   _id: string;
   // `assetThumbnailUrl$` field is used only when displaying asset thumbnail at
   // /home/activities
-  assetThumbnailUrl$?: Observable<SafeUrl>;
+  assetThumbnailUrl$?: Observable<SafeUrl | undefined>;
 }
 
 export enum OrderStatus {

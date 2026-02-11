@@ -33,7 +33,6 @@ export class CaptureService {
     await this.proofRepository.add(proof);
 
     this._collectingOldProofHashes$.next(
-      // eslint-disable-next-line rxjs/no-subject-value
       this._collectingOldProofHashes$.value.add(getOldProof(proof).hash)
     );
     const collected = await this.collectorService.run(
@@ -41,7 +40,6 @@ export class CaptureService {
       proof.timestamp,
       media.source
     );
-    // eslint-disable-next-line rxjs/no-subject-value
     const newCollectingOldProofHashes = this._collectingOldProofHashes$.value;
     newCollectingOldProofHashes.delete(getOldProof(proof).hash);
     this._collectingOldProofHashes$.next(newCollectingOldProofHashes);

@@ -85,8 +85,8 @@
         class="go-pro-item"
       >
         <app-go-pro-media-list-item-on-camera
-          ngxLongPress2
-          (onLongPress)="enterMultiSelectMode(mediaFile)"
+          appLongPress
+          (appLongPress)="enterMultiSelectMode(mediaFile)"
           (click)="onItemClick(mediaFile)"
           [mediaFile]="mediaFile"
           [selected]="isItemInSelectedList(mediaFile)"

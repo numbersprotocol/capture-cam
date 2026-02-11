@@ -2,25 +2,23 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { CachedQueryJWTToken } from '../../../../shared/dia-backend/auth/dia-backend-auth.service';
 import { BUBBLE_IFRAME_URL } from '../../../../shared/dia-backend/secret';
-import { SharedModule } from '../../../../shared/shared.module';
+import { SharedTestingModule } from '../../../../shared/shared-testing.module';
 import { CaptureDetailsWithIframeComponent } from './capture-details-with-iframe.component';
 
 describe('CaptureDetailsWithIframeComponent', () => {
   let component: CaptureDetailsWithIframeComponent;
   let fixture: ComponentFixture<CaptureDetailsWithIframeComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [CaptureDetailsWithIframeComponent],
-        imports: [SharedModule],
-      }).compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [CaptureDetailsWithIframeComponent],
+      imports: [SharedTestingModule],
+    }).compileComponents();
 
-      fixture = TestBed.createComponent(CaptureDetailsWithIframeComponent);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-    })
-  );
+    fixture = TestBed.createComponent(CaptureDetailsWithIframeComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();

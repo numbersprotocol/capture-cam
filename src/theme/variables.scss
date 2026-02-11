@@ -6,6 +6,14 @@
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
+// The following line adds:
+//   1. Default typography styles for all components
+//   2. Styles for typography hierarchy classes (e.g. .mat-headline-1)
+// If you specify typography styles for the components you use elsewhere, you should delete this line.
+// If you don't need the default component typographies but still want the hierarchy styles,
+// you can delete this line and instead use:
+//   `@include mat.typography-hierarchy(mat.define-typography-config());`
+@include mat.all-component-typographies();
 @include mat.core();
 
 $capture-primary-light: (
@@ -77,16 +85,16 @@ $capture-primary-dark: (
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$app-primary-light: mat.define-palette($capture-primary-light, 400);
-$app-primary-dark: mat.define-palette($capture-primary-dark, 500);
-$app-accent: mat.define-palette(mat.$teal-palette, 200);
+$app-primary-light: mat.m2-define-palette($capture-primary-light, 400);
+$app-primary-dark: mat.m2-define-palette($capture-primary-dark, 500);
+$app-accent: mat.m2-define-palette(mat.$m2-teal-palette, 200);
 
 // The warn palette is optional (defaults to red).
-$app-warn: mat.define-palette(mat.$red-palette);
+$app-warn: mat.m2-define-palette(mat.$m2-red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$app-theme: mat.define-light-theme(
+$app-theme: mat.m2-define-light-theme(
   (
     color: (
       primary: $app-primary-light,
@@ -96,7 +104,7 @@ $app-theme: mat.define-light-theme(
   )
 );
 
-$dark-theme: mat.define-dark-theme(
+$dark-theme: mat.m2-define-dark-theme(
   (
     color: (
       primary: $app-primary-dark,
@@ -116,7 +124,7 @@ $dark-theme: mat.define-dark-theme(
 
 /** Ionic CSS Variables **/
 :root {
-  /** primary **/
+  /** primary - custom brand color **/
   --ion-color-primary: #0000d8;
   --ion-color-primary-rgb: 0, 0, 216;
   --ion-color-primary-contrast: black;
@@ -124,69 +132,13 @@ $dark-theme: mat.define-dark-theme(
   --ion-color-primary-shade: #0000d8;
   --ion-color-primary-tint: #0000d8;
 
-  /** secondary **/
+  /** secondary - custom brand color **/
   --ion-color-secondary: #6ee4d2;
   --ion-color-secondary-rgb: 110, 228, 210;
   --ion-color-secondary-contrast: black;
   --ion-color-secondary-contrast-rgb: 0, 0, 0;
   --ion-color-secondary-shade: #61c9b9;
   --ion-color-secondary-tint: #7de7d7;
-
-  /** tertiary **/
-  --ion-color-tertiary: #5260ff;
-  --ion-color-tertiary-rgb: 82, 96, 255;
-  --ion-color-tertiary-contrast: white;
-  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
-  --ion-color-tertiary-shade: #4854e0;
-  --ion-color-tertiary-tint: #6370ff;
-
-  /** success **/
-  --ion-color-success: #2dd36f;
-  --ion-color-success-rgb: 45, 211, 111;
-  --ion-color-success-contrast: white;
-  --ion-color-success-contrast-rgb: 255, 255, 255;
-  --ion-color-success-shade: #28ba62;
-  --ion-color-success-tint: #42d77d;
-
-  /** warning **/
-  --ion-color-warning: #ffc409;
-  --ion-color-warning-rgb: 255, 196, 9;
-  --ion-color-warning-contrast: black;
-  --ion-color-warning-contrast-rgb: 0, 0, 0;
-  --ion-color-warning-shade: #e0ac08;
-  --ion-color-warning-tint: #ffca22;
-
-  /** danger **/
-  --ion-color-danger: #eb445a;
-  --ion-color-danger-rgb: 235, 68, 90;
-  --ion-color-danger-contrast: white;
-  --ion-color-danger-contrast-rgb: 255, 255, 255;
-  --ion-color-danger-shade: #cf3c4f;
-  --ion-color-danger-tint: #ed576b;
-
-  /** dark **/
-  --ion-color-dark: #222428;
-  --ion-color-dark-rgb: 34, 36, 40;
-  --ion-color-dark-contrast: white;
-  --ion-color-dark-contrast-rgb: 255, 255, 255;
-  --ion-color-dark-shade: #1e2023;
-  --ion-color-dark-tint: #383a3e;
-
-  /** medium **/
-  --ion-color-medium: #92949c;
-  --ion-color-medium-rgb: 146, 148, 156;
-  --ion-color-medium-contrast: white;
-  --ion-color-medium-contrast-rgb: 255, 255, 255;
-  --ion-color-medium-shade: #808289;
-  --ion-color-medium-tint: #9d9fa6;
-
-  /** light **/
-  --ion-color-light: #f4f5f8;
-  --ion-color-light-rgb: 244, 245, 248;
-  --ion-color-light-contrast: black;
-  --ion-color-light-contrast-rgb: 0, 0, 0;
-  --ion-color-light-shade: #d7d8da;
-  --ion-color-light-tint: #f5f6f9;
 
   // loading animation
   --loading-background-start: var(--ion-color-light-shade);
@@ -204,11 +156,17 @@ $dark-theme: mat.define-dark-theme(
   --noir-numbers-dark: #4d4d4d;
 }
 
-body.dark {
+:root.dark {
   @include mat.all-component-colors($dark-theme);
 
   --capture-color-dark-background: black;
   --capture-color-dark-contrast: #444;
+
+  // Material Form Field customization for dark mode
+  --mdc-filled-text-field-container-color: rgba(255, 255, 255, 0.05);
+  --mdc-filled-text-field-label-text-color: rgba(255, 255, 255, 0.6);
+  --mdc-filled-text-field-input-text-color: white;
+  --mdc-filled-text-field-caret-color: white;
 
   /** primary **/
   --ion-color-primary: #486cd9;
@@ -283,64 +241,102 @@ body.dark {
   --ion-color-light-tint: #383a3e;
 
   // loading animation
-  --loading-background-start: var(--ion-color-step-150);
-  --loading-background-end: var(--ion-color-step-100);
+  --loading-background-start: var(--ion-background-color-step-150);
+  --loading-background-end: var(--ion-background-color-step-100);
 }
 
-.ios body.dark {
+:root.ios.dark {
   --ion-background-color: black;
   --ion-background-color-rgb: 0, 0, 0;
   --ion-text-color: white;
   --ion-text-color-rgb: 255, 255, 255;
-  --ion-color-step-50: #0d0d0d;
-  --ion-color-step-100: #1a1a1a;
-  --ion-color-step-150: #262626;
-  --ion-color-step-200: #333;
-  --ion-color-step-250: #404040;
-  --ion-color-step-300: #4d4d4d;
-  --ion-color-step-350: #595959;
-  --ion-color-step-400: #666;
-  --ion-color-step-450: #737373;
-  --ion-color-step-500: gray;
-  --ion-color-step-550: #8c8c8c;
-  --ion-color-step-600: #999;
-  --ion-color-step-650: #a6a6a6;
-  --ion-color-step-700: #b3b3b3;
-  --ion-color-step-750: #bfbfbf;
-  --ion-color-step-800: #ccc;
-  --ion-color-step-850: #d9d9d9;
-  --ion-color-step-900: #e6e6e6;
-  --ion-color-step-950: #f2f2f2;
+  --ion-background-color-step-50: #0d0d0d;
+  --ion-background-color-step-100: #1a1a1a;
+  --ion-background-color-step-150: #262626;
+  --ion-background-color-step-200: #333;
+  --ion-background-color-step-250: #404040;
+  --ion-background-color-step-300: #4d4d4d;
+  --ion-background-color-step-350: #595959;
+  --ion-background-color-step-400: #666;
+  --ion-background-color-step-450: #737373;
+  --ion-background-color-step-500: gray;
+  --ion-background-color-step-550: #8c8c8c;
+  --ion-background-color-step-600: #999;
+  --ion-background-color-step-650: #a6a6a6;
+  --ion-background-color-step-700: #b3b3b3;
+  --ion-background-color-step-750: #bfbfbf;
+  --ion-background-color-step-800: #ccc;
+  --ion-background-color-step-850: #d9d9d9;
+  --ion-background-color-step-900: #e6e6e6;
+  --ion-background-color-step-950: #f2f2f2;
+  --ion-text-color-step-950: #0d0d0d;
+  --ion-text-color-step-900: #1a1a1a;
+  --ion-text-color-step-850: #262626;
+  --ion-text-color-step-800: #333;
+  --ion-text-color-step-750: #404040;
+  --ion-text-color-step-700: #4d4d4d;
+  --ion-text-color-step-650: #595959;
+  --ion-text-color-step-600: #666;
+  --ion-text-color-step-550: #737373;
+  --ion-text-color-step-500: gray;
+  --ion-text-color-step-450: #8c8c8c;
+  --ion-text-color-step-400: #999;
+  --ion-text-color-step-350: #a6a6a6;
+  --ion-text-color-step-300: #b3b3b3;
+  --ion-text-color-step-250: #bfbfbf;
+  --ion-text-color-step-200: #ccc;
+  --ion-text-color-step-150: #d9d9d9;
+  --ion-text-color-step-100: #e6e6e6;
+  --ion-text-color-step-50: #f2f2f2;
   --ion-toolbar-background: #0d0d0d;
   --ion-item-background: black;
   --ion-card-background: #1c1c1d;
 }
 
-.md body.dark {
+:root.md.dark {
   --ion-background-color: black;
   --ion-background-color-rgb: 18, 18, 18;
   --ion-text-color: white;
   --ion-text-color-rgb: 255, 255, 255;
   --ion-border-color: #222;
-  --ion-color-step-50: #1e1e1e;
-  --ion-color-step-100: #2a2a2a;
-  --ion-color-step-150: #363636;
-  --ion-color-step-200: #414141;
-  --ion-color-step-250: #4d4d4d;
-  --ion-color-step-300: #595959;
-  --ion-color-step-350: #656565;
-  --ion-color-step-400: #717171;
-  --ion-color-step-450: #7d7d7d;
-  --ion-color-step-500: #898989;
-  --ion-color-step-550: #949494;
-  --ion-color-step-600: #a0a0a0;
-  --ion-color-step-650: #acacac;
-  --ion-color-step-700: #b8b8b8;
-  --ion-color-step-750: #c4c4c4;
-  --ion-color-step-800: #d0d0d0;
-  --ion-color-step-850: #dbdbdb;
-  --ion-color-step-900: #e7e7e7;
-  --ion-color-step-950: #f3f3f3;
+  --ion-background-color-step-50: #1e1e1e;
+  --ion-background-color-step-100: #2a2a2a;
+  --ion-background-color-step-150: #363636;
+  --ion-background-color-step-200: #414141;
+  --ion-background-color-step-250: #4d4d4d;
+  --ion-background-color-step-300: #595959;
+  --ion-background-color-step-350: #656565;
+  --ion-background-color-step-400: #717171;
+  --ion-background-color-step-450: #7d7d7d;
+  --ion-background-color-step-500: #898989;
+  --ion-background-color-step-550: #949494;
+  --ion-background-color-step-600: #a0a0a0;
+  --ion-background-color-step-650: #acacac;
+  --ion-background-color-step-700: #b8b8b8;
+  --ion-background-color-step-750: #c4c4c4;
+  --ion-background-color-step-800: #d0d0d0;
+  --ion-background-color-step-850: #dbdbdb;
+  --ion-background-color-step-900: #e7e7e7;
+  --ion-background-color-step-950: #f3f3f3;
+  --ion-text-color-step-950: #1e1e1e;
+  --ion-text-color-step-900: #2a2a2a;
+  --ion-text-color-step-850: #363636;
+  --ion-text-color-step-800: #414141;
+  --ion-text-color-step-750: #4d4d4d;
+  --ion-text-color-step-700: #595959;
+  --ion-text-color-step-650: #656565;
+  --ion-text-color-step-600: #717171;
+  --ion-text-color-step-550: #7d7d7d;
+  --ion-text-color-step-500: #898989;
+  --ion-text-color-step-450: #949494;
+  --ion-text-color-step-400: #a0a0a0;
+  --ion-text-color-step-350: #acacac;
+  --ion-text-color-step-300: #b8b8b8;
+  --ion-text-color-step-250: #c4c4c4;
+  --ion-text-color-step-200: #d0d0d0;
+  --ion-text-color-step-150: #dbdbdb;
+  --ion-text-color-step-100: #e7e7e7;
+  --ion-text-color-step-50: #f3f3f3;
   --ion-toolbar-background: #1f1f1f;
   --ion-tab-bar-background: #1f1f1f;
   --ion-item-background: black;

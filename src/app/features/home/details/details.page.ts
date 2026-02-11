@@ -1,5 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectorRef, Component } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  ViewChild,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -8,7 +13,7 @@ import { Browser } from '@capacitor/browser';
 import { Clipboard } from '@capacitor/clipboard';
 import { ActionSheetController, AlertController } from '@ionic/angular';
 import { ActionSheetButton } from '@ionic/core';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
   EMPTY,
@@ -17,11 +22,11 @@ import {
   Subject,
   combineLatest,
   defer,
+  firstValueFrom,
 } from 'rxjs';
 import {
   catchError,
   concatMap,
-  concatMapTo,
   distinctUntilChanged,
   finalize,
   first,
@@ -31,7 +36,7 @@ import {
   takeUntil,
   tap,
 } from 'rxjs/operators';
-import SwiperCore, { Swiper, Virtual } from 'swiper';
+import { Swiper } from 'swiper';
 import { BlockingActionService } from '../../../shared/blocking-action/blocking-action.service';
 import { CaptureAppWebCryptoApiSignatureProvider } from '../../../shared/collector/signature/capture-app-web-crypto-api-signature-provider/capture-app-web-crypto-api-signature-provider.service';
 import { ConfirmAlert } from '../../../shared/confirm-alert/confirm-alert.service';
@@ -64,8 +69,6 @@ import {
   InformationSessionService,
 } from './information/session/information-session.service';
 
-SwiperCore.use([Virtual]);
-
 @UntilDestroy()
 @Component({
   selector: 'app-details',
@@ -75,6 +78,15 @@ SwiperCore.use([Virtual]);
 export class DetailsPage {
   captionOn = true;
   expanded = false;
+  activeSlideIndex = 0;
+  userToken: string | undefined;
+
+  private readonly _activeDetailedCapture$ = new ReplaySubject<DetailedCapture>(
+    1
+  );
+
+  private readonly shareMenuDismissed$ = new Subject<void>();
+
   private readonly type$ = this.route.paramMap.pipe(
     map(params => params.get('type')),
     isNonNullable()
@@ -158,10 +170,14 @@ export class DetailsPage {
   ]).pipe(
     first(),
     map(([initialId, initialHash, detailedCaptures]) => {
-      if (initialId) return detailedCaptures.findIndex(c => c.id === initialId);
-      if (initialHash)
-        return detailedCaptures.findIndex(c => c.hash === initialHash);
-      return 0;
+      let index = 0;
+      if (initialId) {
+        index = detailedCaptures.findIndex(c => c.id === initialId);
+      } else if (initialHash) {
+        index = detailedCaptures.findIndex(c => c.hash === initialHash);
+      }
+      // Return 0 if not found (instead of -1)
+      return index >= 0 ? index : 0;
     })
   );
 
@@ -183,14 +199,6 @@ export class DetailsPage {
     )
   );
 
-  private readonly swiper$ = new ReplaySubject<Swiper>(1);
-
-  private readonly _activeDetailedCapture$ = new ReplaySubject<DetailedCapture>(
-    1
-  );
-
-  private readonly shareMenuDismissed$ = new Subject<void>();
-
   readonly activeDetailedCapture$ = this._activeDetailedCapture$.pipe(
     distinctUntilChanged(),
     tap(
@@ -208,8 +216,6 @@ export class DetailsPage {
     map(type => type === 'post-capture')
   );
 
-  userToken: string | undefined;
-
   readonly isFromSeriesPage$ = this.type$.pipe(map(type => type === 'series'));
 
   readonly networkConnected$ = this.networkService.connected$;
@@ -225,6 +231,8 @@ export class DetailsPage {
   ]).pipe(
     map(([networkConnected, hasUploaded]) => networkConnected && hasUploaded)
   );
+
+  @ViewChild('swiper') swiperRef?: ElementRef;
 
   constructor(
     private readonly sanitizer: DomSanitizer,
@@ -254,6 +262,13 @@ export class DetailsPage {
   ) {
     this.initializeActiveDetailedCapture$
       .pipe(untilDestroyed(this))
+      .subscribe();
+
+    this.initialSlideIndex$
+      .pipe(
+        tap(index => (this.activeSlideIndex = index)),
+        untilDestroyed(this)
+      )
       .subscribe();
 
     this.diaBackendAuthService.token$
@@ -307,19 +322,20 @@ export class DetailsPage {
     return item.id;
   }
 
-  onSwiperCreated(swiper: Swiper) {
-    this.swiper$.next(swiper);
-  }
-
   onSlidesChanged() {
-    return combineLatest([this.swiper$, this.detailedCaptures$])
+    const swiper = this.swiperRef?.nativeElement?.swiper as Swiper | undefined;
+    if (!swiper) return;
+
+    const activeIndex = swiper.activeIndex;
+    this.activeSlideIndex = activeIndex;
+    this.detailedCaptures$
       .pipe(
         first(),
-        tap(([swiper, detailedCaptures]) =>
-          this._activeDetailedCapture$.next(
-            detailedCaptures[swiper.activeIndex]
-          )
-        ),
+        tap(detailedCaptures => {
+          if (activeIndex >= 0 && activeIndex < detailedCaptures.length) {
+            this._activeDetailedCapture$.next(detailedCaptures[activeIndex]);
+          }
+        }),
         untilDestroyed(this)
       )
       .subscribe();
@@ -330,6 +346,7 @@ export class DetailsPage {
       minWidth: '90%',
       autoFocus: false,
       data: { email: '' },
+      panelClass: 'contact-selection-dialog',
     });
     const contact$ = dialogRef.afterClosed().pipe(isNonNullable());
 
@@ -646,14 +663,14 @@ export class DetailsPage {
   }
 
   private async handleOpenProofAction(id: string) {
-    await defer(() =>
-      Browser.open({
-        url: getAssetProfileForNSE(id),
-        toolbarColor: browserToolbarColor,
-      })
-    )
-      .pipe(untilDestroyed(this), takeUntil(this.shareMenuDismissed$))
-      .toPromise();
+    await firstValueFrom(
+      defer(() =>
+        Browser.open({
+          url: getAssetProfileForNSE(id),
+          toolbarColor: browserToolbarColor,
+        })
+      ).pipe(untilDestroyed(this), takeUntil(this.shareMenuDismissed$))
+    );
   }
 
   private async handleUnpublishAction() {
@@ -762,7 +779,7 @@ export class DetailsPage {
         return VOID$;
       }),
       catchError((err: unknown) => this.errorService.toastError$(err)),
-      concatMapTo(defer(() => this.router.navigate(['..'])))
+      concatMap(() => defer(() => this.router.navigate(['..'])))
     );
 
     const confirmed = await this.confirmAlert.present();
@@ -828,7 +845,7 @@ export class DetailsPage {
         return VOID$;
       }),
       catchError((err: unknown) => this.errorService.toastError$(err)),
-      concatMapTo(defer(() => this.router.navigate(['..'])))
+      concatMap(() => defer(() => this.router.navigate(['..'])))
     );
     const result = await this.confirmAlert.present();
     if (result) {

@@ -7,18 +7,16 @@ describe('WalletsPage', () => {
   let component: WalletsPage;
   let fixture: ComponentFixture<WalletsPage>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [WalletsPage],
-        imports: [IonicModule.forRoot(), SharedTestingModule],
-      }).compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [WalletsPage],
+      imports: [IonicModule.forRoot(), SharedTestingModule],
+    }).compileComponents();
 
-      fixture = TestBed.createComponent(WalletsPage);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-    })
-  );
+    fixture = TestBed.createComponent(WalletsPage);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();

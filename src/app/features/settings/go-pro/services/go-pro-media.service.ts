@@ -7,6 +7,7 @@ import {
   FilesystemPlugin,
 } from '@capacitor/filesystem';
 import { isPlatform } from '@ionic/core';
+import { firstValueFrom } from 'rxjs';
 import {
   detectFileTypeFromUrl,
   extractFileNameFromGoProUrl,
@@ -57,9 +58,9 @@ export class GoProMediaService {
     let isCaptured = false;
 
     try {
-      const blob = await this.httpClient
-        .get(mediaFile.url, { responseType: 'blob' })
-        .toPromise();
+      const blob = await firstValueFrom(
+        this.httpClient.get(mediaFile.url, { responseType: 'blob' })
+      );
 
       const base64 = await blobToBase64(blob);
 
@@ -83,9 +84,9 @@ export class GoProMediaService {
 
   async getFilesFromGoPro(): Promise<GoProFile[]> {
     const url = this.goproBaseUrl + '/gopro/media/list';
-    const data = await this.httpClient
-      .get<{ media: { fs: string[] }[] }>(url)
-      .toPromise();
+    const data = await firstValueFrom(
+      this.httpClient.get<{ media: { fs: string[] }[] }>(url)
+    );
 
     const files = (data.media[0].fs as any[]).reverse();
     const fileNames: string[] = files.map(e => e.n);

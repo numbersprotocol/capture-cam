@@ -8,9 +8,10 @@ import {
 } from '@angular/core';
 import { Directory, FilesystemPlugin } from '@capacitor/filesystem';
 import { AlertController, Platform } from '@ionic/angular';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import {
   BehaviorSubject,
+  EMPTY,
   ReplaySubject,
   combineLatest,
   defer,
@@ -290,5 +291,6 @@ export class PrePublishModeComponent {
         tap(alertElement => alertElement.present())
       )
       .subscribe();
+    return EMPTY;
   }
 }

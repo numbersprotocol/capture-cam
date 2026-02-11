@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   AlertController,
   LoadingController,
@@ -24,9 +24,10 @@ export class GoProMediaItemDetailOnCameraComponent implements OnInit {
   showTutorialForMobileDataOnlyApps = false;
   dontShowAgainTutorialForMobileDataOnlyApps = false;
 
+  @ViewChild('swiper') swiperRef?: ElementRef;
+
   constructor(
     private readonly location: Location,
-    private readonly route: ActivatedRoute,
     private readonly router: Router,
     public toastController: ToastController,
     public alertController: AlertController,
@@ -34,12 +35,10 @@ export class GoProMediaItemDetailOnCameraComponent implements OnInit {
     public goProMediaService: GoProMediaService,
     public goProWiFiService: GoProWifiService
   ) {
-    this.route.queryParams.subscribe(_ => {
-      const state = this.router.getCurrentNavigation()?.extras.state;
-      if (state) {
-        this.mediaFile = state.goProMediaFile;
-      }
-    });
+    const state = history.state;
+    if (state) {
+      this.mediaFile = state.goProMediaFile;
+    }
   }
 
   ngOnInit() {
@@ -127,5 +126,9 @@ export class GoProMediaItemDetailOnCameraComponent implements OnInit {
 
   goBack() {
     this.location.back();
+  }
+
+  slideNext() {
+    this.swiperRef?.nativeElement?.swiper?.slideNext();
   }
 }

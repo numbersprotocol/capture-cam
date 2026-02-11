@@ -4,14 +4,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Browser } from '@capacitor/browser';
 import { ActionSheetButton, ActionSheetController } from '@ionic/angular';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { groupBy } from 'lodash-es';
-import { BehaviorSubject, combineLatest, defer, iif } from 'rxjs';
+import { BehaviorSubject, combineLatest, defer, EMPTY, iif } from 'rxjs';
 import {
   catchError,
   concatMap,
-  concatMapTo,
   map,
   startWith,
   switchMap,
@@ -245,9 +244,9 @@ export class CaptureTabComponent implements OnInit {
 
   logout() {
     const action$ = defer(() => this.mediaStore.clear()).pipe(
-      concatMapTo(defer(() => this.database.clear())),
-      concatMapTo(defer(() => this.preferenceManager.clear())),
-      concatMapTo(defer(reloadApp)),
+      concatMap(() => defer(() => this.database.clear())),
+      concatMap(() => defer(() => this.preferenceManager.clear())),
+      concatMap(() => defer(reloadApp)),
       catchError((err: unknown) => this.errorService.toastError$(err))
     );
     defer(() =>
@@ -257,7 +256,7 @@ export class CaptureTabComponent implements OnInit {
     )
       .pipe(
         concatMap(result =>
-          iif(() => result, this.blockingActionService.run$(action$))
+          iif(() => result, this.blockingActionService.run$(action$), EMPTY)
         ),
         untilDestroyed(this)
       )
@@ -295,6 +294,7 @@ export class CaptureTabComponent implements OnInit {
 
       return this.dialog.open(PrefetchingDialogComponent, {
         disableClose: true,
+        panelClass: 'prefetching-dialog',
       });
     }
   }

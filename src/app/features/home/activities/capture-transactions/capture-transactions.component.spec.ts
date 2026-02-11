@@ -7,18 +7,16 @@ describe('CaptureTransactionsComponent', () => {
   let component: CaptureTransactionsComponent;
   let fixture: ComponentFixture<CaptureTransactionsComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [CaptureTransactionsComponent],
-        imports: [IonicModule.forRoot(), SharedTestingModule],
-      }).compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [CaptureTransactionsComponent],
+      imports: [IonicModule.forRoot(), SharedTestingModule],
+    }).compileComponents();
 
-      fixture = TestBed.createComponent(CaptureTransactionsComponent);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-    })
-  );
+    fixture = TestBed.createComponent(CaptureTransactionsComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();

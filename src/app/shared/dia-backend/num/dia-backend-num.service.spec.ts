@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { SharedModule } from '../../shared.module';
+import { SharedTestingModule } from '../../shared-testing.module';
 
 import { DiaBackendNumService } from './dia-backend-num.service';
 
@@ -7,7 +7,7 @@ describe('DiaBackendNumService', () => {
   let service: DiaBackendNumService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({ imports: [SharedModule] });
+    TestBed.configureTestingModule({ imports: [SharedTestingModule] });
     service = TestBed.inject(DiaBackendNumService);
   });
 

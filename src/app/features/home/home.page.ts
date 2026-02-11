@@ -9,13 +9,12 @@ import {
   NavController,
   Platform,
 } from '@ionic/angular';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { EMPTY, combineLatest, defer, iif, of } from 'rxjs';
+import { EMPTY, combineLatest, defer, firstValueFrom, iif, of } from 'rxjs';
 import {
   catchError,
   concatMap,
-  concatMapTo,
   delay,
   distinctUntilChanged,
   filter,
@@ -163,29 +162,28 @@ export class HomePage {
     this.onboardingService.isNewLogin = false;
 
     if (!(await this.onboardingService.hasCreatedOrImportedIntegrityWallet())) {
-      this.migrationService
-        .createOrImportDiaBackendIntegrityWallet$()
-        .toPromise()
-        .then(() =>
-          this.onboardingService.setHasCreatedOrImportedIntegrityWallet(true)
-        );
+      firstValueFrom(
+        this.migrationService.createOrImportDiaBackendIntegrityWallet$()
+      ).then(() =>
+        this.onboardingService.setHasCreatedOrImportedIntegrityWallet(true)
+      );
     }
     if (!(await this.onboardingService.hasSyncAssetWalletBalance())) {
-      this.diaBackendWalletService
-        .syncAssetWalletBalance$()
-        .toPromise()
-        .then(() => this.onboardingService.setHasSyncAssetWalletBalance(true));
+      firstValueFrom(
+        this.diaBackendWalletService.syncAssetWalletBalance$()
+      ).then(() => this.onboardingService.setHasSyncAssetWalletBalance(true));
     }
 
     if (
       !(await this.onboardingService.hasPrefetchedDiaBackendAssets()) &&
-      (await this.diaBackendAssetRepository.fetchOriginallyOwnedCount$
-        .pipe(first())
-        .toPromise()) > 0
+      (await firstValueFrom(
+        this.diaBackendAssetRepository.fetchOriginallyOwnedCount$
+      )) > 0
     ) {
       if (await this.showPrefetchAlert()) {
         return this.dialog.open(PrefetchingDialogComponent, {
           disableClose: true,
+          panelClass: 'prefetching-dialog',
         });
       }
     }
@@ -232,7 +230,9 @@ export class HomePage {
   private async promptAppUpdateIfAny() {
     if (!this.platform.is('hybrid')) return;
 
-    const backendAppInfo = await this.diaBackendService.appInfo$().toPromise();
+    const backendAppInfo = await firstValueFrom(
+      this.diaBackendService.appInfo$()
+    );
     const appInfo = await App.getInfo();
 
     const current = appInfo.version;
@@ -241,7 +241,10 @@ export class HomePage {
     if (this.isEqualOrGreaterThanLatestVersion(current, latest)) return;
 
     if (backendAppInfo.update_urgency === 'critical') {
-      this.dialog.open(UpdateAppDialogComponent, { disableClose: true });
+      this.dialog.open(UpdateAppDialogComponent, {
+        disableClose: true,
+        panelClass: 'update-app-dialog',
+      });
     }
 
     if (
@@ -309,7 +312,8 @@ export class HomePage {
         concatMap(hasPrefetched =>
           iif(
             () => hasPrefetched,
-            this.diaBackendTransactionRepository.downloadExpired$
+            this.diaBackendTransactionRepository.downloadExpired$,
+            EMPTY
           )
         ),
         catchError((err: unknown) => this.errorService.toastError$(err)),
@@ -473,9 +477,9 @@ export class HomePage {
 
   logout() {
     const action$ = defer(() => this.mediaStore.clear()).pipe(
-      concatMapTo(defer(() => this.database.clear())),
-      concatMapTo(defer(() => this.preferenceManager.clear())),
-      concatMapTo(defer(reloadApp)),
+      concatMap(() => defer(() => this.database.clear())),
+      concatMap(() => defer(() => this.preferenceManager.clear())),
+      concatMap(() => defer(reloadApp)),
       catchError((err: unknown) => this.errorService.toastError$(err))
     );
     return defer(() =>
@@ -485,7 +489,7 @@ export class HomePage {
     )
       .pipe(
         concatMap(result =>
-          iif(() => result, this.blockingActionService.run$(action$))
+          iif(() => result, this.blockingActionService.run$(action$), EMPTY)
         ),
         untilDestroyed(this)
       )

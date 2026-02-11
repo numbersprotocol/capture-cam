@@ -77,4 +77,8 @@ export class MockAppPlugin implements AppPlugin {
   async openUrl(_: { url: string }): Promise<{ completed: boolean }> {
     return Promise.resolve({ completed: true });
   }
+
+  async toggleBackButtonHandler(_options: any): Promise<void> {
+    return Promise.resolve();
+  }
 }

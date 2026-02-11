@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { Preferences } from '@capacitor/preferences';
 import { defer, zip } from 'rxjs';
-import { concatMapTo, first } from 'rxjs/operators';
+import { concatMap, first } from 'rxjs/operators';
 import { PREFERENCES_PLUGIN } from '../../../capacitor-plugins/capacitor-plugins.module';
 import { SharedTestingModule } from '../../../shared-testing.module';
 import { CapacitorStoragePreferences } from './capacitor-storage-preferences';
@@ -77,7 +77,7 @@ describe('CapacitorStoragePreferences', () => {
     const value = true;
 
     defer(() => preferences.setBoolean(key, value))
-      .pipe(concatMapTo(preferences.getBoolean$(key)))
+      .pipe(concatMap(() => preferences.getBoolean$(key)))
       .subscribe(result => {
         expect(result).toEqual(value);
         done();
@@ -89,7 +89,7 @@ describe('CapacitorStoragePreferences', () => {
     const value = 99;
 
     defer(() => preferences.setNumber(key, value))
-      .pipe(concatMapTo(preferences.getNumber$(key)))
+      .pipe(concatMap(() => preferences.getNumber$(key)))
       .subscribe(result => {
         expect(result).toEqual(value);
         done();
@@ -101,7 +101,7 @@ describe('CapacitorStoragePreferences', () => {
     const value = 'value';
 
     defer(() => preferences.setString(key, value))
-      .pipe(concatMapTo(preferences.getString$(key)))
+      .pipe(concatMap(() => preferences.getString$(key)))
       .subscribe(result => {
         expect(result).toEqual(value);
         done();
@@ -147,7 +147,7 @@ describe('CapacitorStoragePreferences', () => {
     defer(() =>
       Promise.all(booleans.map(bool => preferences.setBoolean(key, bool)))
     )
-      .pipe(concatMapTo(preferences.getBoolean$(key)))
+      .pipe(concatMap(() => preferences.getBoolean$(key)))
       .subscribe(result => {
         expect(result).toEqual(lastBoolean);
         done();
@@ -161,7 +161,7 @@ describe('CapacitorStoragePreferences', () => {
     const numbers: number[] = [...Array(operationCount - 1).keys(), lastNumber];
 
     defer(() => Promise.all(numbers.map(n => preferences.setNumber(key, n))))
-      .pipe(concatMapTo(preferences.getNumber$(key)))
+      .pipe(concatMap(() => preferences.getNumber$(key)))
       .subscribe(result => {
         expect(result).toEqual(lastNumber);
         done();
@@ -180,7 +180,7 @@ describe('CapacitorStoragePreferences', () => {
     defer(() =>
       Promise.all(strings.map(str => preferences.setString(key, str)))
     )
-      .pipe(concatMapTo(preferences.getString$(key)))
+      .pipe(concatMap(() => preferences.getString$(key)))
       .subscribe(result => {
         expect(result).toEqual(lastString);
         done();
@@ -206,7 +206,7 @@ describe('CapacitorStoragePreferences', () => {
       await preferences.clear();
     })
       .pipe(
-        concatMapTo(
+        concatMap(() =>
           zip(
             preferences.getBoolean$(booleanKey, defaultBooleanValue),
             preferences.getNumber$(numberKey, defaultNumberValue),

@@ -7,18 +7,16 @@ describe('UserGuidePage', () => {
   let component: UserGuidePage;
   let fixture: ComponentFixture<UserGuidePage>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [UserGuidePage],
-        imports: [SharedTestingModule, JoyrideModule.forChild()],
-      }).compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [UserGuidePage],
+      imports: [SharedTestingModule, JoyrideModule.forChild()],
+    }).compileComponents();
 
-      fixture = TestBed.createComponent(UserGuidePage);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-    })
-  );
+    fixture = TestBed.createComponent(UserGuidePage);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();

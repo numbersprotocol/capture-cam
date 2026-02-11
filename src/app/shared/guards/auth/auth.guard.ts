@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
-  CanActivate,
   Router,
   RouterStateSnapshot,
   UrlTree,
@@ -11,7 +10,7 @@ import { DiaBackendAuthService } from '../../dia-backend/auth/dia-backend-auth.s
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate {
+export class AuthGuard {
   constructor(
     private readonly router: Router,
     private readonly diaBackendAuthService: DiaBackendAuthService

@@ -25,7 +25,8 @@
 </mat-toolbar>
 
 <div class="content" *ngrxLet="detailedCaptures$ as detailedCaptures">
-  <swiper
+  <swiper-container
+    #swiper
     *ngrxLet="initialSlideIndex$ as initialSlideIndex"
     [virtual]="true"
     [initialSlide]="initialSlideIndex"
@@ -33,15 +34,13 @@
     [observeSlideChildren]="true"
     [resizeObserver]="true"
     [observeParents]="true"
-    (swiper)="onSwiperCreated($event)"
-    (slideChange)="onSlidesChanged()"
     class="swiper"
+    (swiperslidechange)="onSlidesChanged()"
   >
-    <ng-template
-      swiperSlide
-      let-data
+    <swiper-slide
       *ngFor="
         let detailedCapture of detailedCaptures;
+        let i = index;
         trackBy: trackDetailedCapture
       "
     >
@@ -56,9 +55,9 @@
         <app-capture-details-with-iframe
           *ngIf="(showCaptureDetailsInIframe$ | ngrxPush) === true"
           [detailedCapture]="detailedCapture"
-          [slideIsActive]="data.isActive"
+          [slideIsActive]="activeSlideIndex === i"
         ></app-capture-details-with-iframe>
       </div>
-    </ng-template>
-  </swiper>
+    </swiper-slide>
+  </swiper-container>
 </div>

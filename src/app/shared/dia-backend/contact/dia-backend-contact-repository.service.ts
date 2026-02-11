@@ -7,7 +7,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, defer, iif, of, Subject, throwError } from 'rxjs';
 import {
   concatMap,
-  concatMapTo,
   distinctUntilChanged,
   first,
   pluck,
@@ -80,7 +79,7 @@ export class DiaBackendContactRepository {
     offset?: number;
   }) {
     return defer(async () => this._isFetching$.next(true)).pipe(
-      concatMapTo(defer(() => this.authService.getAuthHeaders())),
+      concatMap(() => defer(() => this.authService.getAuthHeaders())),
       concatMap(headers => {
         let params = new HttpParams();
 

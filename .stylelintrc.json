@@ -7,6 +7,12 @@
         "ignore": ["custom-elements"]
       }
     ],
+    "selector-pseudo-element-no-unknown": [
+      true,
+      {
+        "ignorePseudoElements": ["ng-deep"]
+      }
+    ],
     "no-empty-source": null,
     "declaration-no-important": true,
     "keyframe-declaration-no-important": true,
