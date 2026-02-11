@@ -200,18 +200,6 @@ export class DiaBackendAssetRepository {
     );
   }
 
-  downloadC2pa$(id: string) {
-    return defer(() => this.authService.getAuthHeaders()).pipe(
-      concatMap(headers =>
-        this.httpClient.post<DownloadC2paResponse>(
-          `${BASE_URL}/api/v3/assets/${id}/c2pa/`,
-          {},
-          { headers }
-        )
-      )
-    );
-  }
-
   downloadFile$({ id, field }: { id: string; field: AssetDownloadField }) {
     const formData = new FormData();
     formData.append('field', field);
@@ -347,7 +335,6 @@ export interface DiaBackendAsset extends Tuple {
   readonly creator_profile_display_name: string | null;
   readonly supporting_file: string | null;
   readonly source_type: 'original' | 'post_capture' | 'store';
-  readonly cai_file: string;
   readonly nft_chain_id: number | null;
   readonly nft_token_id: string | null;
   readonly nft_token_uri: string;
@@ -376,11 +363,6 @@ type UpdateAssetResponse = DiaBackendAsset;
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface DeleteAssetResponse {}
-
-interface DownloadC2paResponse {
-  url: string;
-  cid: string;
-}
 
 async function buildFormDataToCreateAsset(proof: Proof) {
   const formData = new FormData();
