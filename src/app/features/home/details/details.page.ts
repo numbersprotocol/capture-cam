@@ -28,7 +28,6 @@ import {
   catchError,
   concatMap,
   distinctUntilChanged,
-  finalize,
   first,
   map,
   pluck,
@@ -41,10 +40,7 @@ import { BlockingActionService } from '../../../shared/blocking-action/blocking-
 import { CaptureAppWebCryptoApiSignatureProvider } from '../../../shared/collector/signature/capture-app-web-crypto-api-signature-provider/capture-app-web-crypto-api-signature-provider.service';
 import { ConfirmAlert } from '../../../shared/confirm-alert/confirm-alert.service';
 import { ContactSelectionDialogComponent } from '../../../shared/contact-selection-dialog/contact-selection-dialog.component';
-import {
-  DiaBackendAsset,
-  DiaBackendAssetRepository,
-} from '../../../shared/dia-backend/asset/dia-backend-asset-repository.service';
+import { DiaBackendAssetRepository } from '../../../shared/dia-backend/asset/dia-backend-asset-repository.service';
 import { DiaBackendAuthService } from '../../../shared/dia-backend/auth/dia-backend-auth.service';
 import { BUBBLE_IFRAME_URL } from '../../../shared/dia-backend/secret';
 import { DiaBackendStoreService } from '../../../shared/dia-backend/store/dia-backend-store.service';
@@ -57,7 +53,6 @@ import { ProofRepository } from '../../../shared/repositories/proof/proof-reposi
 import { ShareService } from '../../../shared/share/share.service';
 import { UserGuideService } from '../../../shared/user-guide/user-guide.service';
 import { browserToolbarColor } from '../../../utils/constants';
-import { MimeType } from '../../../utils/mime-type';
 import {
   VOID$,
   isNonNullable,
