@@ -5,11 +5,7 @@
       {{ t('onboarding.skip') }}
     </button>
   </div>
-  <swiper-container
-    #swiper
-    [pagination]="!isLastSlide"
-    (swiperslidechange)="onSlideChange()"
-  >
+  <swiper-container #swiper [pagination]="!isLastSlide">
     <swiper-slide>
       <img src="/assets/images/onboarding/image-1.jpeg" class="slide-image" />
       <div class="slide-text">

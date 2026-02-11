@@ -38,6 +38,7 @@ export class ContactSelectionDialogComponent {
     const nestedDialogRef = this.dialog.open(FriendInvitationDialogComponent, {
       minWidth: '90%',
       data: { email: '' },
+      panelClass: 'friend-invitation-dialog',
     });
     nestedDialogRef
       .afterClosed()

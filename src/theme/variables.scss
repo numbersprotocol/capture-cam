@@ -162,6 +162,12 @@ $dark-theme: mat.m2-define-dark-theme(
   --capture-color-dark-background: black;
   --capture-color-dark-contrast: #444;
 
+  // Material Form Field customization for dark mode
+  --mdc-filled-text-field-container-color: rgba(255, 255, 255, 0.05);
+  --mdc-filled-text-field-label-text-color: rgba(255, 255, 255, 0.6);
+  --mdc-filled-text-field-input-text-color: white;
+  --mdc-filled-text-field-caret-color: white;
+
   /** primary **/
   --ion-color-primary: #486cd9;
   --ion-color-primary-rgb: 0, 201, 255;

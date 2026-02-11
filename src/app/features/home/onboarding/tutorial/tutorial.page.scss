@@ -40,8 +40,10 @@ ion-content {
     --swiper-pagination-color: #486cd9;
 
     swiper-slide {
+      display: flex;
       flex-direction: column;
       justify-content: space-around;
+      align-items: center;
       background-color: var(--noir-primary);
 
       .slide-image {

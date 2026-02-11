@@ -90,6 +90,7 @@ export class MigrationService {
     const dialogRef = this.dialog.open(MigratingDialogComponent, {
       disableClose: true,
       data: { progress: 0 },
+      panelClass: 'migrating-dialog',
     });
 
     try {
@@ -139,6 +140,7 @@ export class MigrationService {
       const dialogRef = this.dialog.open(MigratingDialogComponent, {
         disableClose: true,
         data: { progress: 0 },
+        panelClass: 'migrating-dialog',
       });
 
       try {

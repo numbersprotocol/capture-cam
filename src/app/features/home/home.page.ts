@@ -183,6 +183,7 @@ export class HomePage {
       if (await this.showPrefetchAlert()) {
         return this.dialog.open(PrefetchingDialogComponent, {
           disableClose: true,
+          panelClass: 'prefetching-dialog',
         });
       }
     }
@@ -240,7 +241,10 @@ export class HomePage {
     if (this.isEqualOrGreaterThanLatestVersion(current, latest)) return;
 
     if (backendAppInfo.update_urgency === 'critical') {
-      this.dialog.open(UpdateAppDialogComponent, { disableClose: true });
+      this.dialog.open(UpdateAppDialogComponent, {
+        disableClose: true,
+        panelClass: 'update-app-dialog',
+      });
     }
 
     if (

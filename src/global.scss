@@ -39,10 +39,10 @@
 }
 
 html {
-  --ion-safe-area-top: env(safe-area-inset-top);
-  --ion-safe-area-bottom: env(safe-area-inset-bottom);
-  --ion-safe-area-left: env(safe-area-inset-left);
-  --ion-safe-area-right: env(safe-area-inset-right);
+  --ion-safe-area-top: env(safe-area-inset-top, 0px);
+  --ion-safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --ion-safe-area-left: env(safe-area-inset-left, 0px);
+  --ion-safe-area-right: env(safe-area-inset-right, 0px);
 }
 
 body {
@@ -51,15 +51,14 @@ body {
 }
 
 .ios-bottom-safe-area {
-  padding-bottom: var(safe-area-inset-bottom);
-  padding-bottom: env(safe-area-inset-bottom);
+  padding-bottom: var(--ion-safe-area-bottom);
   background-color: var(--ion-color-primary);
 }
 
 ion-app {
   background-color: white;
-  margin-top: env(safe-area-inset-top);
-  margin-bottom: env(safe-area-inset-bottom);
+  margin-top: var(--ion-safe-area-top);
+  margin-bottom: var(--ion-safe-area-bottom);
 }
 
 .ion-page {
@@ -136,25 +135,70 @@ ion-button {
 }
 
 :root.dark .mat-mdc-dialog-container {
+  background-color: transparent;
+}
+
+// Material 18 (MDC) - Default fallback for dialogs without specific classes
+.mdc-dialog__surface {
+  background-color: white;
+  border-radius: 16px;
+}
+
+:root.dark .mdc-dialog__surface {
   background-color: var(--noir-primary);
 }
 
-:root.dark .num-transfer-dialog mat-dialog-container {
+// Material 18 (MDC) uses .mdc-dialog__surface instead of mat-dialog-container
+:root.dark .num-transfer-dialog .mdc-dialog__surface {
   background-color: white;
+  border-radius: 16px;
 }
 
-:root.dark .onboarding-pop-up-dialog mat-dialog-container {
+:root.dark .onboarding-pop-up-dialog .mdc-dialog__surface {
   background-color: white;
   border-radius: 16px;
   max-width: 364px;
   // max-height: 438px;
 }
 
-:root.dark .order-detail-dialog mat-dialog-container {
+:root.dark .order-detail-dialog .mdc-dialog__surface {
   background-color: #212121;
   border-radius: 8px;
   max-width: 420px;
   margin: auto;
+}
+
+.prefetching-dialog .mdc-dialog__surface {
+  min-width: 300px;
+  max-width: 90vw;
+  padding: 24px;
+  border-radius: 16px;
+}
+
+.migrating-dialog .mdc-dialog__surface {
+  min-width: 300px;
+  max-width: 90vw;
+  padding: 24px;
+  border-radius: 16px;
+}
+
+.update-app-dialog .mdc-dialog__surface {
+  min-width: 300px;
+  max-width: 90vw;
+  padding: 24px;
+  border-radius: 16px;
+}
+
+.contact-selection-dialog .mdc-dialog__surface {
+  min-width: 90%;
+  padding: 24px;
+  border-radius: 16px;
+}
+
+.friend-invitation-dialog .mdc-dialog__surface {
+  min-width: 90%;
+  padding: 24px;
+  border-radius: 16px;
 }
 
 :root.dark .mat-mdc-card {

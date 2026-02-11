@@ -16,6 +16,7 @@ import { CapacitorPluginsModule } from './capacitor-plugins/capacitor-plugins.mo
 import { CaptureBackButtonComponent } from './capture-back-button/capture-back-button.component';
 import { ContactSelectionDialogComponent } from './contact-selection-dialog/contact-selection-dialog.component';
 import { FriendInvitationDialogComponent } from './contact-selection-dialog/friend-invitation-dialog/friend-invitation-dialog.component';
+import { LongPressDirective } from './directives/long-press.directive';
 import { ExportPrivateKeyModalComponent } from './export-private-key-modal/export-private-key-modal.component';
 import { IframeService } from './iframe/iframe.service';
 import { MaterialModule } from './material/material.module';
@@ -27,7 +28,6 @@ import { OrderDetailDialogComponent } from './order-detail-dialog/order-detail-d
 import { SafeResourceUrlPipe } from './pipes/safe-resource-url/safe-resource-url.pipe';
 import { StartsWithPipe } from './pipes/starts-with/starts-with.pipe';
 import { SocialLoginButtonComponent } from './social-login-button/social-login-button.component';
-import { LongPressDirective } from './directives/long-press.directive';
 import { UserGuideService } from './user-guide/user-guide.service';
 
 const declarations = [

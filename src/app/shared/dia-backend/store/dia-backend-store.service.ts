@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EMPTY, Observable, defer, of } from 'rxjs';
+import { Observable, defer, of } from 'rxjs';
 import { catchError, concatMap, map } from 'rxjs/operators';
 import { DiaBackendAssetRepository } from '../asset/dia-backend-asset-repository.service';
 import { DiaBackendAuthService } from '../auth/dia-backend-auth.service';

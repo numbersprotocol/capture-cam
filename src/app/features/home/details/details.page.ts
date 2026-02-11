@@ -345,6 +345,7 @@ export class DetailsPage {
       minWidth: '90%',
       autoFocus: false,
       data: { email: '' },
+      panelClass: 'contact-selection-dialog',
     });
     const contact$ = dialogRef.afterClosed().pipe(isNonNullable());
 

@@ -1,14 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import {
-  BehaviorSubject,
-  EMPTY,
-  Observable,
-  combineLatest,
-  defer,
-  of,
-} from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, defer, of } from 'rxjs';
 import { catchError, concatMap, first, map, pluck, tap } from 'rxjs/operators';
 import { CaptureAppWebCryptoApiSignatureProvider } from '../../collector/signature/capture-app-web-crypto-api-signature-provider/capture-app-web-crypto-api-signature-provider.service';
 import { DiaBackendAssetRepository } from '../../dia-backend/asset/dia-backend-asset-repository.service';

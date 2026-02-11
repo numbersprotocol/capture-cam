@@ -1,10 +1,10 @@
 PODS:
   - Alamofire (5.10.2)
-  - AppAuth (1.7.6):
-    - AppAuth/Core (= 1.7.6)
-    - AppAuth/ExternalUserAgent (= 1.7.6)
-  - AppAuth/Core (1.7.6)
-  - AppAuth/ExternalUserAgent (1.7.6):
+  - AppAuth (2.0.0):
+    - AppAuth/Core (= 2.0.0)
+    - AppAuth/ExternalUserAgent (= 2.0.0)
+  - AppAuth/Core (2.0.0)
+  - AppAuth/ExternalUserAgent (2.0.0):
     - AppAuth/Core
   - AppCheckCore (11.2.0):
     - GoogleUtilities/Environment (~> 8.0)
@@ -16,87 +16,88 @@ PODS:
   - AppsFlyerFramework (6.17.8):
     - AppsFlyerFramework/Main (= 6.17.8)
   - AppsFlyerFramework/Main (6.17.8)
-  - Capacitor (7.4.3):
+  - Capacitor (7.4.5):
     - CapacitorCordova
-  - CapacitorApp (7.0.0):
+  - CapacitorApp (7.1.1):
     - Capacitor
   - CapacitorBlobWriter (0.0.1):
     - Capacitor
     - GCDWebServer (~> 3.0)
-  - CapacitorBrowser (7.0.0):
+  - CapacitorBrowser (7.0.3):
     - Capacitor
-  - CapacitorCamera (7.0.0):
+  - CapacitorCamera (7.0.3):
     - Capacitor
-  - CapacitorClipboard (7.0.0):
+  - CapacitorClipboard (7.0.3):
     - Capacitor
-  - CapacitorCommunityAdvertisingId (7.0.0):
+  - CapacitorCommunityAdvertisingId (7.1.0):
     - Capacitor
-  - CapacitorCommunityBluetoothLe (7.0.0):
+  - CapacitorCommunityBluetoothLe (7.3.2):
     - Capacitor
-  - CapacitorCordova (7.4.3)
-  - CapacitorDevice (7.0.0):
+  - CapacitorCordova (7.4.5)
+  - CapacitorDevice (7.0.3):
     - Capacitor
-  - CapacitorFilesystem (7.0.0):
+  - CapacitorFilesystem (7.1.6):
     - Capacitor
-  - CapacitorGeolocation (7.1.1):
+    - IONFilesystemLib (~> 1.0.1)
+  - CapacitorGeolocation (7.1.7):
     - Capacitor
-    - IONGeolocationLib (~> 1.0)
-  - CapacitorLocalNotifications (7.0.0):
+    - IONGeolocationLib (= 1.0.1)
+  - CapacitorLocalNotifications (7.0.4):
     - Capacitor
-  - CapacitorNativeSettings (7.0.1):
+  - CapacitorNativeSettings (7.0.2):
     - Capacitor
-  - CapacitorNetwork (7.0.0):
+  - CapacitorNetwork (7.0.3):
     - Capacitor
-  - CapacitorPreferences (7.0.0):
+  - CapacitorPreferences (7.0.3):
     - Capacitor
-  - CapacitorPushNotifications (7.0.0):
+  - CapacitorPushNotifications (7.0.4):
     - Capacitor
-  - CapacitorShare (7.0.0):
+  - CapacitorShare (7.0.3):
     - Capacitor
-  - CapacitorSplashScreen (7.0.0):
+  - CapacitorSplashScreen (7.0.4):
     - Capacitor
-  - CapgoCapacitorSocialLogin (7.2.3):
+  - CapgoCapacitorSocialLogin (7.20.0):
     - Alamofire (~> 5.10.2)
     - Capacitor
-    - FBSDKCoreKit (= 17.4.0)
-    - FBSDKLoginKit (= 17.4.0)
-    - GoogleSignIn (~> 8.0.0)
+    - FBSDKCoreKit (= 18.0.0)
+    - FBSDKLoginKit (= 18.0.0)
+    - GoogleSignIn (~> 9.0.0)
   - CordovaPlugins (7.4.5):
     - CapacitorCordova
-  - FalconetaCapacitorWifiConnect (7.0.0):
+  - FalconetaCapacitorWifiConnect (7.0.2):
     - Capacitor
-  - FBAEMKit (17.4.0):
-    - FBSDKCoreKit_Basics (= 17.4.0)
-  - FBSDKCoreKit (17.4.0):
-    - FBAEMKit (= 17.4.0)
-    - FBSDKCoreKit_Basics (= 17.4.0)
-  - FBSDKCoreKit_Basics (17.4.0)
-  - FBSDKLoginKit (17.4.0):
-    - FBSDKCoreKit (= 17.4.0)
-  - Firebase/CoreOnly (11.9.0):
-    - FirebaseCore (~> 11.9.0)
-  - Firebase/Messaging (11.9.0):
+  - FBAEMKit (18.0.0):
+    - FBSDKCoreKit_Basics (= 18.0.0)
+  - FBSDKCoreKit (18.0.0):
+    - FBAEMKit (= 18.0.0)
+    - FBSDKCoreKit_Basics (= 18.0.0)
+  - FBSDKCoreKit_Basics (18.0.0)
+  - FBSDKLoginKit (18.0.0):
+    - FBSDKCoreKit (= 18.0.0)
+  - Firebase/CoreOnly (12.9.0):
+    - FirebaseCore (~> 12.9.0)
+  - Firebase/Messaging (12.9.0):
     - Firebase/CoreOnly
-    - FirebaseMessaging (~> 11.9.0)
-  - FirebaseCore (11.9.0):
-    - FirebaseCoreInternal (~> 11.9.0)
-    - GoogleUtilities/Environment (~> 8.0)
-    - GoogleUtilities/Logger (~> 8.0)
-  - FirebaseCoreInternal (11.9.0):
-    - "GoogleUtilities/NSData+zlib (~> 8.0)"
-  - FirebaseInstallations (11.9.0):
-    - FirebaseCore (~> 11.9.0)
-    - GoogleUtilities/Environment (~> 8.0)
-    - GoogleUtilities/UserDefaults (~> 8.0)
+    - FirebaseMessaging (~> 12.9.0)
+  - FirebaseCore (12.9.0):
+    - FirebaseCoreInternal (~> 12.9.0)
+    - GoogleUtilities/Environment (~> 8.1)
+    - GoogleUtilities/Logger (~> 8.1)
+  - FirebaseCoreInternal (12.9.0):
+    - "GoogleUtilities/NSData+zlib (~> 8.1)"
+  - FirebaseInstallations (12.9.0):
+    - FirebaseCore (~> 12.9.0)
+    - GoogleUtilities/Environment (~> 8.1)
+    - GoogleUtilities/UserDefaults (~> 8.1)
     - PromisesObjC (~> 2.4)
-  - FirebaseMessaging (11.9.0):
-    - FirebaseCore (~> 11.9.0)
-    - FirebaseInstallations (~> 11.0)
-    - GoogleDataTransport (~> 10.0)
-    - GoogleUtilities/AppDelegateSwizzler (~> 8.0)
-    - GoogleUtilities/Environment (~> 8.0)
-    - GoogleUtilities/Reachability (~> 8.0)
-    - GoogleUtilities/UserDefaults (~> 8.0)
+  - FirebaseMessaging (12.9.0):
+    - FirebaseCore (~> 12.9.0)
+    - FirebaseInstallations (~> 12.9.0)
+    - GoogleDataTransport (~> 10.1)
+    - GoogleUtilities/AppDelegateSwizzler (~> 8.1)
+    - GoogleUtilities/Environment (~> 8.1)
+    - GoogleUtilities/Reachability (~> 8.1)
+    - GoogleUtilities/UserDefaults (~> 8.1)
     - nanopb (~> 3.30910.0)
   - GCDWebServer (3.5.4):
     - GCDWebServer/Core (= 3.5.4)
@@ -104,40 +105,41 @@ PODS:
   - GoogleDataTransport (10.1.0):
     - nanopb (~> 3.30910.0)
     - PromisesObjC (~> 2.4)
-  - GoogleSignIn (8.0.0):
-    - AppAuth (< 2.0, >= 1.7.3)
+  - GoogleSignIn (9.0.0):
+    - AppAuth (~> 2.0)
     - AppCheckCore (~> 11.0)
-    - GTMAppAuth (< 5.0, >= 4.1.1)
+    - GTMAppAuth (~> 5.0)
     - GTMSessionFetcher/Core (~> 3.3)
-  - GoogleUtilities/AppDelegateSwizzler (8.0.2):
+  - GoogleUtilities/AppDelegateSwizzler (8.1.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
     - GoogleUtilities/Privacy
-  - GoogleUtilities/Environment (8.0.2):
+  - GoogleUtilities/Environment (8.1.0):
     - GoogleUtilities/Privacy
-  - GoogleUtilities/Logger (8.0.2):
+  - GoogleUtilities/Logger (8.1.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Privacy
-  - GoogleUtilities/Network (8.0.2):
+  - GoogleUtilities/Network (8.1.0):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Privacy
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (8.0.2)":
+  - "GoogleUtilities/NSData+zlib (8.1.0)":
     - GoogleUtilities/Privacy
-  - GoogleUtilities/Privacy (8.0.2)
-  - GoogleUtilities/Reachability (8.0.2):
+  - GoogleUtilities/Privacy (8.1.0)
+  - GoogleUtilities/Reachability (8.1.0):
     - GoogleUtilities/Logger
     - GoogleUtilities/Privacy
-  - GoogleUtilities/UserDefaults (8.0.2):
+  - GoogleUtilities/UserDefaults (8.1.0):
     - GoogleUtilities/Logger
     - GoogleUtilities/Privacy
-  - GTMAppAuth (4.1.1):
-    - AppAuth/Core (~> 1.7)
+  - GTMAppAuth (5.0.0):
+    - AppAuth/Core (~> 2.0)
     - GTMSessionFetcher/Core (< 4.0, >= 3.3)
   - GTMSessionFetcher/Core (3.5.0)
-  - IONGeolocationLib (1.0.0)
+  - IONFilesystemLib (1.0.1)
+  - IONGeolocationLib (1.0.1)
   - nanopb (3.30910.0):
     - nanopb/decode (= 3.30910.0)
     - nanopb/encode (= 3.30910.0)
@@ -199,6 +201,7 @@ SPEC REPOS:
     - GoogleUtilities
     - GTMAppAuth
     - GTMSessionFetcher
+    - IONFilesystemLib
     - IONGeolocationLib
     - nanopb
     - PromisesObjC
@@ -257,53 +260,54 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: 7193b3b92c74a07f85569e1a6c4f4237291e7496
-  AppAuth: d4f13a8fe0baf391b2108511793e4b479691fb73
+  AppAuth: 1c1a8afa7e12f2ec3a294d9882dfa5ab7d3cb063
   AppCheckCore: cc8fd0a3a230ddd401f326489c99990b013f0c4f
   AppsflyerCapacitorPlugin: bb320adfb3fcde436a53e6e9132a03e2fbd60d91
   AppsFlyerFramework: 63577b60d6b9fcdab60135289979e7d1c9ec79b9
-  Capacitor: 28d6c01026a9a3f7156529498ec1f389a2a28dbc
-  CapacitorApp: 9cb31064a6c6bb2b1438583733a7bf45557fc1da
+  Capacitor: 12914e6f1b7835e161a74ebd19cb361efa37a7dd
+  CapacitorApp: 63b237168fc869e758481dba283315a85743ee78
   CapacitorBlobWriter: d709e5d22ab9989afd730eb4773873d1ded5fd08
-  CapacitorBrowser: 55c21db47416dcc8fc3b623e18fd7d09acb26081
-  CapacitorCamera: 20a37684b81c69c0c33fb5a7216919f135371a6f
-  CapacitorClipboard: 007d79cd6c104002b274546d13873526ca20beb7
-  CapacitorCommunityAdvertisingId: 112c7b79f2897c2d9e61803f8448409c49999b32
-  CapacitorCommunityBluetoothLe: f911fcbecc25033bca1cfcc5782c46c11ebf62ec
-  CapacitorCordova: 435121e81a2df4d0034f0fb11fcefab5104cfdb5
-  CapacitorDevice: 069faf433b3a99c3d5f0e500fbe634f60a8c6a84
-  CapacitorFilesystem: 59a2b7b56a897c6a3de4d04c5718e1d80de9d2f5
-  CapacitorGeolocation: c0755715aaadf5c86dc0053e1127b368444c914b
-  CapacitorLocalNotifications: c9577978cd598af5e2b5615548b8222b3b10d7e2
-  CapacitorNativeSettings: bef37b3c7e2184da7416a3f162c71de19fd27593
-  CapacitorNetwork: 30c2e78a0ed32530656cb426c8ee6c2caec10dbf
-  CapacitorPreferences: 8e4bef1f937fc991a19d7ea99330c36a62edd24b
-  CapacitorPushNotifications: 2e0132cd2f1a5d696bcbfc3725c2b6ffcb9275d4
-  CapacitorShare: d94c53d7656f1ce8f6712ae8d19ab0c18a69259f
-  CapacitorSplashScreen: 7e7a0a1113833032f196b3af6fa437baccacf5bc
-  CapgoCapacitorSocialLogin: 0fcf5cf6d447ec4992c3e9e4fcae70c19d12919b
+  CapacitorBrowser: b98aa3db018a2ce4c68242d27e596c344f3b81b3
+  CapacitorCamera: 6746827d82376f31cea9224945c0458c9fd0b0b2
+  CapacitorClipboard: 2a282bc14e8f47d430f2f9698ed95fbe25dcc21c
+  CapacitorCommunityAdvertisingId: 5b96abafb55438f6dacfd4b3e65fa731a4678380
+  CapacitorCommunityBluetoothLe: 9aa29c1555fbe797e6b595db824c2acd39a5bdf5
+  CapacitorCordova: 31bbe4466000c6b86d9b7f1181ee286cff0205aa
+  CapacitorDevice: b64654eb4d404373e733c01d835055ba59286e5c
+  CapacitorFilesystem: 66f05ee0d8b1ccdc00d509091273a9b3b57c4a0b
+  CapacitorGeolocation: bb6f441b53393984f1c4e8b7e4a826fe3e133309
+  CapacitorLocalNotifications: ba2a08bd92887b08f352e6b2db430575cef0cea3
+  CapacitorNativeSettings: 3cd2e2ef431fe471674f381609cfb29154ddfcfa
+  CapacitorNetwork: 1a22460c6f900686f12ffa52f3074ee313821b08
+  CapacitorPreferences: 913eef88272c13eb6445b21e51fe8ef6635412cc
+  CapacitorPushNotifications: 7604512af53bbfdf1dd8fb2256b9ef1e8a69cdc2
+  CapacitorShare: a4f4f86eabd4b3ff52ba6a11b754713c6926a8d1
+  CapacitorSplashScreen: 000f7591d546907dda5cbb514bd6b6d9e6048cf8
+  CapgoCapacitorSocialLogin: a6084e910ce61d78173fa215460c00523a6c4536
   CordovaPlugins: 4e4b10b11bd2b55de8912c6d5459f0904c0c2864
-  FalconetaCapacitorWifiConnect: c8c26550fe3fca67cf7aac174b09f0805aabf107
-  FBAEMKit: 58cb5f302cdd715a56d4c1d0dfdd2e423ac1421a
-  FBSDKCoreKit: 94d7461d0cecf441b1ba7c41acfff41daa8ccd41
-  FBSDKCoreKit_Basics: 151b43db8b834d3f0e02f95d36a44ffd36265e45
-  FBSDKLoginKit: 5c1cd53c91a2282b3a4fe6e6d3dcf2b8b0d33d55
-  Firebase: 819b973f669bc894c85e181f814171e9d4440b29
-  FirebaseCore: 7cfcf7e8b33985c06478fd2b96e2f7101eb61a1c
-  FirebaseCoreInternal: 154779013b85b4b290fdba38414df475f42e3096
-  FirebaseInstallations: c76d4931a485fc0cc2dc1d62d3ed0369846ea4b8
-  FirebaseMessaging: 07e196b68580e68104df5c1c1b09ac26d04b24ea
+  FalconetaCapacitorWifiConnect: c2ba6a5fa6b0935e2481d1ebcced46c9c484e9d9
+  FBAEMKit: e34530df538b8eb8aeb53c35867715ba6c63ef0c
+  FBSDKCoreKit: d3f479a69127acebb1c6aad91c1a33907bcf6c2f
+  FBSDKCoreKit_Basics: 017b6dc2a1862024815a8229e75661e627ac1e29
+  FBSDKLoginKit: 5875762d1fe09ddcb05d03365d4f5dc34413843d
+  Firebase: 065f2bb395062046623036d8e6dc857bc2521d56
+  FirebaseCore: 428912f751178b06bef0a1793effeb4a5e09a9b8
+  FirebaseCoreInternal: b321eafae5362113bc182956fafc9922cfc77b72
+  FirebaseInstallations: 7b64ffd006032b2b019a59b803858df5112d9eaa
+  FirebaseMessaging: 7d6cdbff969127c4151c824fe432f0e301210f15
   GCDWebServer: 2c156a56c8226e2d5c0c3f208a3621ccffbe3ce4
   GoogleDataTransport: aae35b7ea0c09004c3797d53c8c41f66f219d6a7
-  GoogleSignIn: ce8c89bb9b37fb624b92e7514cc67335d1e277e4
-  GoogleUtilities: 26a3abef001b6533cf678d3eb38fd3f614b7872d
-  GTMAppAuth: f69bd07d68cd3b766125f7e072c45d7340dea0de
+  GoogleSignIn: c7f09cfbc85a1abf69187be091997c317cc33b77
+  GoogleUtilities: 00c88b9a86066ef77f0da2fab05f65d7768ed8e1
+  GTMAppAuth: 217a876b249c3c585a54fd6f73e6b58c4f5c4238
   GTMSessionFetcher: 5aea5ba6bd522a239e236100971f10cb71b96ab6
-  IONGeolocationLib: 81f33f88d025846946de2cf63b0c7628e7c6bc9d
+  IONFilesystemLib: 89258b8e3e85465da93127d25d7ce37f977e8a6f
+  IONGeolocationLib: 20f9d0248a0b5264511fb57a37e25dd2badf797a
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
   NumbersprotocolPreviewCamera: ad1dcbb6067429855ecef9c10f674c7777dece8a
   NumbersprotocolPreviewVideo: 1f42fd2d699611638352d5400488d18fa5e03fc0
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
 
-PODFILE CHECKSUM: 2394fade62c1adf76db3b1db96ba8820bfa95220
+PODFILE CHECKSUM: 43de92e8852163f464119e9ba1241fcc6fbafb4f
 
 COCOAPODS: 1.16.2

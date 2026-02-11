@@ -294,6 +294,7 @@ export class CaptureTabComponent implements OnInit {
 
       return this.dialog.open(PrefetchingDialogComponent, {
         disableClose: true,
+        panelClass: 'prefetching-dialog',
       });
     }
   }
