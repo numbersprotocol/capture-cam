@@ -145,9 +145,9 @@ PODS:
     - nanopb/encode (= 3.30910.0)
   - nanopb/decode (3.30910.0)
   - nanopb/encode (3.30910.0)
-  - NumbersprotocolPreviewCamera (0.0.20):
+  - NumbersprotocolPreviewCamera (0.0.21):
     - Capacitor
-  - NumbersprotocolPreviewVideo (0.0.5):
+  - NumbersprotocolPreviewVideo (0.0.6):
     - Capacitor
   - PromisesObjC (2.4.0)
 
@@ -304,10 +304,10 @@ SPEC CHECKSUMS:
   IONFilesystemLib: 89258b8e3e85465da93127d25d7ce37f977e8a6f
   IONGeolocationLib: 20f9d0248a0b5264511fb57a37e25dd2badf797a
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
-  NumbersprotocolPreviewCamera: ad1dcbb6067429855ecef9c10f674c7777dece8a
-  NumbersprotocolPreviewVideo: 1f42fd2d699611638352d5400488d18fa5e03fc0
+  NumbersprotocolPreviewCamera: dcfb603b7dfa1ddd4410283c06dc6dd45cb00057
+  NumbersprotocolPreviewVideo: e4854cce6735276358dbbd1baa26bae7974e4e97
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
 
-PODFILE CHECKSUM: 43de92e8852163f464119e9ba1241fcc6fbafb4f
+PODFILE CHECKSUM: 2394fade62c1adf76db3b1db96ba8820bfa95220
 
 COCOAPODS: 1.16.2
