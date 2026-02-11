@@ -56,14 +56,13 @@ export class CapacitorStoragePreferences {
     defaultValue: SupportedTypes
   ): Promise<SupportedTypes> {
     await this.initializeValue(key, defaultValue);
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, rxjs/no-subject-value
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return this.subjects.get(key)!.value;
   }
 
   private async initializeValue(key: string, defaultValue: SupportedTypes) {
     if (this.subjects.has(key)) {
       const subject$ = this.subjects.get(key);
-      // eslint-disable-next-line rxjs/no-subject-value
       if (subject$?.value === undefined) {
         subject$?.next(defaultValue);
       }

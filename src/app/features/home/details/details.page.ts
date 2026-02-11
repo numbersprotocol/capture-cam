@@ -79,7 +79,14 @@ export class DetailsPage {
   captionOn = true;
   expanded = false;
   activeSlideIndex = 0;
-  @ViewChild('swiper') swiperRef?: ElementRef;
+  userToken: string | undefined;
+
+  private readonly _activeDetailedCapture$ = new ReplaySubject<DetailedCapture>(
+    1
+  );
+
+  private readonly shareMenuDismissed$ = new Subject<void>();
+
   private readonly type$ = this.route.paramMap.pipe(
     map(params => params.get('type')),
     isNonNullable()
@@ -192,12 +199,6 @@ export class DetailsPage {
     )
   );
 
-  private readonly _activeDetailedCapture$ = new ReplaySubject<DetailedCapture>(
-    1
-  );
-
-  private readonly shareMenuDismissed$ = new Subject<void>();
-
   readonly activeDetailedCapture$ = this._activeDetailedCapture$.pipe(
     distinctUntilChanged(),
     tap(
@@ -215,8 +216,6 @@ export class DetailsPage {
     map(type => type === 'post-capture')
   );
 
-  userToken: string | undefined;
-
   readonly isFromSeriesPage$ = this.type$.pipe(map(type => type === 'series'));
 
   readonly networkConnected$ = this.networkService.connected$;
@@ -232,6 +231,8 @@ export class DetailsPage {
   ]).pipe(
     map(([networkConnected, hasUploaded]) => networkConnected && hasUploaded)
   );
+
+  @ViewChild('swiper') swiperRef?: ElementRef;
 
   constructor(
     private readonly sanitizer: DomSanitizer,

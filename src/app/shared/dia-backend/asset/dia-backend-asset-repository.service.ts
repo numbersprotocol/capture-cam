@@ -138,7 +138,6 @@ export class DiaBackendAssetRepository {
           this.downloadFile$({ id: postCapture.id, field: 'asset_file' }).pipe(
             first(),
             tap(blob => {
-              // eslint-disable-next-line rxjs/no-subject-value
               const currentCache = this.postCapturesImageCache$.value;
               currentCache.set(postCapture.id, blob);
               this.postCapturesImageCache$.next(currentCache);

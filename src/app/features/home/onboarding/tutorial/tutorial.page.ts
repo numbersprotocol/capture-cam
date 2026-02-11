@@ -25,6 +25,7 @@ export class TutorialPage implements AfterViewInit {
     // Angular's (swiperslidechange) binding doesn't work with web components
     // Use Swiper's instance event system instead
     const swiperEl = this.swiperRef?.nativeElement;
+    const SWIPER_CHECK_INTERVAL_MS = 50;
     if (swiperEl) {
       // Wait for Swiper to initialize
       const checkSwiper = () => {
@@ -33,7 +34,7 @@ export class TutorialPage implements AfterViewInit {
             this.onSlideChange();
           });
         } else {
-          setTimeout(checkSwiper, 50);
+          setTimeout(checkSwiper, SWIPER_CHECK_INTERVAL_MS);
         }
       };
       checkSwiper();

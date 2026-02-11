@@ -116,7 +116,7 @@ export class DetailedCapture {
         return `${geolocation.latitude.toFixed(
           fixedLength
         )}, ${geolocation.longitude.toFixed(fixedLength)}`;
-      return this.translocoService.translate<string>('notDisclosed');
+      return this.translocoService.translate('notDisclosed');
     })
   );
 

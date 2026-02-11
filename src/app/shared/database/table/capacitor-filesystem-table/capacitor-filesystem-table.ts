@@ -1,4 +1,3 @@
-/* eslint-disable rxjs/no-subject-value */
 import {
   Directory as FilesystemDirectory,
   Encoding as FilesystemEncoding,

@@ -12,10 +12,10 @@ const DEFAULT_DURATION = 500;
   selector: '[appLongPress]',
 })
 export class LongPressDirective {
+  private timeout: ReturnType<typeof setTimeout> | null = null;
+
   @Input() appLongPressDuration = DEFAULT_DURATION;
   @Output() appLongPress = new EventEmitter<void>();
-
-  private timeout: ReturnType<typeof setTimeout> | null = null;
 
   @HostListener('pointerdown')
   onPointerDown(): void {
