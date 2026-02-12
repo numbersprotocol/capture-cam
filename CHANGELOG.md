@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.104.0] - 2026-02-12
+
+### Added
+
+1. Upgrade Angular from version 14 to 18 with complete dependency updates [#3354](https://github.com/numbersprotocol/capture-lite/pull/3354)
+2. Add Android 16KB page size support for compatibility with future Android versions [#3355](https://github.com/numbersprotocol/capture-lite/pull/3355)
+
+### Changed
+
+1. Refactor media editing by removing pqina/pintura package and dependencies [#3353](https://github.com/numbersprotocol/capture-lite/pull/3353)
+2. Remove C2PA support and related functionality [#3356](https://github.com/numbersprotocol/capture-lite/pull/3356)
+
 ## [0.103.2] - 2025-09-03
 
 ### Fixed
@@ -2493,7 +2505,8 @@ This is the first release! _Capture Lite_ is a cross-platform app adapted from [
 - Web - see the demo [here](https://github.com/numbersprotocol/capture-lite#demo-app)
 - Android - the APK file `app-debug.apk` is attached to this release
 
-[unreleased]: https://github.com/numbersprotocol/capture-lite/compare/0.103.2...HEAD
+[unreleased]: https://github.com/numbersprotocol/capture-lite/compare/0.104.0...HEAD
+[0.104.0]: https://github.com/numbersprotocol/capture-lite/compare/0.103.2...0.104.0
 [0.103.2]: https://github.com/numbersprotocol/capture-lite/compare/0.103.1...0.103.2
 [0.103.1]: https://github.com/numbersprotocol/capture-lite/compare/0.103.0...0.103.1
 [0.103.0]: https://github.com/numbersprotocol/capture-lite/compare/0.102.0...0.103.0
