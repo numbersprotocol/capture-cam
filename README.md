@@ -147,6 +147,18 @@ The script does the same thing for you.
 npm run build.android
 ```
 
+#### Android 16 KB Page Size Support
+
+This app supports 16 KB memory page sizes as required by Google Play for Android 15+ compatibility. The configuration is automatically enabled in the build system.
+
+To verify 16 KB page size support:
+
+```bash
+./verify-16kb-support.sh
+```
+
+For detailed information about the 16 KB page size implementation, see [`ANDROID_16KB_SUPPORT.md`](./ANDROID_16KB_SUPPORT.md).
+
 ### Caveat
 
 - This app is still in the experimental stage.

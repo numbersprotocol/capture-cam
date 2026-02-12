@@ -7,6 +7,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
+        // Android Gradle Plugin 8.9.1 supports 16 KB page sizes (Android 15+ requirement)
         classpath 'com.android.tools.build:gradle:8.9.1'
         classpath 'com.google.gms:google-services:4.4.2'
 
