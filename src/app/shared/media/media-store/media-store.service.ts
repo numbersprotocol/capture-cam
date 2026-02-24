@@ -6,7 +6,7 @@ import {
   FilesystemPlugin,
 } from '@capacitor/filesystem';
 import { Mutex } from 'async-mutex';
-import write_blob from 'capacitor-blob-writer';
+import { write_blob } from 'capacitor-blob-writer';
 import Compressor from 'compressorjs';
 import { defer, firstValueFrom, merge } from 'rxjs';
 import { concatMap, map } from 'rxjs/operators';
