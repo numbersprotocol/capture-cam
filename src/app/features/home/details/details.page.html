@@ -47,13 +47,15 @@
       <div class="slide">
         <!-- Show capture details with Ionic when capture is not uploaded or the network is disconnected -->
         <app-capture-details-with-ionic
-          *ngIf="(showCaptureDetailsInIframe$ | ngrxPush) === false"
+          *ngIf="!detailedCapture.id || (networkConnected$ | ngrxPush) !== true"
           [detailedCapture]="detailedCapture"
         ></app-capture-details-with-ionic>
 
         <!-- Show capture details with an iframe when capture is uploaded and the network is connected -->
         <app-capture-details-with-iframe
-          *ngIf="(showCaptureDetailsInIframe$ | ngrxPush) === true"
+          *ngIf="
+            !!detailedCapture.id && (networkConnected$ | ngrxPush) === true
+          "
           [detailedCapture]="detailedCapture"
           [slideIsActive]="activeSlideIndex === i"
         ></app-capture-details-with-iframe>
