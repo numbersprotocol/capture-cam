@@ -2,7 +2,7 @@
 <ng-container *ngIf="networkConnected$ | ngrxPush; else noNetworkText">
   <!-- Display iframe if the iframeUrl is available -->
   <ng-container *ngIf="iframeUrl$ | ngrxPush as iframeUrl">
-    <iframe [src]="iframeUrl"></iframe>
+    <iframe [src]="iframeUrl" allow="accelerometer; gyroscope"></iframe>
   </ng-container>
   <!-- Display spinner while iframe is loading -->
   <ion-spinner *ngIf="!(iframeLoaded$ | ngrxPush)" name="lines-sharp">

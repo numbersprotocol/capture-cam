@@ -7,7 +7,11 @@
 
 <ng-template #onlineTemplate>
   <ng-container *ngIf="iframeUrl$ | ngrxPush as iframeUrl">
-    <iframe [src]="iframeUrl | safeResourceUrl"> </iframe>
+    <iframe
+      [src]="iframeUrl | safeResourceUrl"
+      allow="accelerometer; gyroscope"
+    >
+    </iframe>
   </ng-container>
   <ion-spinner
     *ngIf="(iframeLoaded$ | async) !== true"

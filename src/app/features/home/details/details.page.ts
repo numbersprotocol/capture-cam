@@ -261,7 +261,12 @@ export class DetailsPage {
 
     this.initialSlideIndex$
       .pipe(
-        tap(index => (this.activeSlideIndex = index)),
+        tap(index => {
+          this.activeSlideIndex = index;
+          // Slide to the correct index after it's calculated
+          // Use setTimeout to ensure the swiper is fully initialized
+          setTimeout(() => this.slideToInitialIndex(), 0);
+        }),
         untilDestroyed(this)
       )
       .subscribe();
@@ -282,9 +287,21 @@ export class DetailsPage {
   }
 
   async ionViewDidEnter() {
+    // Programmatically slide to the initial index after the view enters
+    // This is needed because Swiper's initialSlide property may not work
+    // reliably when the swiper is rendered with *ngrxLet directives
+    this.slideToInitialIndex();
+
     await this.userGuideService.showUserGuidesOnDetailsPage();
     await this.userGuideService.setHasOpenedDetailsPage(true);
     await this.userGuideService.setHasClickedDetailsPageOptionsMenu(true);
+  }
+
+  private slideToInitialIndex() {
+    const swiper = this.swiperRef?.nativeElement?.swiper as Swiper | undefined;
+    if (swiper && this.activeSlideIndex > 0) {
+      swiper.slideTo(this.activeSlideIndex, 0); // 0 = no animation
+    }
   }
 
   // eslint-disable-next-line class-methods-use-this
