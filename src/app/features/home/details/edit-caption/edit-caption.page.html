@@ -1,5 +1,9 @@
 <ion-content>
   <div *ngIf="iframeUrl$ | ngrxPush as iframeUrl">
-    <iframe [src]="iframeUrl" frameborder="0"></iframe>
+    <iframe
+      [src]="iframeUrl"
+      frameborder="0"
+      allow="accelerometer; gyroscope"
+    ></iframe>
   </div>
 </ion-content>

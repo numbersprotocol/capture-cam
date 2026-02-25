@@ -12,6 +12,7 @@
   <iframe
     [src]="dataPolicyUrl | safeResourceUrl"
     class="bubble-iframe"
+    allow="accelerometer; gyroscope"
   ></iframe>
   <ion-spinner
     *ngIf="(iframeLoaded$ | async) !== true"
