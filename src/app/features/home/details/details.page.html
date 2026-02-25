@@ -53,7 +53,9 @@
 
         <!-- Show capture details with an iframe when capture is uploaded and the network is connected -->
         <app-capture-details-with-iframe
-          *ngIf="!!detailedCapture.id && (networkConnected$ | ngrxPush) === true"
+          *ngIf="
+            !!detailedCapture.id && (networkConnected$ | ngrxPush) === true
+          "
           [detailedCapture]="detailedCapture"
           [slideIsActive]="activeSlideIndex === i"
         ></app-capture-details-with-iframe>
