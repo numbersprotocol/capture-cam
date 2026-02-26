@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.104.2] - 2026-02-26
+
+### Fixed
+
+1. Upgrade Swiper 9→12 and fix detail page iframes [#3369](https://github.com/numbersprotocol/capture-lite/pull/3369)
+
 ## [0.104.1] - 2026-02-25
 
 ### Fixed
@@ -2511,7 +2517,8 @@ This is the first release! _Capture Lite_ is a cross-platform app adapted from [
 - Web - see the demo [here](https://github.com/numbersprotocol/capture-lite#demo-app)
 - Android - the APK file `app-debug.apk` is attached to this release
 
-[unreleased]: https://github.com/numbersprotocol/capture-lite/compare/0.104.1...HEAD
+[unreleased]: https://github.com/numbersprotocol/capture-lite/compare/0.104.2...HEAD
+[0.104.2]: https://github.com/numbersprotocol/capture-lite/compare/0.104.1...0.104.2
 [0.104.1]: https://github.com/numbersprotocol/capture-lite/compare/0.104.0...0.104.1
 [0.104.0]: https://github.com/numbersprotocol/capture-lite/compare/0.103.2...0.104.0
 [0.103.2]: https://github.com/numbersprotocol/capture-lite/compare/0.103.1...0.103.2
