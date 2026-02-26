@@ -28,14 +28,12 @@
   <swiper-container
     #swiper
     *ngrxLet="initialSlideIndex$ as initialSlideIndex"
-    [virtual]="true"
-    [initialSlide]="initialSlideIndex"
-    [resistanceRatio]="0"
-    [observeSlideChildren]="true"
-    [resizeObserver]="true"
-    [observeParents]="true"
+    [attr.initial-slide]="initialSlideIndex"
+    resistance-ratio="0"
+    observe-slide-children="true"
+    resize-observer="true"
+    observe-parents="true"
     class="swiper"
-    (swiperslidechange)="onSlidesChanged()"
   >
     <swiper-slide
       *ngFor="
@@ -51,9 +49,12 @@
           [detailedCapture]="detailedCapture"
         ></app-capture-details-with-ionic>
 
-        <!-- Show capture details with an iframe when capture is uploaded and the network is connected -->
+        <!-- Show capture details with an iframe only for active slide (and adjacent slides for smoother swiping) -->
         <app-capture-details-with-iframe
-          *ngIf="(showCaptureDetailsInIframe$ | ngrxPush) === true"
+          *ngIf="
+            (showCaptureDetailsInIframe$ | ngrxPush) === true &&
+            isSlideNearActive(i)
+          "
           [detailedCapture]="detailedCapture"
           [slideIsActive]="activeSlideIndex === i"
         ></app-capture-details-with-iframe>

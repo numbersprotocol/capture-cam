@@ -75,6 +75,7 @@ export class DetailsPage {
   expanded = false;
   activeSlideIndex = 0;
   userToken: string | undefined;
+  private swiperEventsHooked = false;
 
   private readonly _activeDetailedCapture$ = new ReplaySubject<DetailedCapture>(
     1
@@ -224,7 +225,8 @@ export class DetailsPage {
     this.networkConnected$,
     this.hasUploaded$,
   ]).pipe(
-    map(([networkConnected, hasUploaded]) => networkConnected && hasUploaded)
+    map(([networkConnected, hasUploaded]) => networkConnected && hasUploaded),
+    distinctUntilChanged()
   );
 
   @ViewChild('swiper') swiperRef?: ElementRef;
@@ -292,21 +294,71 @@ export class DetailsPage {
     // reliably when the swiper is rendered with *ngrxLet directives
     this.slideToInitialIndex();
 
+    // Angular's (swiperslidechange) event binding doesn't work with Swiper
+    // web components. Use the Swiper instance event system instead.
+    this.hookupSwiperEvents();
+
     await this.userGuideService.showUserGuidesOnDetailsPage();
     await this.userGuideService.setHasOpenedDetailsPage(true);
     await this.userGuideService.setHasClickedDetailsPageOptionsMenu(true);
   }
 
+  private hookupSwiperEvents() {
+    if (this.swiperEventsHooked) return;
+
+    const swiperEl = this.swiperRef?.nativeElement;
+    if (!swiperEl) return;
+
+    const SWIPER_CHECK_INTERVAL_MS = 50;
+    const MAX_RETRIES = 40; // 2 seconds max wait
+    let retries = 0;
+
+    const checkSwiper = () => {
+      if (swiperEl.swiper) {
+        this.swiperEventsHooked = true;
+        swiperEl.swiper.on('slideChange', () => {
+          this.onSlidesChanged();
+        });
+      } else if (retries < MAX_RETRIES) {
+        retries++;
+        setTimeout(checkSwiper, SWIPER_CHECK_INTERVAL_MS);
+      }
+    };
+    checkSwiper();
+  }
+
   private slideToInitialIndex() {
-    const swiper = this.swiperRef?.nativeElement?.swiper as Swiper | undefined;
-    if (swiper && this.activeSlideIndex > 0) {
-      swiper.slideTo(this.activeSlideIndex, 0); // 0 = no animation
-    }
+    const swiperEl = this.swiperRef?.nativeElement;
+    if (!swiperEl || this.activeSlideIndex <= 0) return;
+
+    const SWIPER_CHECK_INTERVAL_MS = 50;
+    const MAX_RETRIES = 20; // 1 second max wait
+    let retries = 0;
+
+    const trySlide = () => {
+      const swiper = swiperEl.swiper as Swiper | undefined;
+      if (swiper) {
+        swiper.slideTo(this.activeSlideIndex, 0); // 0 = no animation
+      } else if (retries < MAX_RETRIES) {
+        retries++;
+        setTimeout(trySlide, SWIPER_CHECK_INTERVAL_MS);
+      }
+    };
+    trySlide();
   }
 
   // eslint-disable-next-line class-methods-use-this
   trackDetailedCapture(_: number, item: DetailedCapture) {
     return item.id;
+  }
+
+  /**
+   * Check if a slide is near the active slide.
+   * Only renders iframe for active slide and 1 adjacent slide on each side.
+   * This prevents loading too many iframes at once while still allowing smooth swiping.
+   */
+  isSlideNearActive(index: number): boolean {
+    return Math.abs(index - this.activeSlideIndex) <= 1;
   }
 
   onSlidesChanged() {
@@ -315,6 +367,8 @@ export class DetailsPage {
 
     const activeIndex = swiper.activeIndex;
     this.activeSlideIndex = activeIndex;
+    // Trigger change detection so isSlideNearActive() gets re-evaluated
+    this.changeDetectorRef.detectChanges();
     this.detailedCaptures$
       .pipe(
         first(),
