@@ -3,6 +3,13 @@ updates:
   - package-ecosystem: 'npm'
     directory: '/'
     schedule:
-      interval: 'monthly'
+      interval: 'weekly'
     target-branch: 'main'
-    open-pull-requests-limit: 5
+    open-pull-requests-limit: 10
+    groups:
+      patch-updates:
+        update-types:
+          - 'patch'
+      minor-updates:
+        update-types:
+          - 'minor'
