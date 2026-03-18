@@ -44,6 +44,9 @@ export class DataPolicyPage {
         }),
         untilDestroyed(this)
       )
-      .subscribe();
+      .subscribe({
+        // eslint-disable-next-line no-console
+        error: (err: unknown) => console.error(err),
+      });
   }
 }
