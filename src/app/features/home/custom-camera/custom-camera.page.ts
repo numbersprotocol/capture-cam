@@ -48,6 +48,10 @@ type CameraMode = 'story' | 'photo' | 'gopro' | 'pre-publish';
 type CameraQuality = 'low' | 'hq';
 type MediaType = 'image' | 'video';
 
+interface PinchGestureEvent {
+  scale: number;
+}
+
 @UntilDestroy({ checkProperties: true })
 @Component({
   selector: 'app-custom-camera',
@@ -257,7 +261,7 @@ export class CustomCameraPage implements OnInit, OnDestroy {
       }
       return true;
     } catch (_error: unknown) {
-      // FIXME: report _error to crashlytics.
+      // Error reporting to a crash reporting service (e.g. Crashlytics) is not yet implemented.
       const errMsg = this.translocoService.translate(
         'customCamera.error.canNotStartCamera'
       );
@@ -432,17 +436,17 @@ export class CustomCameraPage implements OnInit, OnDestroy {
     await this.customCameraService.focus(event.x, event.y);
   }
 
-  zoomFactorChange(event: any) {
+  zoomFactorChange(event: CustomEvent<{ value: number }>) {
     const newZooomFactor = event.detail.value;
     this.curZoomFactor$.next(newZooomFactor);
     this.cameraZoomEvents$.next(newZooomFactor);
   }
 
-  handlePinchStart(e: any) {
+  handlePinchStart(e: PinchGestureEvent) {
     this.lastZoomScale = e.scale;
   }
 
-  handlePinchIn(e: any) {
+  handlePinchIn(e: PinchGestureEvent) {
     const zoomOutSensitivity = 2;
     const zoom = Math.abs(e.scale - this.lastZoomScale) / zoomOutSensitivity;
     this.lastZoomScale = e.scale;
@@ -454,7 +458,7 @@ export class CustomCameraPage implements OnInit, OnDestroy {
     this.cameraZoomEvents$.next(newZoomFactor);
   }
 
-  handlePinchOut(e: any) {
+  handlePinchOut(e: PinchGestureEvent) {
     const zoomInSensitivity = 8;
     const zoom = Math.abs(e.scale - this.lastZoomScale) / zoomInSensitivity;
     this.lastZoomScale = e.scale;
@@ -548,7 +552,7 @@ export class CustomCameraPage implements OnInit, OnDestroy {
   // eslint-disable-next-line class-methods-use-this
   private debugOnlyPreventContextMenuFromLongPressContextMenu() {
     // Prevent showing context menu on long press
-    window.oncontextmenu = function (event: any) {
+    window.oncontextmenu = function (event: MouseEvent) {
       const pointerEvent = event as PointerEvent;
       if (pointerEvent.pointerType === 'touch') return false;
 

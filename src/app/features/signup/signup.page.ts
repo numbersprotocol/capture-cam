@@ -190,7 +190,7 @@ export class SignupPage {
             expressions: {
               'model.referralCodeOptional': 'model.referralCodeOptional',
             },
-            parsers: [(value: any) => value?.toUpperCase()],
+            parsers: [(value: string) => value.toUpperCase()],
           },
         ],
       },

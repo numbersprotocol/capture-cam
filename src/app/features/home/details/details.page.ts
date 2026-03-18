@@ -40,7 +40,7 @@ import { BlockingActionService } from '../../../shared/blocking-action/blocking-
 import { CaptureAppWebCryptoApiSignatureProvider } from '../../../shared/collector/signature/capture-app-web-crypto-api-signature-provider/capture-app-web-crypto-api-signature-provider.service';
 import { ConfirmAlert } from '../../../shared/confirm-alert/confirm-alert.service';
 import { ContactSelectionDialogComponent } from '../../../shared/contact-selection-dialog/contact-selection-dialog.component';
-import { DiaBackendAssetRepository } from '../../../shared/dia-backend/asset/dia-backend-asset-repository.service';
+import { DiaBackendAssetRepository, DiaBackendAsset } from '../../../shared/dia-backend/asset/dia-backend-asset-repository.service';
 import { DiaBackendAuthService } from '../../../shared/dia-backend/auth/dia-backend-auth.service';
 import { BUBBLE_IFRAME_URL } from '../../../shared/dia-backend/secret';
 import { DiaBackendStoreService } from '../../../shared/dia-backend/store/dia-backend-store.service';
@@ -282,7 +282,7 @@ export class DetailsPage {
       .subscribe();
   }
 
-  iframeUrlFor(detailedCapture: any) {
+  iframeUrlFor(detailedCapture: DiaBackendAsset) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(
       `${BUBBLE_IFRAME_URL}/asset_page?nid=${detailedCapture.id}`
     );

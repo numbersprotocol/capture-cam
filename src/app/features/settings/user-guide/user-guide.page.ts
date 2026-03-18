@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ToggleCustomEvent } from '@ionic/angular';
 import { UserGuideService } from '../../../shared/user-guide/user-guide.service';
 
 @Component({
@@ -41,53 +42,53 @@ export class UserGuidePage {
 
   constructor(private readonly userGuideService: UserGuideService) {}
 
-  setHasHighlightedCameraTab(event: any) {
+  setHasHighlightedCameraTab(event: ToggleCustomEvent) {
     this.userGuideService.setHasHighlightedCameraTab(event.detail.checked);
   }
 
-  setHasOpenedCustomCameraPage(event: any) {
+  setHasOpenedCustomCameraPage(event: ToggleCustomEvent) {
     this.userGuideService.setHasOpenedCustomCameraPage(event.detail.checked);
   }
 
-  setHasCapturedPhotoWithCustomCamera(event: any) {
+  setHasCapturedPhotoWithCustomCamera(event: ToggleCustomEvent) {
     this.userGuideService.setHasCapturedPhotoWithCustomCamera(
       event.detail.checked
     );
   }
 
-  setHasCapturedVideoWithCustomCamera(event: any) {
+  setHasCapturedVideoWithCustomCamera(event: ToggleCustomEvent) {
     this.userGuideService.setHasCapturedVideoWithCustomCamera(
       event.detail.checked
     );
   }
 
-  setHasHighlightedFirstCapture(event: any) {
+  setHasHighlightedFirstCapture(event: ToggleCustomEvent) {
     this.userGuideService.setHasHighlightedFirstCapture(event.detail.checked);
   }
 
-  setHasOpenedDetailsPage(event: any) {
+  setHasOpenedDetailsPage(event: ToggleCustomEvent) {
     this.userGuideService.setHasOpenedDetailsPage(event.detail.checked);
   }
 
-  setHasClickedDetailsPageOptionsMenu(event: any) {
+  setHasClickedDetailsPageOptionsMenu(event: ToggleCustomEvent) {
     this.userGuideService.setHasClickedDetailsPageOptionsMenu(
       event.detail.checked
     );
   }
 
-  setHasHighligtedActivityButton(event: any) {
+  setHasHighligtedActivityButton(event: ToggleCustomEvent) {
     this.userGuideService.setHasHighligtedActivityButton(event.detail.checked);
   }
 
-  setHasOpenedActivitiesPage(event: any) {
+  setHasOpenedActivitiesPage(event: ToggleCustomEvent) {
     this.userGuideService.setHasOpenedActivitiesPage(event.detail.checked);
   }
 
-  setHasHightlightedInboxTab(event: any) {
+  setHasHightlightedInboxTab(event: ToggleCustomEvent) {
     this.userGuideService.setHasHightlightedInboxTab(event.detail.checked);
   }
 
-  setHasOpenedInboxTab(event: any) {
+  setHasOpenedInboxTab(event: ToggleCustomEvent) {
     this.userGuideService.setHasOpenedInboxTab(event.detail.checked);
   }
 

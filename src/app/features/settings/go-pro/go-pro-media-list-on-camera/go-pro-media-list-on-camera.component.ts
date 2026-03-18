@@ -70,7 +70,7 @@ export class GoProMediaListOnCameraComponent implements OnInit {
       this.fetchingFilesError = undefined;
       this.fetchingFiles = true;
       this.allMediaFiles = await this.goProMediaService.getFilesFromGoPro();
-    } catch (error: any) {
+    } catch (error: unknown) {
       this.fetchingFilesError = 'Failed to fetch media from GoPro';
       if (this.platform.is('ios')) {
         this.fetchingFilesError =

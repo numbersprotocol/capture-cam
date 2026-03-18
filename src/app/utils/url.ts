@@ -2,6 +2,7 @@ import { DiaBackendAsset } from '../shared/dia-backend/asset/dia-backend-asset-r
 import { BUBBLE_IFRAME_URL } from '../shared/dia-backend/secret';
 import { urlToDownloadApp } from './constants';
 import { MimeType } from './mime-type';
+import { Platforms } from '@ionic/core';
 
 export function toDataUrl(base64: string, mimeType: MimeType | string) {
   return `data:${mimeType};base64,${base64}`;
@@ -15,7 +16,7 @@ export function getAssetProfileForCaptureIframe(cid: string) {
   return `${BUBBLE_IFRAME_URL}/asset_page?nid=${cid}`;
 }
 
-export function getAppDownloadLink(isPlatform: (platformName: any) => boolean) {
+export function getAppDownloadLink(isPlatform: (platformName: Platforms) => boolean) {
   if (isPlatform('ios'))
     return 'https://apps.apple.com/en/app/capture-app/id1536388009';
 
