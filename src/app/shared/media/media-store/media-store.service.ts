@@ -262,14 +262,19 @@ export class MediaStore {
    * directly when dealing with small image for better performance.
    */
   async getUrl(index: string, mimeType: MimeType) {
-    if (Capacitor.isNativePlatform()) {
-      // Workaround to fix urls (thumbnails) saved as incorrect mimeType.
-      await this.fixIncorrectExtension(index, mimeType);
-      return Capacitor.convertFileSrc(await this.getUri(index));
+    try {
+      if (Capacitor.isNativePlatform()) {
+        // Workaround to fix urls (thumbnails) saved as incorrect mimeType.
+        await this.fixIncorrectExtension(index, mimeType);
+        return Capacitor.convertFileSrc(await this.getUri(index));
+      }
+      return URL.createObjectURL(
+        await base64ToBlob(await this.readWithFileSystem(index), mimeType)
+      );
+    } catch (err: unknown) {
+      console.error(`MediaStore.getUrl failed for index ${index}:`, err);
+      return '';
     }
-    return URL.createObjectURL(
-      await base64ToBlob(await this.readWithFileSystem(index), mimeType)
-    );
   }
 
   private async fixIncorrectExtension(

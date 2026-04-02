@@ -1,7 +1,15 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, defer, forkJoin, Subject } from 'rxjs';
 import {
+  BehaviorSubject,
+  EMPTY,
+  combineLatest,
+  defer,
+  forkJoin,
+  Subject,
+} from 'rxjs';
+import {
+  catchError,
   concatMap,
   distinctUntilChanged,
   first,
@@ -86,7 +94,11 @@ export class DiaBackendTransactionRepository {
           this.assetDownloadingService.storeRemoteCapture(asset)
         )
       )
-    )
+    ),
+    catchError((err: unknown) => {
+      console.error('downloadExpired$ error:', err);
+      return EMPTY;
+    })
   );
 
   constructor(

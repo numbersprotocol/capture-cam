@@ -32,19 +32,17 @@ export class DiaBackendAssetPrefetchingService {
       if (diaBackendAssets.length === 0) {
         break;
       }
-      await Promise.all(
-        diaBackendAssets.map(async diaBackendAsset => {
-          if (diaBackendAsset.source_transaction === null)
-            await this.downloadingService.storeRemoteCapture(
-              diaBackendAsset,
-              (await this.mediaStore.getThumbnail(
-                diaBackendAsset.proof_hash
-              )) === undefined
-            );
-          currentCount += 1;
-          onStored(currentCount, totalCount);
-        })
-      );
+      for (const diaBackendAsset of diaBackendAssets) {
+        if (diaBackendAsset.source_transaction === null)
+          await this.downloadingService.storeRemoteCapture(
+            diaBackendAsset,
+            (await this.mediaStore.getThumbnail(
+              diaBackendAsset.proof_hash
+            )) === undefined
+          );
+        currentCount += 1;
+        onStored(currentCount, totalCount);
+      }
       currentOffset += diaBackendAssets.length;
     }
   }
