@@ -57,6 +57,8 @@ import { InformationSessionService } from '../../information/session/information
   styleUrls: ['./action-details.page.scss'],
 })
 export class ActionDetailsPage {
+  private readonly ALLOWED_DOMAINS = ['captureapp.xyz', 'numbersprotocol.io'];
+
   readonly id$ = this.route.paramMap.pipe(
     map(params => params.get('id')),
     isNonNullable()
@@ -371,7 +373,27 @@ export class ActionDetailsPage {
     );
   }
 
+  private isValidRedirectUrl(url: string): boolean {
+    try {
+      const parsed = new URL(url);
+      if (parsed.protocol !== 'https:') return false;
+      return this.ALLOWED_DOMAINS.some(
+        d => parsed.hostname === d || parsed.hostname.endsWith(`.${d}`)
+      );
+    } catch {
+      return false;
+    }
+  }
+
   redirectToExternalUrl(url: string, orderId: string) {
+    if (!this.isValidRedirectUrl(url)) {
+      this.errorService
+        .toastError$(
+          this.translocoService.translate('error.invalidRedirectUrl')
+        )
+        .subscribe();
+      return;
+    }
     this.id$
       .pipe(
         first(),
