@@ -56,6 +56,8 @@ export class Proof {
    */
   cameraSource: CameraSource = CameraSource.Camera;
 
+  private _timestamp?: number;
+
   /**
    * Used to sort the assets in the VERIFIED tab either by timestamp or uploadedAt (if available).
    * Since timestamp getter now ensures values are always in milliseconds, we don't need
@@ -79,15 +81,22 @@ export class Proof {
    *
    * This getter ensures timestamps are always returned in milliseconds regardless of
    * how they're stored (seconds or milliseconds).
+   *
+   * The computed value is cached because `truth` is a readonly reference and
+   * `truth.timestamp` is treated as immutable after Proof construction.
    */
   get timestamp() {
-    const MILLISECONDS_PER_SECOND = 1000;
-    const MILLISECONDS_THRESHOLD = 10000000000; // 10^10, timestamps after March 2001
+    if (this._timestamp === undefined) {
+      const MILLISECONDS_PER_SECOND = 1000;
+      const MILLISECONDS_THRESHOLD = 10000000000; // 10^10, timestamps after March 2001
 
-    // Convert to milliseconds if the timestamp is in seconds
-    return this.truth.timestamp > MILLISECONDS_THRESHOLD
-      ? this.truth.timestamp
-      : this.truth.timestamp * MILLISECONDS_PER_SECOND;
+      // Convert to milliseconds if the timestamp is in seconds
+      this._timestamp =
+        this.truth.timestamp > MILLISECONDS_THRESHOLD
+          ? this.truth.timestamp
+          : this.truth.timestamp * MILLISECONDS_PER_SECOND;
+    }
+    return this._timestamp;
   }
 
   get deviceName() {

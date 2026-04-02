@@ -100,10 +100,14 @@ export class MediaStore {
 
   private async _write(index: string, base64: string, mimeType: MimeType) {
     await this.initialize();
+    // Perform expensive blob conversion before acquiring the lock so concurrent
+    // reads are not blocked during the conversion of large files.
+    const blob = Capacitor.isNativePlatform()
+      ? await base64ToBlob(base64, mimeType)
+      : undefined;
     return this.mutex.runExclusive(async () => {
       const mediaExtension = await this.setMediaExtension(index, mimeType);
-      if (Capacitor.isNativePlatform()) {
-        const blob = await base64ToBlob(base64, mimeType);
+      if (blob !== undefined) {
         await write_blob({
           directory: this.directory,
           path: `${this.rootDir}/${index}.${mediaExtension.extension}`,
