@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { defer, forkJoin, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { BUBBLE_DB_URL } from '../../dia-backend/secret';
+import { BUBBLE_API_URL, BUBBLE_DB_URL } from '../../dia-backend/secret';
 
 @Injectable({
   providedIn: 'root',
@@ -36,6 +36,11 @@ export class ActionsService {
   }
 
   send$(url: string, body: any) {
+    const allowedPrefixes = [BUBBLE_DB_URL, BUBBLE_API_URL].filter(Boolean);
+    const isAllowed = allowedPrefixes.some(prefix => url.startsWith(prefix));
+    if (!isAllowed) {
+      throw new Error(`Request to disallowed URL: ${url}`);
+    }
     return this.httpClient.post(url, body);
   }
 }

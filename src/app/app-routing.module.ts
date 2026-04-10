@@ -52,6 +52,7 @@ const routes: Routes = [
       import('./shared/media/media-viewer/media-viewer.module').then(
         m => m.MediaViewerPageModule
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'contacts',
@@ -59,6 +60,7 @@ const routes: Routes = [
       import('./features/contacts/contacts.module').then(
         m => m.ContactsPageModule
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'wallets',
@@ -66,6 +68,7 @@ const routes: Routes = [
       import('./features/wallets/wallets.module').then(
         m => m.WalletsPageModule
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'invitation',
@@ -73,6 +76,7 @@ const routes: Routes = [
       import('./features/invitation/invitation.module').then(
         m => m.InvitationPageModule
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'data-policy',
@@ -80,6 +84,7 @@ const routes: Routes = [
       import('./features/data-policy/data-policy.module').then(
         m => m.DataPolicyPageModule
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'terms-of-use',
@@ -87,6 +92,7 @@ const routes: Routes = [
       import('./features/terms-of-use/terms-of-use.module').then(
         m => m.TermsOfUsePageModule
       ),
+    canActivate: [AuthGuard],
   },
 ];
 @NgModule({

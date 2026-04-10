@@ -94,11 +94,50 @@ export class AppComponent {
     this.inAppStoreService.initialize();
   }
 
+  private static readonly DEEP_LINK_HOST = 'capture-cam-deep-links.web.app';
+
+  private static readonly ALLOWED_DEEP_LINK_ROUTES = [
+    '/login',
+    '/signup',
+    '/home',
+    '/settings',
+    '/privacy',
+    '/about',
+    '/media-viewer',
+    '/contacts',
+    '/wallets',
+    '/invitation',
+    '/data-policy',
+    '/terms-of-use',
+  ];
+
   async initializeDeepLinking() {
     App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
       this.zone.run(() => {
-        const slug = event.url.split('.app').pop();
-        if (slug) this.router.navigateByUrl(slug);
+        try {
+          const parsedUrl = new URL(event.url);
+          if (parsedUrl.hostname !== AppComponent.DEEP_LINK_HOST) {
+            return;
+          }
+          // Strip matrix parameters from each path segment to prevent injection
+          const pathname = parsedUrl.pathname
+            .split('/')
+            .map(segment => segment.split(';')[0])
+            .join('/');
+          // Reject any URL containing path-traversal sequences after normalization
+          if (pathname.includes('..')) {
+            return;
+          }
+          const isAllowed = AppComponent.ALLOWED_DEEP_LINK_ROUTES.some(
+            prefix =>
+              pathname === prefix || pathname.startsWith(`${prefix}/`)
+          );
+          if (pathname && isAllowed) {
+            this.router.navigateByUrl(pathname);
+          }
+        } catch {
+          // Invalid URL – silently ignore
+        }
       });
     });
   }
