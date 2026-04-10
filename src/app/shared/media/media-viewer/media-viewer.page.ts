@@ -19,6 +19,8 @@ export class MediaViewerPage {
     distinctUntilChanged(),
     map((src): SafeUrl | null => {
       if (!ALLOWED_URL_SCHEMES.some(scheme => src.startsWith(scheme))) {
+        // eslint-disable-next-line no-console
+        console.error(`Blocked media URL with disallowed scheme: ${src}`);
         this.navController.back();
         return null;
       }
