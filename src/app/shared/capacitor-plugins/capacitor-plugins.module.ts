@@ -24,7 +24,7 @@ export const FILESYSTEM_PLUGIN = new InjectionToken<FilesystemPlugin>(
 );
 export const LOCAL_NOTIFICATIONS_PLUGIN =
   new InjectionToken<LocalNotificationsPlugin>('LOCAL_NOTIFICATIONS_PLUGIN');
-export const NETOWRK_PLUGIN = new InjectionToken<NetworkPlugin>(
+export const NETWORK_PLUGIN = new InjectionToken<NetworkPlugin>(
   'NETWORK_PLUGIN'
 );
 export const PREFERENCES_PLUGIN = new InjectionToken<PreferencesPlugin>(
@@ -56,7 +56,7 @@ export const PUSH_NOTIFICATIONS_PLUGIN =
       useValue: LocalNotifications,
     },
     {
-      provide: NETOWRK_PLUGIN,
+      provide: NETWORK_PLUGIN,
       useValue: Network,
     },
     {

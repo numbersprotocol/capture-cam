@@ -2,7 +2,7 @@ import { Inject, Injectable, NgZone } from '@angular/core';
 import { ConnectionStatus, NetworkPlugin } from '@capacitor/network';
 import { defer, merge, ReplaySubject } from 'rxjs';
 import { distinctUntilChanged, pluck } from 'rxjs/operators';
-import { NETOWRK_PLUGIN } from '../capacitor-plugins/capacitor-plugins.module';
+import { NETWORK_PLUGIN } from '../capacitor-plugins/capacitor-plugins.module';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +16,7 @@ export class NetworkService {
   ).pipe(pluck('connected'), distinctUntilChanged());
 
   constructor(
-    @Inject(NETOWRK_PLUGIN)
+    @Inject(NETWORK_PLUGIN)
     private readonly networkPlugin: NetworkPlugin,
     private readonly zone: NgZone
   ) {

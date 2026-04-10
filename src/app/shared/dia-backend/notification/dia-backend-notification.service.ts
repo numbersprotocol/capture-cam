@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { AppPlugin } from '@capacitor/app';
-import { Capacitor } from '@capacitor/core';
+import { Platform } from '@ionic/angular';
 import { TranslocoService } from '@jsverse/transloco';
 import { combineLatest, defer, EMPTY, Observable } from 'rxjs';
 import { concatMap, filter, tap } from 'rxjs/operators';
@@ -19,7 +19,8 @@ export class DiaBackendNotificationService {
     private readonly pushNotificationService: PushNotificationService,
     private readonly transactionRepository: DiaBackendTransactionRepository,
     private readonly notificationService: NotificationService,
-    private readonly translocoService: TranslocoService
+    private readonly translocoService: TranslocoService,
+    private readonly platform: Platform
   ) {}
 
   initialize$() {
@@ -50,7 +51,7 @@ export class DiaBackendNotificationService {
   }
 
   private async needLocalNotification() {
-    if (Capacitor.getPlatform() !== 'android') {
+    if (!this.platform.is('android')) {
       return false;
     }
     return (await this.appPlugin.getState()).isActive;

@@ -5,7 +5,7 @@ import {
   FILESYSTEM_PLUGIN,
   GEOLOCATION_PLUGIN,
   LOCAL_NOTIFICATIONS_PLUGIN,
-  NETOWRK_PLUGIN,
+  NETWORK_PLUGIN,
   PREFERENCES_PLUGIN,
   PUSH_NOTIFICATIONS_PLUGIN,
 } from './capacitor-plugins.module';
@@ -41,7 +41,7 @@ import { MockStoragePlugin } from './mock-storage-plugin';
       useClass: MockLocalNotificationsPlugin,
     },
     {
-      provide: NETOWRK_PLUGIN,
+      provide: NETWORK_PLUGIN,
       useClass: MockNetworkPlugin,
     },
     {

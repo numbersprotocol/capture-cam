@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { App } from '@capacitor/app';
@@ -20,7 +20,6 @@ import {
   filter,
   first,
   map,
-  startWith,
   tap,
 } from 'rxjs/operators';
 import { AndroidBackButtonService } from '../../shared/android-back-button/android-back-button.service';
@@ -59,7 +58,7 @@ import { PrefetchingDialogComponent } from './onboarding/prefetching-dialog/pref
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit {
   readonly initialTabIndex = 0;
   private readonly afterCaptureTabIndex = 0;
   private readonly collectionTabIndex = 2;
@@ -68,16 +67,15 @@ export class HomePage {
 
   readonly profileName$ = this.diaBackendAuthService.profileName$;
 
-  readonly hasNewInbox$ = this.diaBackendTransactionRepository.inbox$.pipe(
-    catchError((err: unknown) => this.errorService.toastError$(err)),
-    map(transactions => transactions.count !== 0),
-    /**
-     * WORKARDOUND: force changeDetection to update badge when returning to App
-     * by clicking push notification
-     */
-    tap(() => this.changeDetectorRef.detectChanges()),
-    startWith(false)
-  );
+  readonly hasNewInbox$ =
+    this.diaBackendTransactionRepository.hasNewInbox$.pipe(
+      catchError((err: unknown) => this.errorService.toastError$(err)),
+      /**
+       * WORKARDOUND: force changeDetection to update badge when returning to App
+       * by clicking push notification
+       */
+      tap(() => this.changeDetectorRef.detectChanges())
+    );
 
   constructor(
     private readonly changeDetectorRef: ChangeDetectorRef,
@@ -108,7 +106,9 @@ export class HomePage {
     private readonly mediaStore: MediaStore,
     private readonly blockingActionService: BlockingActionService,
     private readonly navController: NavController
-  ) {
+  ) {}
+
+  ngOnInit(): void {
     this.downloadExpiredPostCaptures();
     this.overrideAndroidBackButtonBehavior();
     this.encourageUserToTakePhoto();

@@ -8,14 +8,7 @@ import { TranslocoService } from '@jsverse/transloco';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { groupBy } from 'lodash-es';
 import { BehaviorSubject, combineLatest, defer, EMPTY, iif } from 'rxjs';
-import {
-  catchError,
-  concatMap,
-  map,
-  startWith,
-  switchMap,
-  tap,
-} from 'rxjs/operators';
+import { catchError, concatMap, map, switchMap, tap } from 'rxjs/operators';
 import { BlockingActionService } from '../../../shared/blocking-action/blocking-action.service';
 import {
   CaptureTabSegments,
@@ -53,16 +46,15 @@ export class CaptureTabComponent implements OnInit {
   readonly captureTabSegments = CaptureTabSegments;
   segment: CaptureTabSegments = CaptureTabSegments.VERIFIED;
 
-  readonly hasNewInbox$ = this.diaBackendTransactionRepository.inbox$.pipe(
-    catchError((err: unknown) => this.errorService.toastError$(err)),
-    map(transactions => transactions.count !== 0),
-    /**
-     * WORKARDOUND: force changeDetection to update badge when returning to App
-     * by clicking push notification
-     */
-    tap(() => this.changeDetectorRef.detectChanges()),
-    startWith(false)
-  );
+  readonly hasNewInbox$ =
+    this.diaBackendTransactionRepository.hasNewInbox$.pipe(
+      catchError((err: unknown) => this.errorService.toastError$(err)),
+      /**
+       * WORKARDOUND: force changeDetection to update badge when returning to App
+       * by clicking push notification
+       */
+      tap(() => this.changeDetectorRef.detectChanges())
+    );
 
   readonly username$ = this.diaBackendAuthService.username$;
 
@@ -149,7 +141,13 @@ export class CaptureTabComponent implements OnInit {
     private readonly blockingActionService: BlockingActionService,
     private readonly captureTabService: CaptureTabService,
     private readonly uploadService: DiaBackendAssetUploadingService
-  ) {
+  ) {}
+
+  static async openFaq() {
+    await Browser.open({ url: getFaqUrl(), toolbarColor: browserToolbarColor });
+  }
+
+  ngOnInit(): void {
     this.uploadService.pendingTasks$
       .pipe(untilDestroyed(this))
       .subscribe(value => (this.pendingUploadTasks = value));
@@ -157,13 +155,6 @@ export class CaptureTabComponent implements OnInit {
       .syncUser$()
       .pipe(untilDestroyed(this))
       .subscribe();
-  }
-
-  static async openFaq() {
-    await Browser.open({ url: getFaqUrl(), toolbarColor: browserToolbarColor });
-  }
-
-  ngOnInit(): void {
     this.initSegmentListener();
   }
 

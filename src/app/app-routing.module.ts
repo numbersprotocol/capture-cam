@@ -1,6 +1,19 @@
-import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { Injectable, NgModule } from '@angular/core';
+import {
+  PreloadingStrategy,
+  Route,
+  RouterModule,
+  Routes,
+} from '@angular/router';
+import { Observable, of } from 'rxjs';
 import { AuthGuard } from './shared/guards/auth/auth.guard';
+
+@Injectable({ providedIn: 'root' })
+export class SelectivePreloadingStrategy implements PreloadingStrategy {
+  preload(route: Route, load: () => Observable<unknown>): Observable<unknown> {
+    return route.data?.['preload'] === true ? load() : of(null);
+  }
+}
 
 const routes: Routes = [
   {
@@ -12,6 +25,7 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () =>
       import('./features/login/login.module').then(m => m.LoginPageModule),
+    data: { preload: true },
   },
   {
     path: 'signup',
@@ -23,6 +37,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./features/home/home.module').then(m => m.HomePageModule),
     canActivate: [AuthGuard],
+    data: { preload: true },
   },
   {
     path: 'settings',
@@ -92,7 +107,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, {
-      preloadingStrategy: PreloadAllModules,
+      preloadingStrategy: SelectivePreloadingStrategy,
     }),
   ],
   exports: [RouterModule],

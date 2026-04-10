@@ -9,8 +9,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { Capacitor } from '@capacitor/core';
 import { TranslocoService } from '@jsverse/transloco';
+import { Platform } from '@ionic/angular';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { PreviewVideo } from '@numbersprotocol/preview-video';
 import { BehaviorSubject, ReplaySubject, combineLatest, of } from 'rxjs';
@@ -57,7 +57,7 @@ export class MediaComponent implements AfterViewInit, OnDestroy {
 
   readonly playWithAndroidNativePlayer$ = combineLatest([
     this.isVideo$,
-    of(Capacitor.getPlatform() == 'android'),
+    of(this.platform.is('android')),
   ]).pipe(map(([isVideo, isAndroid]) => isVideo && isAndroid));
 
   @Input()
@@ -74,7 +74,8 @@ export class MediaComponent implements AfterViewInit, OnDestroy {
     private readonly renderer: Renderer2,
     private readonly elementRef: ElementRef,
     private readonly errorService: ErrorService,
-    private readonly translocoService: TranslocoService
+    private readonly translocoService: TranslocoService,
+    private readonly platform: Platform
   ) {}
 
   ngAfterViewInit(): void {

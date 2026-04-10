@@ -13,6 +13,14 @@
           class="flash-camera-button"
           [ngClass]="customOrientation$ | ngrxPush"
           (click)="enableTorch()"
+          (keydown.enter)="enableTorch()"
+          (keydown.space)="enableTorch()"
+          role="button"
+          tabindex="0"
+          [attr.aria-label]="
+            (isFlashOn$ | ngrxPush) ? t('camera.flashOff') : t('camera.flashOn')
+          "
+          [attr.aria-pressed]="(isFlashOn$ | ngrxPush) ?? false"
         >
           {{ (isFlashOn$ | ngrxPush) ? 'flash_on' : 'flash_off' }}
         </mat-icon>
@@ -22,6 +30,11 @@
           [ngClass]="customOrientation$ | ngrxPush"
           [svgIcon]="'capture-rebrand-camera-' + (cameraQuality$ | ngrxPush)"
           (click)="toggleCameraQuality()"
+          (keydown.enter)="toggleCameraQuality()"
+          (keydown.space)="toggleCameraQuality()"
+          role="button"
+          tabindex="0"
+          [attr.aria-label]="t('camera.toggleQuality')"
         >
         </mat-icon>
 
@@ -30,6 +43,11 @@
           [ngClass]="customOrientation$ | ngrxPush"
           *ngIf="lastConnectedGoProDevice$ | ngrxPush"
           (click)="captureFromGoPro()"
+          (keydown.enter)="captureFromGoPro()"
+          (keydown.space)="captureFromGoPro()"
+          role="button"
+          tabindex="0"
+          [attr.aria-label]="t('camera.captureFromGoPro')"
         >
           GoPro
           <mat-icon> featured_video </mat-icon>
@@ -39,6 +57,11 @@
           class="close-camera-button"
           [ngClass]="customOrientation$ | ngrxPush"
           (click)="leaveCustomCamera()"
+          (keydown.enter)="leaveCustomCamera()"
+          (keydown.space)="leaveCustomCamera()"
+          role="button"
+          tabindex="0"
+          [attr.aria-label]="t('camera.closeCamera')"
           joyrideStep="highlightCustomCameraCloseButton"
           [title]="t('userGuide.cameraUsageGuide')"
           [text]="
@@ -84,6 +107,12 @@
             class="camera-mode-item"
             [ngClass]="{ selected: isStoryMode$ | ngrxPush }"
             (click)="selectMode('story')"
+            (keydown.enter)="selectMode('story')"
+            (keydown.space)="selectMode('story')"
+            role="button"
+            tabindex="0"
+            [attr.aria-label]="t('camera.shortVideoMode')"
+            [attr.aria-pressed]="(isStoryMode$ | ngrxPush) ?? false"
           >
             SHORT
           </div>
@@ -91,6 +120,12 @@
             class="camera-mode-item"
             [ngClass]="{ selected: isPhotoMode$ | ngrxPush }"
             (click)="selectMode('photo')"
+            (keydown.enter)="selectMode('photo')"
+            (keydown.space)="selectMode('photo')"
+            role="button"
+            tabindex="0"
+            [attr.aria-label]="t('camera.photoMode')"
+            [attr.aria-pressed]="(isPhotoMode$ | ngrxPush) ?? false"
           >
             PHOTO
           </div>
@@ -100,12 +135,28 @@
           </div>
         </div>
         <div class="footer-camera-buttons">
-          <mat-icon (click)="redirectToCaptureDashboard()">
+          <mat-icon
+            (click)="redirectToCaptureDashboard()"
+            (keydown.enter)="redirectToCaptureDashboard()"
+            (keydown.space)="redirectToCaptureDashboard()"
+            role="button"
+            tabindex="0"
+            [attr.aria-label]="t('camera.openGallery')"
+          >
             imagesmode
           </mat-icon>
 
           <circle-progress
             (click)="onPress()"
+            (keydown.enter)="onPress()"
+            (keydown.space)="onPress()"
+            role="button"
+            tabindex="0"
+            [attr.aria-label]="
+              (isPhotoMode$ | ngrxPush)
+                ? t('camera.takePhoto')
+                : t('camera.recordVideo')
+            "
             [percent]="(curRecordTimeInPercent$ | ngrxPush) ?? 0"
             [outerStrokeColor]="
               (curRecordTimeInPercent$ | ngrxPush) === 0
@@ -132,6 +183,11 @@
 
           <mat-icon
             (click)="flipCamera()"
+            (keydown.enter)="flipCamera()"
+            (keydown.space)="flipCamera()"
+            role="button"
+            tabindex="0"
+            [attr.aria-label]="t('camera.flipCamera')"
             [ngClass]="customOrientation$ | ngrxPush"
             joyrideStep="highlightCustomCameraFlipButton"
             [title]="t('userGuide.cameraUsageGuide')"

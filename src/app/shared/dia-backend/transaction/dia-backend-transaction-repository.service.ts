@@ -8,6 +8,8 @@ import {
   map,
   pluck,
   repeatWhen,
+  shareReplay,
+  startWith,
   tap,
 } from 'rxjs/operators';
 import { Tuple } from '../../database/table/table';
@@ -48,6 +50,17 @@ export class DiaBackendTransactionRepository {
     first(),
     concatMap(count => this.listInbox$({ limit: count })),
     repeatWhen(() => this.updated$)
+  );
+
+  /**
+   * Shared observable that emits whether there are unread inbox items.
+   * Uses shareReplay to avoid duplicate API calls when multiple components
+   * subscribe simultaneously.
+   */
+  readonly hasNewInbox$ = this.inbox$.pipe(
+    map(transactions => transactions.count !== 0),
+    startWith(false),
+    shareReplay({ bufferSize: 1, refCount: true })
   );
 
   private readonly updated$ = new Subject<{ reason?: string }>();

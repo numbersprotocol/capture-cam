@@ -153,7 +153,8 @@ export class SettingsPage {
           return this.router.navigate(['email-verification'], {
             relativeTo: this.route,
           });
-        })
+        }),
+        untilDestroyed(this)
       )
       .subscribe();
   }
@@ -175,7 +176,8 @@ export class SettingsPage {
           this.snackBar.open(
             this.translocoService.translate('message.copiedToClipboard')
           );
-        })
+        }),
+        untilDestroyed(this)
       )
       .subscribe();
   }
