@@ -469,7 +469,7 @@ export class HomePage {
   }
 
   logout() {
-    return this.logoutService
+    this.logoutService
       .logout$()
       .pipe(untilDestroyed(this))
       .subscribe();
