@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  appsFlyerAppId: '1536388009',
 };
 
 /*

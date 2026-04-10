@@ -20,7 +20,7 @@ export interface SocialUser {
 })
 export class SocialAuthService {
   private initialized = false;
-  private initializing = false;
+  private initializationPromise: Promise<void> | undefined;
 
   // No dependencies needed for this service
   constructor() {
@@ -28,36 +28,33 @@ export class SocialAuthService {
   }
 
   private async initSocialAuth(): Promise<void> {
-    // Prevent multiple initializations
-    if (this.initialized || this.initializing) {
-      return;
+    if (this.initialized) {
+      return Promise.resolve();
     }
 
-    this.initializing = true;
-
-    try {
-      // Initialize the SocialLogin plugin with Google authentication credentials
-      // For iOS, we use a specific iOS client ID
-      // For Android and Web, we use the web client ID
-      await SocialLogin.initialize({
+    if (!this.initializationPromise) {
+      this.initializationPromise = SocialLogin.initialize({
         google: {
           iOSClientId: GOOGLE_IOS_CLIENT_ID,
           webClientId: GOOGLE_WEB_CLIENT_ID,
         },
-      });
-      this.initialized = true;
-    } finally {
-      this.initializing = false;
+      })
+        .then(() => {
+          this.initialized = true;
+        })
+        .catch((err: unknown) => {
+          this.initializationPromise = undefined;
+          throw err;
+        });
     }
+
+    return this.initializationPromise;
   }
 
   /**
    * Method to ensure the service is initialized
    */
   ensureInitialized$(): Observable<void> {
-    if (this.initialized) {
-      return from(Promise.resolve());
-    }
     return from(this.initSocialAuth());
   }
 

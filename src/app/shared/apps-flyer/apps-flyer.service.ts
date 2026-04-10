@@ -3,6 +3,7 @@ import { AdvertisingId } from '@capacitor-community/advertising-id';
 import { Capacitor } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
 import { AFEvent, AFInit, AppsFlyer } from 'appsflyer-capacitor-plugin';
+import { environment } from '../../../environments/environment';
 import { APPS_FLYER_DEV_KEY } from '../dia-backend/secret';
 import { CCamCustomEventType } from './apps-flyer-enums';
 
@@ -12,7 +13,7 @@ import { CCamCustomEventType } from './apps-flyer-enums';
 export class AppsFlyerService {
   private readonly INIT_TIMEOUT_MS = 2000;
   private readonly afConfig: AFInit = {
-    appID: '1536388009', // AppStore Application ID. For iOS only.
+    appID: environment.appsFlyerAppId, // AppStore Application ID. For iOS only.
     devKey: APPS_FLYER_DEV_KEY,
     isDebug: false,
     waitForATTUserAuthorization: 15, // for iOS 14 and higher

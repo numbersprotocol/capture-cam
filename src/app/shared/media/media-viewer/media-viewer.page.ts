@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
-import { distinctUntilChanged, map } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { isNonNullable } from '../../../utils/rx-operators/rx-operators';
+
+const ALLOWED_URL_SCHEMES = ['blob:', 'https:', 'capacitor:'];
 
 @Component({
   selector: 'app-media-viewer',
@@ -15,7 +17,14 @@ export class MediaViewerPage {
     map(params => params.get('src')),
     isNonNullable(),
     distinctUntilChanged(),
-    map(src => this.sanitizer.bypassSecurityTrustUrl(src))
+    map((src): SafeUrl | null => {
+      if (!ALLOWED_URL_SCHEMES.some(scheme => src.startsWith(scheme))) {
+        this.navController.back();
+        return null;
+      }
+      return this.sanitizer.bypassSecurityTrustUrl(src);
+    }),
+    filter((src): src is SafeUrl => src !== null)
   );
 
   private readonly mimeType$ = this.route.paramMap.pipe(
