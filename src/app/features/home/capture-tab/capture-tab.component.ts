@@ -7,35 +7,30 @@ import { ActionSheetButton, ActionSheetController } from '@ionic/angular';
 import { TranslocoService } from '@jsverse/transloco';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { groupBy } from 'lodash-es';
-import { BehaviorSubject, combineLatest, defer, EMPTY, iif } from 'rxjs';
+import { BehaviorSubject, combineLatest, defer } from 'rxjs';
 import {
   catchError,
-  concatMap,
   map,
   startWith,
   switchMap,
   tap,
 } from 'rxjs/operators';
-import { BlockingActionService } from '../../../shared/blocking-action/blocking-action.service';
 import {
   CaptureTabSegments,
   CaptureTabService,
 } from '../../../shared/capture-tab/capture-tab.service';
 import { ConfirmAlert } from '../../../shared/confirm-alert/confirm-alert.service';
-import { Database } from '../../../shared/database/database.service';
 import { DiaBackendAssetUploadingService } from '../../../shared/dia-backend/asset/uploading/dia-backend-asset-uploading.service';
 import { DiaBackendAuthService } from '../../../shared/dia-backend/auth/dia-backend-auth.service';
 import { DiaBackendTransactionRepository } from '../../../shared/dia-backend/transaction/dia-backend-transaction-repository.service';
 import { ErrorService } from '../../../shared/error/error.service';
-import { MediaStore } from '../../../shared/media/media-store/media-store.service';
+import { LogoutService } from '../../../shared/logout/logout.service';
 import { NetworkService } from '../../../shared/network/network.service';
-import { PreferenceManager } from '../../../shared/preference-manager/preference-manager.service';
 import { getOldProof } from '../../../shared/repositories/proof/old-proof-adapter';
 import { Proof } from '../../../shared/repositories/proof/proof';
 import { ProofRepository } from '../../../shared/repositories/proof/proof-repository.service';
 import { ShareService } from '../../../shared/share/share.service';
 import { browserToolbarColor } from '../../../utils/constants';
-import { reloadApp } from '../../../utils/miscellaneous';
 import { getFaqUrl, getShowcaseUrl } from '../../../utils/url';
 import { PrefetchingDialogComponent } from '../onboarding/prefetching-dialog/prefetching-dialog.component';
 
@@ -134,11 +129,8 @@ export class CaptureTabComponent implements OnInit {
   constructor(
     private readonly actionSheetController: ActionSheetController,
     private readonly router: Router,
-    private readonly mediaStore: MediaStore,
-    private readonly database: Database,
     private readonly confirmAlert: ConfirmAlert,
     private readonly dialog: MatDialog,
-    private readonly preferenceManager: PreferenceManager,
     private readonly changeDetectorRef: ChangeDetectorRef,
     private readonly proofRepository: ProofRepository,
     private readonly diaBackendAuthService: DiaBackendAuthService,
@@ -146,7 +138,7 @@ export class CaptureTabComponent implements OnInit {
     private readonly networkService: NetworkService,
     private readonly translocoService: TranslocoService,
     private readonly errorService: ErrorService,
-    private readonly blockingActionService: BlockingActionService,
+    private readonly logoutService: LogoutService,
     private readonly captureTabService: CaptureTabService,
     private readonly uploadService: DiaBackendAssetUploadingService
   ) {
@@ -243,23 +235,9 @@ export class CaptureTabComponent implements OnInit {
   }
 
   logout() {
-    const action$ = defer(() => this.mediaStore.clear()).pipe(
-      concatMap(() => defer(() => this.database.clear())),
-      concatMap(() => defer(() => this.preferenceManager.clear())),
-      concatMap(() => defer(reloadApp)),
-      catchError((err: unknown) => this.errorService.toastError$(err))
-    );
-    defer(() =>
-      this.confirmAlert.present({
-        message: this.translocoService.translate('message.confirmLogout'),
-      })
-    )
-      .pipe(
-        concatMap(result =>
-          iif(() => result, this.blockingActionService.run$(action$), EMPTY)
-        ),
-        untilDestroyed(this)
-      )
+    this.logoutService
+      .logout$()
+      .pipe(untilDestroyed(this))
       .subscribe();
   }
 

@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Device } from '@capacitor/device';
 import { Preferences } from '@capacitor/preferences';
-import { isEqual, reject } from 'lodash-es';
+import { isEqual } from 'lodash-es';
 import {
   Observable,
   ReplaySubject,
@@ -432,7 +432,7 @@ export class DiaBackendAuthService {
   }
 
   private async getToken() {
-    return new Promise<string>(resolve => {
+    return new Promise<string>((resolve, reject) => {
       this.preferences.getString(PrefKeys.TOKEN).then(token => {
         if (token.length !== 0) {
           resolve(token);

@@ -5,7 +5,7 @@ import { Clipboard } from '@capacitor/clipboard';
 import { IonModal } from '@ionic/angular';
 import { TranslocoService } from '@jsverse/transloco';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { EMPTY, Subject, defer, forkJoin } from 'rxjs';
+import { EMPTY, Subject, forkJoin } from 'rxjs';
 import {
   catchError,
   concatMap,
@@ -20,14 +20,11 @@ import { BlockingActionService } from '../../shared/blocking-action/blocking-act
 import { CapacitorFactsProvider } from '../../shared/collector/facts/capacitor-facts-provider/capacitor-facts-provider.service';
 import { CaptureAppWebCryptoApiSignatureProvider } from '../../shared/collector/signature/capture-app-web-crypto-api-signature-provider/capture-app-web-crypto-api-signature-provider.service';
 import { ConfirmAlert } from '../../shared/confirm-alert/confirm-alert.service';
-import { Database } from '../../shared/database/database.service';
 import { DiaBackendAuthService } from '../../shared/dia-backend/auth/dia-backend-auth.service';
 import { ErrorService } from '../../shared/error/error.service';
 import { LanguageService } from '../../shared/language/service/language.service';
-import { MediaStore } from '../../shared/media/media-store/media-store.service';
-import { PreferenceManager } from '../../shared/preference-manager/preference-manager.service';
+import { LogoutService } from '../../shared/logout/logout.service';
 import { VersionService } from '../../shared/version/version.service';
-import { reloadApp } from '../../utils/miscellaneous';
 import {
   CustomCameraService,
   SaveToCameraRollDecision,
@@ -81,9 +78,6 @@ export class SettingsPage {
 
   constructor(
     private readonly languageService: LanguageService,
-    private readonly database: Database,
-    private readonly preferenceManager: PreferenceManager,
-    private readonly mediaStore: MediaStore,
     private readonly blockingActionService: BlockingActionService,
     private readonly errorService: ErrorService,
     private readonly translocoService: TranslocoService,
@@ -95,7 +89,8 @@ export class SettingsPage {
     private readonly route: ActivatedRoute,
     private readonly capAppWebCryptoApiSignatureProvider: CaptureAppWebCryptoApiSignatureProvider,
     private readonly snackBar: MatSnackBar,
-    private readonly customCameraService: CustomCameraService
+    private readonly customCameraService: CustomCameraService,
+    private readonly logoutService: LogoutService
   ) {}
 
   ionViewWillEnter() {
@@ -182,11 +177,7 @@ export class SettingsPage {
 
   async deleteAccount() {
     const action$ = this.diaBackendAuthService.deleteAccount$().pipe(
-      // logout
-      concatMap(() => defer(() => this.mediaStore.clear())),
-      concatMap(() => defer(() => this.database.clear())),
-      concatMap(() => defer(() => this.preferenceManager.clear())),
-      concatMap(() => defer(reloadApp)),
+      concatMap(() => this.logoutService.wipeAndReload$()),
       catchError((err: unknown) => this.errorService.toastError$(err))
     );
 

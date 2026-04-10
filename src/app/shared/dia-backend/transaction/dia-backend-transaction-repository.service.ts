@@ -6,8 +6,7 @@ import {
   distinctUntilChanged,
   first,
   map,
-  pluck,
-  repeatWhen,
+  repeat,
   tap,
 } from 'rxjs/operators';
 import { Tuple } from '../../database/table/table';
@@ -29,25 +28,25 @@ export class DiaBackendTransactionRepository {
   readonly isFetching$ = this._isFetching$.pipe(distinctUntilChanged());
 
   private readonly allCount$ = this.list$({ limit: 1 }).pipe(
-    pluck('count'),
-    repeatWhen(() => this.updated$)
+    map(x => x.count),
+    repeat({ delay: () => this.updated$ })
   );
 
   private readonly inboxCount$ = this.listInbox$({ limit: 1 }).pipe(
-    pluck('count'),
-    repeatWhen(() => this.updated$)
+    map(x => x.count),
+    repeat({ delay: () => this.updated$ })
   );
 
   readonly all$ = this.allCount$.pipe(
     first(),
     concatMap(count => this.list$({ limit: count })),
-    repeatWhen(() => this.updated$)
+    repeat({ delay: () => this.updated$ })
   );
 
   readonly inbox$ = this.inboxCount$.pipe(
     first(),
     concatMap(count => this.listInbox$({ limit: count })),
-    repeatWhen(() => this.updated$)
+    repeat({ delay: () => this.updated$ })
   );
 
   private readonly updated$ = new Subject<{ reason?: string }>();

@@ -20,8 +20,7 @@ import {
   distinctUntilChanged,
   first,
   map,
-  pluck,
-  repeatWhen,
+  repeat,
   switchMap,
   tap,
 } from 'rxjs/operators';
@@ -60,14 +59,14 @@ export class DiaBackendAssetRepository {
   readonly fetchOriginallyOwnedCount$ = this.list$({
     limit: 1,
     isOriginalOwner: true,
-  }).pipe(pluck('count'));
+  }).pipe(map(x => x.count));
 
   private readonly postCapturesCount$ = this.list$({
     limit: 1,
     orderBy: 'source_transaction',
   }).pipe(
-    pluck('count'),
-    repeatWhen(() => this.postCapturesUpdated$)
+    map(x => x.count),
+    repeat({ delay: () => this.postCapturesUpdated$ })
   );
 
   private readonly postCapturesUpdated$ = new Subject<{ reason?: string }>();
@@ -83,7 +82,7 @@ export class DiaBackendAssetRepository {
         })
       ),
       tap(response => this.postCapturesCache$.next(response)),
-      repeatWhen(() => this.postCapturesUpdated$)
+      repeat({ delay: () => this.postCapturesUpdated$ })
     )
   ).pipe(distinctUntilChanged());
 

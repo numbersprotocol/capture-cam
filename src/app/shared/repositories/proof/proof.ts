@@ -1,5 +1,5 @@
 import { CameraSource } from '@capacitor/camera';
-import { snakeCase } from 'lodash';
+import { snakeCase } from 'lodash-es';
 import { defer, iif, of } from 'rxjs';
 import { concatMap } from 'rxjs/operators';
 import { sha256WithString } from '../../../utils/crypto/crypto';

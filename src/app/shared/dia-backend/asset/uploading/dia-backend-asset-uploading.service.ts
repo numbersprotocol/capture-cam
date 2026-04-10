@@ -17,8 +17,7 @@ import {
   filter,
   first,
   map,
-  mergeMap,
-  retryWhen,
+  retry,
   switchMap,
   tap,
 } from 'rxjs/operators';
@@ -149,13 +148,9 @@ export class DiaBackendAssetUploadingService {
         proof.parentAssetCid = diaBackendAsset.parent_asset_cid;
         return proof;
       }),
-      retryWhen(err$ =>
-        err$.pipe(
-          mergeMap((_, attempt) => {
-            return timer(attempBase ** attempt * scalingDuration);
-          })
-        )
-      )
+      retry({
+        delay: (_, attempt) => timer(attempBase ** attempt * scalingDuration),
+      })
     );
   }
 }

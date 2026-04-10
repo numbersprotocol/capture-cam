@@ -9,8 +9,8 @@ import {
   concatMap,
   distinctUntilChanged,
   first,
-  pluck,
-  repeatWhen,
+  map,
+  repeat,
   tap,
 } from 'rxjs/operators';
 import { Tuple } from '../../database/table/table';
@@ -29,14 +29,14 @@ export class DiaBackendContactRepository {
   private readonly contactsUpdated$ = new Subject<{ reason?: string }>();
 
   private readonly allCount$ = this.list$({ limit: 1 }).pipe(
-    pluck('count'),
-    repeatWhen(() => this.contactsUpdated$)
+    map(x => x.count),
+    repeat({ delay: () => this.contactsUpdated$ })
   );
 
   readonly all$ = this.allCount$.pipe(
     first(),
     concatMap(count => this.list$({ limit: count })),
-    repeatWhen(() => this.contactsUpdated$)
+    repeat({ delay: () => this.contactsUpdated$ })
   );
 
   constructor(
