@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Device } from '@capacitor/device';
 import { Preferences } from '@capacitor/preferences';
-import { isEqual, reject } from 'lodash-es';
+import { isEqual } from 'lodash-es';
 import {
   Observable,
   ReplaySubject,
@@ -435,15 +435,9 @@ export class DiaBackendAuthService {
   }
 
   private async getToken() {
-    return new Promise<string>(resolve => {
-      this.preferences.getString(PrefKeys.TOKEN).then(token => {
-        if (token.length !== 0) {
-          resolve(token);
-        } else {
-          reject(new Error('Cannot get DIA backend token which is empty.'));
-        }
-      });
-    });
+    const token = await this.preferences.getString(PrefKeys.TOKEN);
+    if (!token) throw new Error('Cannot get DIA backend token which is empty.');
+    return token;
   }
 
   private async setToken(value: string) {

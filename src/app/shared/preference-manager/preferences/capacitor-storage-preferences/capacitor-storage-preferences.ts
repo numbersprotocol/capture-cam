@@ -64,18 +64,20 @@ export class CapacitorStoragePreferences {
   }
 
   private async initializeValue(key: string, defaultValue: SupportedTypes) {
-    if (this.subjects.has(key)) {
-      const subject$ = this.subjects.get(key);
-      if (subject$?.value === undefined) {
-        subject$?.next(defaultValue);
+    return this.mutex.runExclusive(async () => {
+      if (this.subjects.has(key)) {
+        const subject$ = this.subjects.get(key);
+        if (subject$?.value === undefined) {
+          subject$?.next(defaultValue);
+        }
+        return;
       }
-      return;
-    }
-    const value = await this.loadValue(key, defaultValue);
-    this.subjects.set(
-      key,
-      new BehaviorSubject<SupportedTypes | undefined>(value)
-    );
+      const value = await this.loadValue(key, defaultValue);
+      this.subjects.set(
+        key,
+        new BehaviorSubject<SupportedTypes | undefined>(value)
+      );
+    });
   }
 
   private async loadValue(key: string, defaultValue: SupportedTypes) {
