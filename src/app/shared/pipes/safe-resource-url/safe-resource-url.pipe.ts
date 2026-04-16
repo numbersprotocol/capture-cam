@@ -8,9 +8,8 @@ import { BUBBLE_IFRAME_URL } from '../../dia-backend/secret';
 export class SafeResourceUrlPipe implements PipeTransform {
   constructor(private readonly sanitizer: DomSanitizer) {}
 
-  transform(url: string): SafeResourceUrl {
-    if (!url || !url.startsWith(BUBBLE_IFRAME_URL)) {
-      console.warn('Untrusted URL blocked:', url);
+  transform(url: string | null): SafeResourceUrl {
+    if (!url?.startsWith(BUBBLE_IFRAME_URL)) {
       return this.sanitizer.bypassSecurityTrustResourceUrl('');
     }
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);

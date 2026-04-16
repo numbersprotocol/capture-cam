@@ -43,4 +43,10 @@ describe('SafeResourceUrlPipe', () => {
     const pipe = new SafeResourceUrlPipe(domSanitizerMock!);
     expect(pipe.transform('')).toBe('');
   });
+
+  it('should block a null URL and return an empty safe resource URL', () => {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const pipe = new SafeResourceUrlPipe(domSanitizerMock!);
+    expect(pipe.transform(null)).toBe('');
+  });
 });
