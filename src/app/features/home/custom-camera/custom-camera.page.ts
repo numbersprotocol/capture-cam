@@ -3,7 +3,12 @@ import { Router } from '@angular/router';
 import { CameraSource } from '@capacitor/camera';
 import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
-import { AlertController, NavController, Platform } from '@ionic/angular';
+import {
+  AlertController,
+  NavController,
+  Platform,
+  RangeCustomEvent,
+} from '@ionic/angular';
 import { TranslocoService } from '@jsverse/transloco';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
@@ -47,6 +52,10 @@ import {
 type CameraMode = 'story' | 'photo' | 'gopro' | 'pre-publish';
 type CameraQuality = 'low' | 'hq';
 type MediaType = 'image' | 'video';
+
+interface PinchGestureEvent extends Event {
+  scale: number;
+}
 
 @UntilDestroy({ checkProperties: true })
 @Component({
@@ -257,7 +266,7 @@ export class CustomCameraPage implements OnInit, OnDestroy {
       }
       return true;
     } catch (_error: unknown) {
-      // FIXME: report _error to crashlytics.
+      // Error reporting to a crash reporting service (e.g. Crashlytics) is not yet implemented.
       const errMsg = this.translocoService.translate(
         'customCamera.error.canNotStartCamera'
       );
@@ -432,20 +441,22 @@ export class CustomCameraPage implements OnInit, OnDestroy {
     await this.customCameraService.focus(event.x, event.y);
   }
 
-  zoomFactorChange(event: any) {
-    const newZooomFactor = event.detail.value;
+  zoomFactorChange(event: RangeCustomEvent) {
+    const newZooomFactor = event.detail.value as number;
     this.curZoomFactor$.next(newZooomFactor);
     this.cameraZoomEvents$.next(newZooomFactor);
   }
 
-  handlePinchStart(e: any) {
-    this.lastZoomScale = e.scale;
+  handlePinchStart(e: Event) {
+    this.lastZoomScale = (e as PinchGestureEvent).scale;
   }
 
-  handlePinchIn(e: any) {
+  handlePinchIn(e: Event) {
+    const pinch = e as PinchGestureEvent;
     const zoomOutSensitivity = 2;
-    const zoom = Math.abs(e.scale - this.lastZoomScale) / zoomOutSensitivity;
-    this.lastZoomScale = e.scale;
+    const zoom =
+      Math.abs(pinch.scale - this.lastZoomScale) / zoomOutSensitivity;
+    this.lastZoomScale = pinch.scale;
     let newZoomFactor = this.curZoomFactor$.value - zoom;
     if (newZoomFactor < this.minZoomFactor$.value) {
       newZoomFactor = this.minZoomFactor$.value;
@@ -454,10 +465,11 @@ export class CustomCameraPage implements OnInit, OnDestroy {
     this.cameraZoomEvents$.next(newZoomFactor);
   }
 
-  handlePinchOut(e: any) {
+  handlePinchOut(e: Event) {
+    const pinch = e as PinchGestureEvent;
     const zoomInSensitivity = 8;
-    const zoom = Math.abs(e.scale - this.lastZoomScale) / zoomInSensitivity;
-    this.lastZoomScale = e.scale;
+    const zoom = Math.abs(pinch.scale - this.lastZoomScale) / zoomInSensitivity;
+    this.lastZoomScale = pinch.scale;
     let newZoomFactor = this.curZoomFactor$.value + zoom;
     if (newZoomFactor > this.maxZoomFactor$.value) {
       newZoomFactor = this.maxZoomFactor$.value;
@@ -548,7 +560,7 @@ export class CustomCameraPage implements OnInit, OnDestroy {
   // eslint-disable-next-line class-methods-use-this
   private debugOnlyPreventContextMenuFromLongPressContextMenu() {
     // Prevent showing context menu on long press
-    window.oncontextmenu = function (event: any) {
+    window.oncontextmenu = function (event: MouseEvent) {
       const pointerEvent = event as PointerEvent;
       if (pointerEvent.pointerType === 'touch') return false;
 

@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { PluginListenerHandle } from '@capacitor/core';
 import { NavController, Platform } from '@ionic/angular';
 import { GoProFile } from '../go-pro-media-file';
 
@@ -12,7 +13,7 @@ export class GoProMediaViewerWithNativePlayerComponent
 {
   mediaFile: GoProFile | undefined;
 
-  onIOSPlayerDismissedListener?: any;
+  onIOSPlayerDismissedListener?: PluginListenerHandle;
 
   constructor(
     private readonly navController: NavController,

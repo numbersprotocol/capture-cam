@@ -79,7 +79,10 @@ export class DiaBackendAuthService {
     private readonly pushNotificationService: PushNotificationService
   ) {}
 
-  // TODO: remove this method
+  /**
+   * Migrates legacy auth credentials stored under old 'numbersStoragePublisher_*' keys
+   * to the current preference keys. This can be removed once all users have migrated.
+   */
   private async migrate() {
     const oldToken = await Preferences.get({
       key: 'numbersStoragePublisher_authToken',
@@ -313,7 +316,7 @@ export class DiaBackendAuthService {
   deleteAccount$() {
     return defer(() => this.getAuthHeaders()).pipe(
       concatMap(authHeaders => {
-        return this.httpClient.delete<any>(`${BASE_URL}/auth/users/me/`, {
+        return this.httpClient.delete<void>(`${BASE_URL}/auth/users/me/`, {
           headers: new HttpHeaders()
             .set('Authorization', `${authHeaders.authorization}`)
             .set('Content-Type', 'application/json'),

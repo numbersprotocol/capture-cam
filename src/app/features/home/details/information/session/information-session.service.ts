@@ -259,8 +259,8 @@ export function normalizeGeolocation({
   latitude,
   longitude,
 }: {
-  latitude: any;
-  longitude: any;
+  latitude: string | number | undefined;
+  longitude: string | number | undefined;
 }) {
   if (
     ((typeof latitude === 'string' &&
