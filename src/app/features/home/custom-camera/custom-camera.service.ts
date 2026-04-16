@@ -234,7 +234,7 @@ export class CustomCameraService {
     return Promise.resolve(defaultMaxAvailableZoom);
   }
 
-  async zoom(zoomFactor: any) {
+  async zoom(zoomFactor: number) {
     if (this.isNativePlatform) {
       return await PreviewCamera.zoom({ factor: zoomFactor });
     }

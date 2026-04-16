@@ -125,7 +125,7 @@ export class ActionDetailsPage {
 
   // eslint-disable-next-line class-methods-use-this
   private createFormModel(params: Param[]) {
-    const formModel: any = {};
+    const formModel: Record<string, string> = {};
 
     for (const param of params)
       formModel[param.name_text] = param.default_values_list_text?.length
@@ -252,7 +252,7 @@ export class ActionDetailsPage {
     return VOID$;
   }
 
-  async performAction(data: any) {
+  async performAction(data: Record<string, unknown>) {
     const createOrderInput$ = combineLatest([
       this.networkAction$,
       this.authService.token$,
@@ -330,7 +330,7 @@ export class ActionDetailsPage {
       .subscribe();
   }
 
-  createOrder$(appName: string, actionArgs: any) {
+  createOrder$(appName: string, actionArgs: Record<string, unknown>) {
     return this.storeService.createNetworkAppOrder(appName, actionArgs).pipe(
       catchError((err: unknown) =>
         this.errorService.toastDiaBackendError$(err)

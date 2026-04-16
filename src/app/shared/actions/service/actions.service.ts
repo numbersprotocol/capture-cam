@@ -35,7 +35,7 @@ export class ActionsService {
     );
   }
 
-  send$(url: string, body: any) {
+  send$(url: string, body: Record<string, unknown>) {
     return this.httpClient.post(url, body);
   }
 }

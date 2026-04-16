@@ -90,7 +90,10 @@ export class WalletsPage {
         }),
         untilDestroyed(this)
       )
-      .subscribe();
+      .subscribe({
+        // eslint-disable-next-line no-console
+        error: (err: unknown) => console.error(err),
+      });
   }
 
   private reloadPage() {
@@ -103,7 +106,10 @@ export class WalletsPage {
         }),
         untilDestroyed(this)
       )
-      .subscribe();
+      .subscribe({
+        // eslint-disable-next-line no-console
+        error: (err: unknown) => console.error(err),
+      });
   }
 
   private copyToClipboardAssetWallet() {
@@ -113,7 +119,10 @@ export class WalletsPage {
         concatMap(assetWalletAddr => this.copyToClipboard(assetWalletAddr)),
         untilDestroyed(this)
       )
-      .subscribe();
+      .subscribe({
+        // eslint-disable-next-line no-console
+        error: (err: unknown) => console.error(err),
+      });
   }
 
   private copyToClipboardIntegrityWallet() {
@@ -123,7 +132,10 @@ export class WalletsPage {
         concatMap(publicKey => this.copyToClipboard(publicKey)),
         untilDestroyed(this)
       )
-      .subscribe();
+      .subscribe({
+        // eslint-disable-next-line no-console
+        error: (err: unknown) => console.error(err),
+      });
   }
 
   private copyToClipboardPrivateKey() {
@@ -133,7 +145,10 @@ export class WalletsPage {
         concatMap(privateKey => this.copyToClipboard(privateKey)),
         untilDestroyed(this)
       )
-      .subscribe();
+      .subscribe({
+        // eslint-disable-next-line no-console
+        error: (err: unknown) => console.error(err),
+      });
   }
 
   navigateToBuyNumPage() {

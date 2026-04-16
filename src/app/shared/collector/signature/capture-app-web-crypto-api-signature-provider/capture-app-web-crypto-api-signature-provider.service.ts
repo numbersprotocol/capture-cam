@@ -23,7 +23,7 @@ export class CaptureAppWebCryptoApiSignatureProvider
 
   constructor(private readonly preferenceManager: PreferenceManager) {}
 
-  idFor(source: any): string {
+  idFor(source: CameraSource): string {
     switch (source) {
       case CameraSource.Photos:
         return 'UploaderWebCryptoApiSignatureProvider';
