@@ -3,7 +3,12 @@ import { Router } from '@angular/router';
 import { CameraSource } from '@capacitor/camera';
 import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
-import { AlertController, NavController, Platform } from '@ionic/angular';
+import {
+  AlertController,
+  NavController,
+  Platform,
+  RangeCustomEvent,
+} from '@ionic/angular';
 import { TranslocoService } from '@jsverse/transloco';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
@@ -48,7 +53,7 @@ type CameraMode = 'story' | 'photo' | 'gopro' | 'pre-publish';
 type CameraQuality = 'low' | 'hq';
 type MediaType = 'image' | 'video';
 
-interface PinchGestureEvent {
+interface PinchGestureEvent extends Event {
   scale: number;
 }
 
@@ -436,20 +441,22 @@ export class CustomCameraPage implements OnInit, OnDestroy {
     await this.customCameraService.focus(event.x, event.y);
   }
 
-  zoomFactorChange(event: CustomEvent<{ value: number }>) {
-    const newZooomFactor = event.detail.value;
+  zoomFactorChange(event: RangeCustomEvent) {
+    const newZooomFactor = event.detail.value as number;
     this.curZoomFactor$.next(newZooomFactor);
     this.cameraZoomEvents$.next(newZooomFactor);
   }
 
-  handlePinchStart(e: PinchGestureEvent) {
-    this.lastZoomScale = e.scale;
+  handlePinchStart(e: Event) {
+    this.lastZoomScale = (e as PinchGestureEvent).scale;
   }
 
-  handlePinchIn(e: PinchGestureEvent) {
+  handlePinchIn(e: Event) {
+    const pinch = e as PinchGestureEvent;
     const zoomOutSensitivity = 2;
-    const zoom = Math.abs(e.scale - this.lastZoomScale) / zoomOutSensitivity;
-    this.lastZoomScale = e.scale;
+    const zoom =
+      Math.abs(pinch.scale - this.lastZoomScale) / zoomOutSensitivity;
+    this.lastZoomScale = pinch.scale;
     let newZoomFactor = this.curZoomFactor$.value - zoom;
     if (newZoomFactor < this.minZoomFactor$.value) {
       newZoomFactor = this.minZoomFactor$.value;
@@ -458,10 +465,11 @@ export class CustomCameraPage implements OnInit, OnDestroy {
     this.cameraZoomEvents$.next(newZoomFactor);
   }
 
-  handlePinchOut(e: PinchGestureEvent) {
+  handlePinchOut(e: Event) {
+    const pinch = e as PinchGestureEvent;
     const zoomInSensitivity = 8;
-    const zoom = Math.abs(e.scale - this.lastZoomScale) / zoomInSensitivity;
-    this.lastZoomScale = e.scale;
+    const zoom = Math.abs(pinch.scale - this.lastZoomScale) / zoomInSensitivity;
+    this.lastZoomScale = pinch.scale;
     let newZoomFactor = this.curZoomFactor$.value + zoom;
     if (newZoomFactor > this.maxZoomFactor$.value) {
       newZoomFactor = this.maxZoomFactor$.value;
