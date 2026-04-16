@@ -1,5 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { BackButtonEvent } from '@ionic/angular';
 import { fromEvent } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
@@ -7,13 +8,16 @@ import { map, tap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AndroidBackButtonService {
-  readonly androidBackButtonEvent$ = fromEvent(document, 'ionBackButton');
+  readonly androidBackButtonEvent$ = fromEvent<BackButtonEvent>(
+    document,
+    'ionBackButton'
+  );
 
   constructor(private readonly zone: NgZone) {}
 
   closeMatDialog$<T>(dialogRef: MatDialogRef<T>, priority = 100) {
     return this.androidBackButtonEvent$.pipe(
-      tap((event: any) =>
+      tap(event =>
         event.detail.register(priority, () =>
           this.zone.run(() => dialogRef.close())
         )
@@ -36,7 +40,7 @@ export class AndroidBackButtonService {
    */
   overrideAndroidBackButtonBehavior$(callback: () => void, priority = 1) {
     return this.androidBackButtonEvent$.pipe(
-      tap((event: any) => {
+      tap(event => {
         event.detail.register(priority, () => {
           this.zone.run(() => callback());
         });

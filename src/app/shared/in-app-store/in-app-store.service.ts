@@ -253,7 +253,7 @@ export class InAppStoreService implements OnDestroy {
     firstValueFrom(this.errorService.toastError$(errorMessage), {
       defaultValue: undefined,
     });
-    // TODO: report to remote error service
+    // Remote error reporting (e.g. Crashlytics) is not yet implemented.
   };
 
   private readonly onStoreReady = () => {

@@ -9,13 +9,13 @@ export function isNonNullable<T>() {
 }
 
 export function switchTap<T>(
-  func: (value: T) => Observable<any> | Promise<any>
+  func: (value: T) => Observable<unknown> | Promise<unknown>
 ) {
   return (source$: Observable<T>) =>
     source$.pipe(switchMap(value => from(func(value)).pipe(map(() => value))));
 }
 
-export function switchTapTo<T>(observable$: Observable<any>) {
+export function switchTapTo<T>(observable$: Observable<unknown>) {
   return (source$: Observable<T>) =>
     source$.pipe(switchMap(value => observable$.pipe(map(() => value))));
 }

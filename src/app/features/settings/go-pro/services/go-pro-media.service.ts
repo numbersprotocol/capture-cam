@@ -73,7 +73,7 @@ export class GoProMediaService {
         source: CameraSource.Camera,
       });
       isCaptured = true;
-    } catch (error: any) {
+    } catch (error: unknown) {
       const printIndentation = 2;
       // eslint-disable-next-line no-console
       console.warn(`'😭 ${JSON.stringify(error, null, printIndentation)}`);
@@ -85,10 +85,10 @@ export class GoProMediaService {
   async getFilesFromGoPro(): Promise<GoProFile[]> {
     const url = this.goproBaseUrl + '/gopro/media/list';
     const data = await firstValueFrom(
-      this.httpClient.get<{ media: { fs: string[] }[] }>(url)
+      this.httpClient.get<{ media: { fs: { n: string }[] }[] }>(url)
     );
 
-    const files = (data.media[0].fs as any[]).reverse();
+    const files = [...data.media[0].fs].reverse();
     const fileNames: string[] = files.map(e => e.n);
 
     return fileNames

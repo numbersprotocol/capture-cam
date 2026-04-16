@@ -4,7 +4,7 @@ import { NavController } from '@ionic/angular';
 import { TranslocoService } from '@jsverse/transloco';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { FormlyFieldConfig } from '@ngx-formly/core';
-import { combineLatest } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { catchError, first, map, tap } from 'rxjs/operators';
 import { BlockingActionService } from '../../../shared/blocking-action/blocking-action.service';
 import { DiaBackendAuthService } from '../../../shared/dia-backend/auth/dia-backend-auth.service';
@@ -162,7 +162,7 @@ export class EditProfilePage {
       .subscribe();
   }
 
-  private handleUpdateProfileError(err: unknown): any {
+  private handleUpdateProfileError(err: unknown): Observable<never> {
     return this.errorService.toastError$(err);
   }
 }
