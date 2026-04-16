@@ -100,7 +100,11 @@ export class DiaBackendStoreService {
     );
   }
 
-  createNetworkAppOrder(networkApp: string, actionArgs: Record<string, unknown>, price = 0) {
+  createNetworkAppOrder(
+    networkApp: string,
+    actionArgs: Record<string, unknown>,
+    price = 0
+  ) {
     return defer(() => this.authService.getAuthHeadersWithApiKey()).pipe(
       concatMap(headers => {
         return this.httpClient.post<NetworkAppOrder>(

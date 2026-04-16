@@ -16,7 +16,9 @@ export function getAssetProfileForCaptureIframe(cid: string) {
   return `${BUBBLE_IFRAME_URL}/asset_page?nid=${cid}`;
 }
 
-export function getAppDownloadLink(isPlatform: (platformName: Platforms) => boolean) {
+export function getAppDownloadLink(
+  isPlatform: (platformName: Platforms) => boolean
+) {
   if (isPlatform('ios'))
     return 'https://apps.apple.com/en/app/capture-app/id1536388009';
 

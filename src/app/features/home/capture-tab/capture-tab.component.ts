@@ -3,7 +3,11 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Browser } from '@capacitor/browser';
-import { ActionSheetButton, ActionSheetController, InfiniteScrollCustomEvent } from '@ionic/angular';
+import {
+  ActionSheetButton,
+  ActionSheetController,
+  InfiniteScrollCustomEvent,
+} from '@ionic/angular';
 import { TranslocoService } from '@jsverse/transloco';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { groupBy } from 'lodash-es';

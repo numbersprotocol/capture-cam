@@ -6,7 +6,10 @@ import { concatMap, distinctUntilChanged } from 'rxjs/operators';
 import { isNonNullable } from '../../../../utils/rx-operators/rx-operators';
 
 export class CapacitorStoragePreferences {
-  private readonly subjects = new Map<string, BehaviorSubject<SupportedTypes | undefined>>();
+  private readonly subjects = new Map<
+    string,
+    BehaviorSubject<SupportedTypes | undefined>
+  >();
   private readonly mutex = new Mutex();
 
   constructor(

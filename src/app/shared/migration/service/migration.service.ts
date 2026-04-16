@@ -187,9 +187,7 @@ export class MigrationService {
       map(proofs => proofs.filter(proof => !proof.signatureVersion)),
       concatMap(proofs =>
         forkJoin(
-          proofs.map(proof =>
-            this.collectorService.generateSignature(proof)
-          )
+          proofs.map(proof => this.collectorService.generateSignature(proof))
         ).pipe(defaultIfEmpty(proofs))
       ),
       concatMap(proofs =>
