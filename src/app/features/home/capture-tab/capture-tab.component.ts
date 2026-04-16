@@ -180,7 +180,10 @@ export class CaptureTabComponent implements OnInit {
   private initSegmentListener() {
     this.captureTabService.segment$
       .pipe(
-        tap(segment => (this.segment = segment)),
+        tap(segment => {
+          this.segment = segment;
+          this.changeDetectorRef.markForCheck();
+        }),
         untilDestroyed(this)
       )
       .subscribe();
