@@ -136,7 +136,7 @@ export class MediaStore {
           directory: this.directory,
           path: `${this.rootDir}/${index}.${extension}`,
         });
-      } catch (error: any) {
+      } catch (error: unknown) {
         /* WORKAROUND
          * In capture app we get "File does not exist error"
          * if currentPlatform.isAndroid() === true &&
@@ -146,7 +146,10 @@ export class MediaStore {
          * So we can silently ignore "File does not exist" error
          * while deleting capture from FileSystem only.
          */
-        if (error.message !== 'File does not exist') {
+        if (
+          !(error instanceof Error) ||
+          error.message !== 'File does not exist'
+        ) {
           throw error;
         }
       }
@@ -266,14 +269,20 @@ export class MediaStore {
    * directly when dealing with small image for better performance.
    */
   async getUrl(index: string, mimeType: MimeType) {
-    if (Capacitor.isNativePlatform()) {
-      // Workaround to fix urls (thumbnails) saved as incorrect mimeType.
-      await this.fixIncorrectExtension(index, mimeType);
-      return Capacitor.convertFileSrc(await this.getUri(index));
+    try {
+      if (Capacitor.isNativePlatform()) {
+        // Workaround to fix urls (thumbnails) saved as incorrect mimeType.
+        await this.fixIncorrectExtension(index, mimeType);
+        return Capacitor.convertFileSrc(await this.getUri(index));
+      }
+      return URL.createObjectURL(
+        await base64ToBlob(await this.readWithFileSystem(index), mimeType)
+      );
+    } catch (err: unknown) {
+      // eslint-disable-next-line no-console
+      console.error(`MediaStore.getUrl failed for index ${index}:`, err);
+      return '';
     }
-    return URL.createObjectURL(
-      await base64ToBlob(await this.readWithFileSystem(index), mimeType)
-    );
   }
 
   private async fixIncorrectExtension(

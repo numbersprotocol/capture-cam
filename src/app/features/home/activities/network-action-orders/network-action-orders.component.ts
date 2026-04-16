@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { InfiniteScrollCustomEvent } from '@ionic/angular';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { catchError, finalize, first, map, tap } from 'rxjs/operators';
@@ -33,7 +34,7 @@ export class NetworkActionOrdersComponent {
     this.loadData();
   }
 
-  loadData(event?: any) {
+  loadData(event?: InfiniteScrollCustomEvent) {
     this.isFetching$.next(true);
     this.storeService
       .listAllNetworkAppOrderWithThumbnail$({
@@ -45,7 +46,7 @@ export class NetworkActionOrdersComponent {
         tap(({ results }) => {
           this.orders$.next([...this.orders$.value, ...results]);
           this.offset += this.limit;
-          event?.target?.complete();
+          event?.target.complete();
         }),
         catchError((err: unknown) => this.errorService.toastError$(err)),
         finalize(() => this.isFetching$.next(false))

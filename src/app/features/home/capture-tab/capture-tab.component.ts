@@ -8,7 +8,11 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Browser } from '@capacitor/browser';
-import { ActionSheetButton, ActionSheetController } from '@ionic/angular';
+import {
+  ActionSheetButton,
+  ActionSheetController,
+  InfiniteScrollCustomEvent,
+} from '@ionic/angular';
 import { TranslocoService } from '@jsverse/transloco';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { groupBy } from 'lodash-es';
@@ -182,7 +186,7 @@ export class CaptureTabComponent implements OnInit {
       .subscribe();
   }
 
-  loadMoreItems(event: any) {
+  loadMoreItems(event: InfiniteScrollCustomEvent) {
     switch (this.segment) {
       case CaptureTabSegments.VERIFIED:
         this.capturedTabPageIndex$.next(this.capturedTabPageIndex$.value + 1);

@@ -79,14 +79,14 @@ export class GoProBluetoothService {
     try {
       await BleClient.initialize();
       this.hasInitialized = true;
-    } catch (err: any) {
+    } catch (err: unknown) {
       if (
         err instanceof Error &&
         err.message === 'Web Bluetooth API not available in this browser.'
       ) {
         return;
       }
-      throw new Error(err.message);
+      throw new Error(err instanceof Error ? err.message : String(err));
     }
   }
 
@@ -102,7 +102,7 @@ export class GoProBluetoothService {
 
     BleClient.requestLEScan(
       { services: [this.goProControlAndQueryServiceUUID] },
-      (foundDevice: any) => bluetoothScanResults.push(foundDevice)
+      (foundDevice: ScanResult) => bluetoothScanResults.push(foundDevice)
     );
 
     await new Promise(resolve => {

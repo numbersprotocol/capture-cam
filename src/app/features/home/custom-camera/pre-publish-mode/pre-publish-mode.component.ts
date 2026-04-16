@@ -98,9 +98,9 @@ export class PrePublishModeComponent {
     if (value) this.curCaptureSrc$.next(value);
   }
 
-  @Output() discard: EventEmitter<any> = new EventEmitter();
+  @Output() discard: EventEmitter<boolean> = new EventEmitter();
 
-  @Output() confirm: EventEmitter<any> = new EventEmitter();
+  @Output() confirm: EventEmitter<boolean> = new EventEmitter();
 
   constructor(
     @Inject(FILESYSTEM_PLUGIN)
