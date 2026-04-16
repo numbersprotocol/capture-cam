@@ -3,7 +3,6 @@ import { UntypedFormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Browser } from '@capacitor/browser';
 import { NavController } from '@ionic/angular';
 import { TranslocoService } from '@jsverse/transloco';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -43,7 +42,6 @@ import { DiaBackendWalletService } from '../../../../../shared/dia-backend/walle
 import { ErrorService } from '../../../../../shared/error/error.service';
 import { OrderDetailDialogComponent } from '../../../../../shared/order-detail-dialog/order-detail-dialog.component';
 import { ProofRepository } from '../../../../../shared/repositories/proof/proof-repository.service';
-import { browserToolbarColor } from '../../../../../utils/constants';
 import {
   VOID$,
   isNonNullable,
@@ -57,8 +55,6 @@ import { InformationSessionService } from '../../information/session/information
   styleUrls: ['./action-details.page.scss'],
 })
 export class ActionDetailsPage {
-  private readonly ALLOWED_DOMAINS = ['captureapp.xyz', 'numbersprotocol.io'];
-
   readonly id$ = this.route.paramMap.pipe(
     map(params => params.get('id')),
     isNonNullable()
@@ -327,14 +323,6 @@ export class ActionDetailsPage {
                   this.navController.back();
                 }
               }),
-              tap(networkAppOrder => {
-                if (action.ext_action_destination_text) {
-                  this.redirectToExternalUrl(
-                    action.ext_action_destination_text,
-                    networkAppOrder.id
-                  );
-                }
-              }),
               untilDestroyed(this)
             );
         })
@@ -371,45 +359,6 @@ export class ActionDetailsPage {
         return this.errorService.toastError$(err);
       })
     );
-  }
-
-  private isValidRedirectUrl(url: string): boolean {
-    try {
-      const parsed = new URL(url);
-      if (parsed.protocol !== 'https:') return false;
-      return this.ALLOWED_DOMAINS.some(
-        d => parsed.hostname === d || parsed.hostname.endsWith(`.${d}`)
-      );
-    } catch {
-      return false;
-    }
-  }
-
-  redirectToExternalUrl(url: string, orderId: string) {
-    if (!this.isValidRedirectUrl(url)) {
-      this.errorService
-        .toastError$(
-          this.translocoService.translate('error.invalidRedirectUrl')
-        )
-        .subscribe();
-      return;
-    }
-    this.id$
-      .pipe(
-        first(),
-        isNonNullable(),
-        tap(cid =>
-          Browser.open({
-            url: `${url}?cid=${cid}&order_id=${orderId}`,
-            toolbarColor: browserToolbarColor,
-          })
-        ),
-        catchError((err: unknown) => {
-          return this.errorService.toastError$(err);
-        }),
-        untilDestroyed(this)
-      )
-      .subscribe();
   }
 
   removeCaptureAndNavigateHome() {
