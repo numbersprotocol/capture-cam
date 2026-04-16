@@ -56,7 +56,7 @@
     "@ionic/pwa-elements": "^3.0.2",
     "@jsverse/transloco": "^8.2.1",
     "@meddv/ngx-pinch-zoom": "^18.0.1",
-    "@ngneat/until-destroy": "^8.1.0",
+    "@ngneat/until-destroy": "^10.0.0",
     "@ngrx/component": "^18.1.1",
     "@ngrx/store": "^18.1.1",
     "@ngx-formly/core": "^7.1.0",
