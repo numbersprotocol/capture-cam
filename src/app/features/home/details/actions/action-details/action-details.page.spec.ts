@@ -1,4 +1,10 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+  waitForAsync,
+} from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { Browser } from '@capacitor/browser';
 import { EMPTY, of } from 'rxjs';
@@ -44,37 +50,40 @@ describe('ActionDetailsPage', () => {
       toastErrorSpy = spyOn(errorService, 'toastError$').and.returnValue(EMPTY);
     });
 
-    it('should open valid HTTPS URL from allowlisted domain captureapp.xyz', () => {
+    it('should open valid HTTPS URL from allowlisted domain captureapp.xyz', fakeAsync(() => {
       component.redirectToExternalUrl(
         'https://app.captureapp.xyz/action',
         'order-1'
       );
+      tick();
       expect(browserOpenSpy).toHaveBeenCalledWith(
         jasmine.objectContaining({
           url: jasmine.stringContaining('https://app.captureapp.xyz/action'),
         })
       );
       expect(toastErrorSpy).not.toHaveBeenCalled();
-    });
+    }));
 
-    it('should open valid HTTPS URL from allowlisted domain numbersprotocol.io', () => {
+    it('should open valid HTTPS URL from allowlisted domain numbersprotocol.io', fakeAsync(() => {
       component.redirectToExternalUrl(
         'https://numbersprotocol.io/action',
         'order-2'
       );
+      tick();
       expect(browserOpenSpy).toHaveBeenCalledWith(
         jasmine.objectContaining({
           url: jasmine.stringContaining('https://numbersprotocol.io/action'),
         })
       );
       expect(toastErrorSpy).not.toHaveBeenCalled();
-    });
+    }));
 
-    it('should open valid HTTPS URL from legitimate subdomain of allowlisted domain', () => {
+    it('should open valid HTTPS URL from legitimate subdomain of allowlisted domain', fakeAsync(() => {
       component.redirectToExternalUrl(
         'https://subdomain.captureapp.xyz/action',
         'order-7'
       );
+      tick();
       expect(browserOpenSpy).toHaveBeenCalledWith(
         jasmine.objectContaining({
           url: jasmine.stringContaining(
@@ -83,7 +92,7 @@ describe('ActionDetailsPage', () => {
         })
       );
       expect(toastErrorSpy).not.toHaveBeenCalled();
-    });
+    }));
 
     it('should reject HTTP URLs', () => {
       component.redirectToExternalUrl(
@@ -110,10 +119,7 @@ describe('ActionDetailsPage', () => {
     });
 
     it('should reject URLs that try to spoof allowlisted domains via similar domain names', () => {
-      component.redirectToExternalUrl(
-        'https://evil-captureapp.xyz',
-        'order-8'
-      );
+      component.redirectToExternalUrl('https://evil-captureapp.xyz', 'order-8');
       expect(browserOpenSpy).not.toHaveBeenCalled();
       expect(toastErrorSpy).toHaveBeenCalled();
     });
