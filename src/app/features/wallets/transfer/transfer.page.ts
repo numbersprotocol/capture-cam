@@ -65,9 +65,13 @@ export class TransferPage {
     private readonly platform: Platform,
     private readonly snackBar: MatSnackBar
   ) {
-    this.activeRoute.paramMap.subscribe(paramMap => {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      this.mode = paramMap.get('mode')!;
+    this.activeRoute.paramMap.subscribe({
+      next: paramMap => {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        this.mode = paramMap.get('mode')!;
+      },
+      // eslint-disable-next-line no-console
+      error: (err: unknown) => console.error(err),
     });
   }
 
@@ -84,7 +88,10 @@ export class TransferPage {
         ),
         untilDestroyed(this)
       )
-      .subscribe();
+      .subscribe({
+        // eslint-disable-next-line no-console
+        error: (err: unknown) => console.error(err),
+      });
   }
 
   onInputTransferAmount() {
@@ -98,7 +105,10 @@ export class TransferPage {
           this.translocoService.translate('error.wallets.emptyTransferAmount')
         )
         .pipe(untilDestroyed(this))
-        .subscribe();
+        .subscribe({
+          // eslint-disable-next-line no-console
+          error: (err: unknown) => console.error(err),
+        });
       return;
     }
 
@@ -156,7 +166,10 @@ export class TransferPage {
         }),
         untilDestroyed(this)
       )
-      .subscribe();
+      .subscribe({
+        // eslint-disable-next-line no-console
+        error: (err: unknown) => console.error(err),
+      });
   }
 
   transfer() {
@@ -180,7 +193,10 @@ export class TransferPage {
         finalize(() => dialogRef.close()),
         untilDestroyed(this)
       )
-      .subscribe();
+      .subscribe({
+        // eslint-disable-next-line no-console
+        error: (err: unknown) => console.error(err),
+      });
   }
 
   openTransferRequestSentDialog() {
