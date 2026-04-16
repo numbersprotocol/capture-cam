@@ -1,5 +1,10 @@
 import { formatDate, KeyValue } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Browser } from '@capacitor/browser';
@@ -48,6 +53,7 @@ import { PrefetchingDialogComponent } from '../onboarding/prefetching-dialog/pre
   selector: 'app-capture-tab',
   templateUrl: './capture-tab.component.html',
   styleUrls: ['./capture-tab.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CaptureTabComponent implements OnInit {
   /**
@@ -174,7 +180,10 @@ export class CaptureTabComponent implements OnInit {
   private initSegmentListener() {
     this.captureTabService.segment$
       .pipe(
-        tap(segment => (this.segment = segment)),
+        tap(segment => {
+          this.segment = segment;
+          this.changeDetectorRef.markForCheck();
+        }),
         untilDestroyed(this)
       )
       .subscribe();
