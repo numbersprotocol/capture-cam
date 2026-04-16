@@ -70,7 +70,10 @@ export class SignupPage {
         ),
         untilDestroyed(this)
       )
-      .subscribe();
+      .subscribe({
+        // eslint-disable-next-line no-console
+        error: (err: unknown) => console.error(err),
+      });
   }
 
   private createFormFields(
@@ -190,7 +193,7 @@ export class SignupPage {
             expressions: {
               'model.referralCodeOptional': 'model.referralCodeOptional',
             },
-            parsers: [(value: any) => value?.toUpperCase()],
+            parsers: [(value: string) => value.toUpperCase()],
           },
         ],
       },
@@ -237,7 +240,10 @@ export class SignupPage {
     this.blockingActionService
       .run$(action$)
       .pipe(untilDestroyed(this))
-      .subscribe();
+      .subscribe({
+        // eslint-disable-next-line no-console
+        error: (err: unknown) => console.error(err),
+      });
   }
 
   private handleOnSubmitError(err: unknown) {

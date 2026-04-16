@@ -6,7 +6,10 @@ import { concatMap, distinctUntilChanged } from 'rxjs/operators';
 import { isNonNullable } from '../../../../utils/rx-operators/rx-operators';
 
 export class CapacitorStoragePreferences {
-  private readonly subjects = new Map<string, BehaviorSubject<any>>();
+  private readonly subjects = new Map<
+    string,
+    BehaviorSubject<SupportedTypes | undefined>
+  >();
   private readonly mutex = new Mutex();
 
   constructor(
@@ -57,7 +60,7 @@ export class CapacitorStoragePreferences {
   ): Promise<SupportedTypes> {
     await this.initializeValue(key, defaultValue);
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return this.subjects.get(key)!.value;
+    return this.subjects.get(key)!.value!;
   }
 
   private async initializeValue(key: string, defaultValue: SupportedTypes) {
