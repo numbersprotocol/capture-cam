@@ -8,6 +8,8 @@ import { DiaBackendAssetDownloadingService } from '../downloading/dia-backend-do
   providedIn: 'root',
 })
 export class DiaBackendAssetPrefetchingService {
+  private readonly batchSize = 5;
+
   constructor(
     private readonly assetRepository: DiaBackendAssetRepository,
     private readonly downloadingService: DiaBackendAssetDownloadingService,
@@ -32,15 +34,20 @@ export class DiaBackendAssetPrefetchingService {
       if (diaBackendAssets.length === 0) {
         break;
       }
-      for (const diaBackendAsset of diaBackendAssets) {
-        if (diaBackendAsset.source_transaction === null)
-          await this.downloadingService.storeRemoteCapture(
-            diaBackendAsset,
-            (await this.mediaStore.getThumbnail(
-              diaBackendAsset.proof_hash
-            )) === undefined
-          );
-        currentCount += 1;
+      for (let i = 0; i < diaBackendAssets.length; i += this.batchSize) {
+        const batch = diaBackendAssets.slice(i, i + this.batchSize);
+        await Promise.all(
+          batch.map(async diaBackendAsset => {
+            if (diaBackendAsset.source_transaction === null)
+              await this.downloadingService.storeRemoteCapture(
+                diaBackendAsset,
+                (await this.mediaStore.getThumbnail(
+                  diaBackendAsset.proof_hash
+                )) === undefined
+              );
+          })
+        );
+        currentCount += batch.length;
         onStored(currentCount, totalCount);
       }
       currentOffset += diaBackendAssets.length;
