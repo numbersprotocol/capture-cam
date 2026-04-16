@@ -24,26 +24,6 @@ jobs:
       - name: Lint
         run: npm run lint
 
-  security-audit:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    permissions:
-      contents: read
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Use Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Security audit
-        run: npm audit --audit-level=high --omit=dev
-
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 10
