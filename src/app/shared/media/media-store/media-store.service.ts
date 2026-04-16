@@ -272,6 +272,7 @@ export class MediaStore {
         await base64ToBlob(await this.readWithFileSystem(index), mimeType)
       );
     } catch (err: unknown) {
+      // eslint-disable-next-line no-console
       console.error(`MediaStore.getUrl failed for index ${index}:`, err);
       return '';
     }

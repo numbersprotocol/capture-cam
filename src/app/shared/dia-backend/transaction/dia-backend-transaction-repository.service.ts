@@ -96,6 +96,7 @@ export class DiaBackendTransactionRepository {
       )
     ),
     catchError((err: unknown) => {
+      // eslint-disable-next-line no-console
       console.error('downloadExpired$ error:', err);
       return EMPTY;
     })
