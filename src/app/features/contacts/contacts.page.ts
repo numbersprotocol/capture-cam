@@ -46,7 +46,10 @@ export class ContactsPage {
         catchError((err: unknown) => this.errorService.toastError$(err)),
         untilDestroyed(this)
       )
-      .subscribe();
+      .subscribe({
+        // eslint-disable-next-line no-console
+        error: (err: unknown) => console.error(err),
+      });
   }
 
   // eslint-disable-next-line class-methods-use-this
