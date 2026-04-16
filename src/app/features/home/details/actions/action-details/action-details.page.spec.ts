@@ -1,10 +1,4 @@
-import {
-  ComponentFixture,
-  fakeAsync,
-  TestBed,
-  tick,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { Browser } from '@capacitor/browser';
 import { EMPTY, of } from 'rxjs';
@@ -46,44 +40,49 @@ describe('ActionDetailsPage', () => {
     let toastErrorSpy: jasmine.Spy;
 
     beforeEach(() => {
+      // Override id$ to bypass ActivatedRoute/RouterTestingModule dependency.
+      // RouterTestingModule may provide its own ActivatedRoute that shadows
+      // the test mock, causing id$ to never emit.
+      Object.defineProperty(component, 'id$', {
+        value: of('test-cid'),
+        writable: true,
+        configurable: true,
+      });
       browserOpenSpy = spyOn(Browser, 'open').and.resolveTo();
       toastErrorSpy = spyOn(errorService, 'toastError$').and.returnValue(EMPTY);
     });
 
-    it('should open valid HTTPS URL from allowlisted domain captureapp.xyz', fakeAsync(() => {
+    it('should open valid HTTPS URL from allowlisted domain captureapp.xyz', () => {
       component.redirectToExternalUrl(
         'https://app.captureapp.xyz/action',
         'order-1'
       );
-      tick();
       expect(browserOpenSpy).toHaveBeenCalledWith(
         jasmine.objectContaining({
           url: jasmine.stringContaining('https://app.captureapp.xyz/action'),
         })
       );
       expect(toastErrorSpy).not.toHaveBeenCalled();
-    }));
+    });
 
-    it('should open valid HTTPS URL from allowlisted domain numbersprotocol.io', fakeAsync(() => {
+    it('should open valid HTTPS URL from allowlisted domain numbersprotocol.io', () => {
       component.redirectToExternalUrl(
         'https://numbersprotocol.io/action',
         'order-2'
       );
-      tick();
       expect(browserOpenSpy).toHaveBeenCalledWith(
         jasmine.objectContaining({
           url: jasmine.stringContaining('https://numbersprotocol.io/action'),
         })
       );
       expect(toastErrorSpy).not.toHaveBeenCalled();
-    }));
+    });
 
-    it('should open valid HTTPS URL from legitimate subdomain of allowlisted domain', fakeAsync(() => {
+    it('should open valid HTTPS URL from legitimate subdomain of allowlisted domain', () => {
       component.redirectToExternalUrl(
         'https://subdomain.captureapp.xyz/action',
         'order-7'
       );
-      tick();
       expect(browserOpenSpy).toHaveBeenCalledWith(
         jasmine.objectContaining({
           url: jasmine.stringContaining(
@@ -92,7 +91,7 @@ describe('ActionDetailsPage', () => {
         })
       );
       expect(toastErrorSpy).not.toHaveBeenCalled();
-    }));
+    });
 
     it('should reject HTTP URLs', () => {
       component.redirectToExternalUrl(
