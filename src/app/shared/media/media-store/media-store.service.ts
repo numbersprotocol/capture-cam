@@ -132,7 +132,7 @@ export class MediaStore {
           directory: this.directory,
           path: `${this.rootDir}/${index}.${extension}`,
         });
-      } catch (error: any) {
+      } catch (error: unknown) {
         /* WORKAROUND
          * In capture app we get "File does not exist error"
          * if currentPlatform.isAndroid() === true &&
@@ -142,7 +142,10 @@ export class MediaStore {
          * So we can silently ignore "File does not exist" error
          * while deleting capture from FileSystem only.
          */
-        if (error.message !== 'File does not exist') {
+        if (
+          !(error instanceof Error) ||
+          error.message !== 'File does not exist'
+        ) {
           throw error;
         }
       }

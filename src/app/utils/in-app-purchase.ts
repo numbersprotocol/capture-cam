@@ -12,7 +12,7 @@ export function truncateReceipt(recipt: string) {
  * It will pring to console only in dev mode aka isDevMode() === true
  */
 export function setupInAppPurchaseDebugPrint(tag: string) {
-  return function (message: string, data?: any) {
+  return function (message: string, data?: unknown) {
     if (!isDevMode()) return;
 
     // eslint-disable-next-line no-console

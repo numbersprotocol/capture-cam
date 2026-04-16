@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CheckboxCustomEvent } from '@ionic/angular';
 import { UserGuideService } from '../../../shared/user-guide/user-guide.service';
 
 @Component({
@@ -41,53 +42,53 @@ export class UserGuidePage {
 
   constructor(private readonly userGuideService: UserGuideService) {}
 
-  setHasHighlightedCameraTab(event: any) {
+  setHasHighlightedCameraTab(event: CheckboxCustomEvent) {
     this.userGuideService.setHasHighlightedCameraTab(event.detail.checked);
   }
 
-  setHasOpenedCustomCameraPage(event: any) {
+  setHasOpenedCustomCameraPage(event: CheckboxCustomEvent) {
     this.userGuideService.setHasOpenedCustomCameraPage(event.detail.checked);
   }
 
-  setHasCapturedPhotoWithCustomCamera(event: any) {
+  setHasCapturedPhotoWithCustomCamera(event: CheckboxCustomEvent) {
     this.userGuideService.setHasCapturedPhotoWithCustomCamera(
       event.detail.checked
     );
   }
 
-  setHasCapturedVideoWithCustomCamera(event: any) {
+  setHasCapturedVideoWithCustomCamera(event: CheckboxCustomEvent) {
     this.userGuideService.setHasCapturedVideoWithCustomCamera(
       event.detail.checked
     );
   }
 
-  setHasHighlightedFirstCapture(event: any) {
+  setHasHighlightedFirstCapture(event: CheckboxCustomEvent) {
     this.userGuideService.setHasHighlightedFirstCapture(event.detail.checked);
   }
 
-  setHasOpenedDetailsPage(event: any) {
+  setHasOpenedDetailsPage(event: CheckboxCustomEvent) {
     this.userGuideService.setHasOpenedDetailsPage(event.detail.checked);
   }
 
-  setHasClickedDetailsPageOptionsMenu(event: any) {
+  setHasClickedDetailsPageOptionsMenu(event: CheckboxCustomEvent) {
     this.userGuideService.setHasClickedDetailsPageOptionsMenu(
       event.detail.checked
     );
   }
 
-  setHasHighligtedActivityButton(event: any) {
+  setHasHighligtedActivityButton(event: CheckboxCustomEvent) {
     this.userGuideService.setHasHighligtedActivityButton(event.detail.checked);
   }
 
-  setHasOpenedActivitiesPage(event: any) {
+  setHasOpenedActivitiesPage(event: CheckboxCustomEvent) {
     this.userGuideService.setHasOpenedActivitiesPage(event.detail.checked);
   }
 
-  setHasHightlightedInboxTab(event: any) {
+  setHasHightlightedInboxTab(event: CheckboxCustomEvent) {
     this.userGuideService.setHasHightlightedInboxTab(event.detail.checked);
   }
 
-  setHasOpenedInboxTab(event: any) {
+  setHasOpenedInboxTab(event: CheckboxCustomEvent) {
     this.userGuideService.setHasOpenedInboxTab(event.detail.checked);
   }
 

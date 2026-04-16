@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Clipboard } from '@capacitor/clipboard';
-import { IonModal } from '@ionic/angular';
+import { IonModal, ToggleCustomEvent } from '@ionic/angular';
 import { TranslocoService } from '@jsverse/transloco';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { EMPTY, Subject, defer, forkJoin } from 'rxjs';
@@ -126,17 +126,17 @@ export class SettingsPage {
     this.hiddenOptionClicks$.next();
   }
 
-  async setDeviceInfoCollection(event: any) {
+  async setDeviceInfoCollection(event: ToggleCustomEvent) {
     const enable = Boolean(event.detail.checked);
     return this.capacitorFactsProvider.setDeviceInfoCollection(enable);
   }
 
-  async setLocationInfoCollection(event: any) {
+  async setLocationInfoCollection(event: ToggleCustomEvent) {
     const enable = Boolean(event.detail.checked);
     return this.capacitorFactsProvider.setGeolocationInfoCollection(enable);
   }
 
-  async setShouldSaveToCameraRoll(event: any) {
+  async setShouldSaveToCameraRoll(event: ToggleCustomEvent) {
     const enable = Boolean(event.detail.checked);
     const shouldSave = enable
       ? SaveToCameraRollDecision.YES

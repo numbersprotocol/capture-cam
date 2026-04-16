@@ -26,8 +26,9 @@ export class ImageInputFormComponent {
   @Output()
   imageSelected = new EventEmitter<File>();
 
-  onInputChange(event: any) {
-    const file = event.target.files[0];
+  onInputChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
     if (file) {
       const image = file as File;
       this.selectedImage = image;
@@ -38,7 +39,8 @@ export class ImageInputFormComponent {
 
   private prepareImagePreview(image: File) {
     const reader = new FileReader();
-    reader.onload = (e: any) => this.imagePreview$.next(e.target.result);
+    reader.onload = (e: ProgressEvent<FileReader>) =>
+      this.imagePreview$.next(e.target?.result ?? '');
     reader.readAsDataURL(image);
   }
 }
