@@ -82,7 +82,7 @@ jobs:
           firebase appdistribution:distribute ./android/app/build/outputs/bundle/release/app-release.aab --app ${APP_ID} --groups "${TEST_GROUPS}"
 
   distribute-ios:
-    runs-on: macos-15
+    runs-on: macos-26
     timeout-minutes: 120
     if: ${{ inputs.ios }}
 
@@ -92,7 +92,7 @@ jobs:
       - name: Setup Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '16.4'
+          xcode-version: '26.2'
 
       - uses: actions/setup-node@v4
         with:

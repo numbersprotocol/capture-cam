@@ -48,7 +48,7 @@ jobs:
           ./gradlew assembleDebug
 
   ios:
-    runs-on: macos-15
+    runs-on: macos-26
     timeout-minutes: 60
     if: github.actor != 'dependabot[bot]'
 
@@ -58,7 +58,7 @@ jobs:
       - name: Setup Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '16.4'
+          xcode-version: '26.2'
 
       - name: Use Node.js
         uses: actions/setup-node@v4

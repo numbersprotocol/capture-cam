@@ -1,9 +1,18 @@
 import { formatDate, KeyValue } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Browser } from '@capacitor/browser';
-import { ActionSheetButton, ActionSheetController } from '@ionic/angular';
+import {
+  ActionSheetButton,
+  ActionSheetController,
+  InfiniteScrollCustomEvent,
+} from '@ionic/angular';
 import { TranslocoService } from '@jsverse/transloco';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { groupBy } from 'lodash-es';
@@ -44,6 +53,7 @@ import { PrefetchingDialogComponent } from '../onboarding/prefetching-dialog/pre
   selector: 'app-capture-tab',
   templateUrl: './capture-tab.component.html',
   styleUrls: ['./capture-tab.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CaptureTabComponent implements OnInit {
   /**
@@ -170,13 +180,16 @@ export class CaptureTabComponent implements OnInit {
   private initSegmentListener() {
     this.captureTabService.segment$
       .pipe(
-        tap(segment => (this.segment = segment)),
+        tap(segment => {
+          this.segment = segment;
+          this.changeDetectorRef.markForCheck();
+        }),
         untilDestroyed(this)
       )
       .subscribe();
   }
 
-  loadMoreItems(event: any) {
+  loadMoreItems(event: InfiniteScrollCustomEvent) {
     switch (this.segment) {
       case CaptureTabSegments.VERIFIED:
         this.capturedTabPageIndex$.next(this.capturedTabPageIndex$.value + 1);

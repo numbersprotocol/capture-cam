@@ -6,7 +6,10 @@ import { concatMap, distinctUntilChanged } from 'rxjs/operators';
 import { isNonNullable } from '../../../../utils/rx-operators/rx-operators';
 
 export class CapacitorStoragePreferences {
-  private readonly subjects = new Map<string, BehaviorSubject<any>>();
+  private readonly subjects = new Map<
+    string,
+    BehaviorSubject<SupportedTypes | undefined>
+  >();
   private readonly mutex = new Mutex();
 
   constructor(
@@ -57,22 +60,24 @@ export class CapacitorStoragePreferences {
   ): Promise<SupportedTypes> {
     await this.initializeValue(key, defaultValue);
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return this.subjects.get(key)!.value;
+    return this.subjects.get(key)!.value!;
   }
 
   private async initializeValue(key: string, defaultValue: SupportedTypes) {
-    if (this.subjects.has(key)) {
-      const subject$ = this.subjects.get(key);
-      if (subject$?.value === undefined) {
-        subject$?.next(defaultValue);
+    return this.mutex.runExclusive(async () => {
+      if (this.subjects.has(key)) {
+        const subject$ = this.subjects.get(key);
+        if (subject$?.value === undefined) {
+          subject$?.next(defaultValue);
+        }
+        return;
       }
-      return;
-    }
-    const value = await this.loadValue(key, defaultValue);
-    this.subjects.set(
-      key,
-      new BehaviorSubject<SupportedTypes | undefined>(value)
-    );
+      const value = await this.loadValue(key, defaultValue);
+      this.subjects.set(
+        key,
+        new BehaviorSubject<SupportedTypes | undefined>(value)
+      );
+    });
   }
 
   private async loadValue(key: string, defaultValue: SupportedTypes) {

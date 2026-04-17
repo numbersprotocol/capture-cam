@@ -35,7 +35,7 @@ export class ActionsService {
     );
   }
 
-  send$(url: string, body: any) {
+  send$(url: string, body: Record<string, unknown>) {
     return this.httpClient.post(url, body);
   }
 }
@@ -48,7 +48,6 @@ export interface Action {
   readonly params_list_custom_param1?: string[];
   readonly title_text: string;
   readonly network_app_id_text: string;
-  readonly ext_action_destination_text?: string;
   readonly hide_capture_after_execution_boolean?: boolean;
 }
 

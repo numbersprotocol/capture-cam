@@ -100,10 +100,14 @@ export class MediaStore {
 
   private async _write(index: string, base64: string, mimeType: MimeType) {
     await this.initialize();
+    // Perform expensive blob conversion before acquiring the lock so concurrent
+    // reads are not blocked during the conversion of large files.
+    const blob = Capacitor.isNativePlatform()
+      ? await base64ToBlob(base64, mimeType)
+      : undefined;
     return this.mutex.runExclusive(async () => {
       const mediaExtension = await this.setMediaExtension(index, mimeType);
-      if (Capacitor.isNativePlatform()) {
-        const blob = await base64ToBlob(base64, mimeType);
+      if (blob !== undefined) {
         await write_blob({
           directory: this.directory,
           path: `${this.rootDir}/${index}.${mediaExtension.extension}`,
@@ -132,7 +136,7 @@ export class MediaStore {
           directory: this.directory,
           path: `${this.rootDir}/${index}.${extension}`,
         });
-      } catch (error: any) {
+      } catch (error: unknown) {
         /* WORKAROUND
          * In capture app we get "File does not exist error"
          * if currentPlatform.isAndroid() === true &&
@@ -142,7 +146,10 @@ export class MediaStore {
          * So we can silently ignore "File does not exist" error
          * while deleting capture from FileSystem only.
          */
-        if (error.message !== 'File does not exist') {
+        if (
+          !(error instanceof Error) ||
+          error.message !== 'File does not exist'
+        ) {
           throw error;
         }
       }
@@ -262,14 +269,20 @@ export class MediaStore {
    * directly when dealing with small image for better performance.
    */
   async getUrl(index: string, mimeType: MimeType) {
-    if (Capacitor.isNativePlatform()) {
-      // Workaround to fix urls (thumbnails) saved as incorrect mimeType.
-      await this.fixIncorrectExtension(index, mimeType);
-      return Capacitor.convertFileSrc(await this.getUri(index));
+    try {
+      if (Capacitor.isNativePlatform()) {
+        // Workaround to fix urls (thumbnails) saved as incorrect mimeType.
+        await this.fixIncorrectExtension(index, mimeType);
+        return Capacitor.convertFileSrc(await this.getUri(index));
+      }
+      return URL.createObjectURL(
+        await base64ToBlob(await this.readWithFileSystem(index), mimeType)
+      );
+    } catch (err: unknown) {
+      // eslint-disable-next-line no-console
+      console.error(`MediaStore.getUrl failed for index ${index}:`, err);
+      return '';
     }
-    return URL.createObjectURL(
-      await base64ToBlob(await this.readWithFileSystem(index), mimeType)
-    );
   }
 
   private async fixIncorrectExtension(
