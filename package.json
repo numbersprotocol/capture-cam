@@ -58,7 +58,7 @@
     "@meddv/ngx-pinch-zoom": "^18.0.1",
     "@ngneat/until-destroy": "^10.0.0",
     "@ngrx/component": "^18.1.1",
-    "@ngrx/store": "^18.1.1",
+    "@ngrx/store": "^21.1.0",
     "@ngx-formly/core": "^7.1.0",
     "@ngx-formly/material": "^7.1.0",
     "@numbersprotocol/preview-camera": "github:numbersprotocol/preview-camera#0.0.21",
