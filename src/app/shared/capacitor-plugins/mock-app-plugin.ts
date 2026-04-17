@@ -81,4 +81,8 @@ export class MockAppPlugin implements AppPlugin {
   async toggleBackButtonHandler(_options: any): Promise<void> {
     return Promise.resolve();
   }
+
+  async getAppLanguage(): Promise<{ value: string }> {
+    return Promise.resolve({ value: 'en' });
+  }
 }

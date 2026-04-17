@@ -3,10 +3,19 @@ import {
   Photo as CameraPhoto,
   CameraPlugin,
   CameraPluginPermissions,
+  ChooseFromGalleryOptions,
+  EditPhotoOptions,
+  EditPhotoResult,
+  EditURIPhotoOptions,
   GalleryImageOptions,
   GalleryPhotos,
   ImageOptions,
+  MediaResult,
+  MediaResults,
   PermissionStatus,
+  PlayVideoOptions,
+  RecordVideoOptions,
+  TakePhotoOptions,
 } from '@capacitor/camera';
 
 export class MockCameraPlugin implements CameraPlugin {
@@ -30,6 +39,32 @@ export class MockCameraPlugin implements CameraPlugin {
   }
 
   async getLimitedLibraryPhotos(): Promise<GalleryPhotos> {
+    throw new Error('Method not implemented.');
+  }
+
+  async takePhoto(_options: TakePhotoOptions): Promise<MediaResult> {
+    throw new Error('Method not implemented.');
+  }
+
+  async recordVideo(_options: RecordVideoOptions): Promise<MediaResult> {
+    throw new Error('Method not implemented.');
+  }
+
+  async playVideo(_options: PlayVideoOptions): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+
+  async chooseFromGallery(
+    _options: ChooseFromGalleryOptions
+  ): Promise<MediaResults> {
+    throw new Error('Method not implemented.');
+  }
+
+  async editPhoto(_options: EditPhotoOptions): Promise<EditPhotoResult> {
+    throw new Error('Method not implemented.');
+  }
+
+  async editURIPhoto(_options: EditURIPhotoOptions): Promise<MediaResult> {
     throw new Error('Method not implemented.');
   }
 }
