@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ScanResult } from '@capacitor-community/bluetooth-le';
-import {
-  CapacitorWifiConnect,
-  ConnectState,
-} from '@falconeta/capacitor-wifi-connect';
+import { CapacitorWifi } from '@capgo/capacitor-wifi';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { GoProBluetoothService } from './services/go-pro-bluetooth.service';
 
@@ -156,22 +153,24 @@ export class GoProPage implements OnInit {
 
     try {
       this.presentToast(`Wifi.connect`);
-      let { value } = await CapacitorWifiConnect.checkPermission();
-      if (value === 'prompt') {
-        const data = await CapacitorWifiConnect.requestPermission();
-        value = data.value;
+      let { location } = await CapacitorWifi.checkPermissions();
+      if (location === 'prompt') {
+        const data = await CapacitorWifi.requestPermissions({
+          permissions: ['location'],
+        });
+        location = data.location;
       }
-      if (value !== 'granted') {
+      if (location !== 'granted') {
         this.presentToast('Permission denied');
         return;
       }
-      const result = await CapacitorWifiConnect.secureConnect({
-        ssid: wifiSSID,
-        password: wifiPASS,
-      });
-      if (result.value === ConnectState.Ok) {
+      try {
+        await CapacitorWifi.connect({
+          ssid: wifiSSID,
+          password: wifiPASS,
+        });
         this.presentToast(`Connected to ${JSON.stringify(wifiSSID)}`);
-      } else {
+      } catch {
         this.presentToast(`Failed to connect to ${JSON.stringify(wifiSSID)}`);
       }
     } catch (error) {

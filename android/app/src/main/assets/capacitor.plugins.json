@@ -68,8 +68,8 @@
 		"classpath": "ee.forgr.capacitor.social.login.SocialLoginPlugin"
 	},
 	{
-		"pkg": "@falconeta/capacitor-wifi-connect",
-		"classpath": "com.falconeta.capacitor_wifi_connect.CapacitorWifiConnectPlugin"
+		"pkg": "@capgo/capacitor-wifi",
+		"classpath": "ee.forgr.plugin.capacitor_wifi.CapacitorWifiPlugin"
 	},
 	{
 		"pkg": "@numbersprotocol/preview-camera",

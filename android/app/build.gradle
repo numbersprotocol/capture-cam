@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace "io.numbersprotocol.capturelite"
-    compileSdk rootProject.ext.compileSdkVersion
+    namespace = "io.numbersprotocol.capturelite"
+    compileSdk = rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "io.numbersprotocol.capturelite"
+        applicationId = "io.numbersprotocol.capturelite"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1042
-        versionName "0.104.2"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        versionCode = 1042
+        versionName = "0.104.2"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     buildFeatures {
         dataBinding true

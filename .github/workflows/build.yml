@@ -48,17 +48,21 @@ jobs:
           ./gradlew assembleDebug
 
   ios:
-    runs-on: macos-15
+    runs-on: macos-26
     timeout-minutes: 60
     if: github.actor != 'dependabot[bot]'
+    permissions:
+      contents: write
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '16.4'
+          xcode-version: '26.2'
 
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -110,3 +114,36 @@ jobs:
           sed -i '' "s/\$(GOOGLE_IOS_URL_SCHEME)/${GOOGLE_IOS_URL_SCHEME}/g" ios/App/App/info.plist
           npx cap sync ios
           xcodebuild archive -workspace ios/App/App.xcworkspace -scheme App -sdk iphoneos  -configuration Debug -archivePath build/App.xcarchive -showBuildTimingSummary -allowProvisioningUpdates archive
+
+      - name: Commit regenerated Podfile.lock (if updated by cap sync)
+        if: github.event_name == 'pull_request'
+        env:
+          HEAD_REF: ${{ github.head_ref }}
+        run: |
+          if git diff --quiet -- ios/App/Podfile.lock && git ls-files --error-unmatch ios/App/Podfile.lock 2>/dev/null; then
+            echo "Podfile.lock unchanged — nothing to commit."
+            exit 0
+          fi
+          echo "Podfile.lock was added or updated by cap sync — committing back to branch."
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Skip any pre-commit/husky hooks that might block an automated bot commit
+          git -c core.hooksPath=/dev/null add ios/App/Podfile.lock
+          git -c core.hooksPath=/dev/null commit --no-verify \
+            -m "chore(ios): regenerate Podfile.lock via CI cap sync"
+          # Retry push up to 3 times in case the branch advanced while CI was running.
+          for attempt in 1 2 3; do
+            echo "Push attempt $attempt..."
+            if git push origin "HEAD:${HEAD_REF}"; then
+              echo "Push succeeded."
+              exit 0
+            fi
+            echo "Push rejected — fetching latest and rebasing."
+            git fetch origin "${HEAD_REF}"
+            # --autostash because `cap sync` also regenerates other native files
+            # (capacitor.build.gradle, capacitor.plugins.json, ...) that remain
+            # unstaged at this point and would otherwise block the rebase.
+            git rebase --autostash "origin/${HEAD_REF}" || { git rebase --abort || true; exit 1; }
+          done
+          echo "Push failed after 3 attempts."
+          exit 1

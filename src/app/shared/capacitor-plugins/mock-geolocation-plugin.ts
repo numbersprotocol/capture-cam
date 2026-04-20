@@ -32,6 +32,10 @@ export class MockGeolocationPlugin implements GeolocationPlugin {
         altitude: 0,
         heading: 0,
         speed: 0,
+        magneticHeading: 0,
+        trueHeading: 0,
+        headingAccuracy: 0,
+        course: 0,
       },
     };
   }

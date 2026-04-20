@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Capacitor } from '@capacitor/core';
-import {
-  CapacitorWifiConnect,
-  ConnectState,
-} from '@falconeta/capacitor-wifi-connect';
+import { CapacitorWifi } from '@capgo/capacitor-wifi';
 import { Platform } from '@ionic/angular';
 import { PreferenceManager } from '../../../../shared/preference-manager/preference-manager.service';
 import { GoProBluetoothService } from './go-pro-bluetooth.service';
@@ -26,16 +23,16 @@ export class GoProWifiService {
   async isConnectedToGoProWifi(): Promise<boolean> {
     if (!Capacitor.isNativePlatform()) return false;
 
-    const result = await CapacitorWifiConnect.getAppSSID();
-    return result.value.startsWith('GP');
+    const { ssid } = await CapacitorWifi.getSsid();
+    return ssid.startsWith('GP');
   }
 
   // eslint-disable-next-line class-methods-use-this
   async getConnectedWifiSSID() {
     if (!Capacitor.isNativePlatform()) return '';
 
-    const result = await CapacitorWifiConnect.getAppSSID();
-    return result.value;
+    const { ssid } = await CapacitorWifi.getSsid();
+    return ssid;
   }
 
   async connectToGoProWiFi(): Promise<string> {
@@ -43,17 +40,23 @@ export class GoProWifiService {
 
     await this.goProBluetoothService.enableGoProWifi();
     const creds = await this.goProBluetoothService.getGoProWiFiCreds();
-    let { value } = await CapacitorWifiConnect.checkPermission();
-    if (value === 'prompt') {
-      const data = await CapacitorWifiConnect.requestPermission();
-      value = data.value;
-    }
-    if (value === 'granted') {
-      const result = await CapacitorWifiConnect.secureConnect({
-        ssid: creds.wifiSSID,
-        password: creds.wifiPASS,
+    let { location } = await CapacitorWifi.checkPermissions();
+    if (location === 'prompt') {
+      const data = await CapacitorWifi.requestPermissions({
+        permissions: ['location'],
       });
-      return result.value === ConnectState.Ok ? creds.wifiSSID : '';
+      location = data.location;
+    }
+    if (location === 'granted') {
+      try {
+        await CapacitorWifi.connect({
+          ssid: creds.wifiSSID,
+          password: creds.wifiPASS,
+        });
+        return creds.wifiSSID;
+      } catch {
+        return '';
+      }
     }
     return '';
   }

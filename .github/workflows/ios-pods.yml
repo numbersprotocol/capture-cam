@@ -1,0 +1,96 @@
+name: ios-pods
+
+# Regenerate ios/App/Podfile.lock on a macOS runner (pod install requires
+# CocoaPods / macOS, which cannot be run on the Linux-based default agents
+# used for other CI jobs). Trigger manually from the Actions tab after
+# updating iOS-facing dependencies (e.g. Capacitor major upgrades).
+
+on:
+  workflow_dispatch:
+    inputs:
+      commit_back:
+        description: 'Commit the regenerated Podfile.lock back to the branch'
+        required: false
+        default: 'true'
+
+jobs:
+  pod-install:
+    runs-on: macos-26
+    timeout-minutes: 40
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout (with write token)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '26.2'
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Ionic CLI
+        run: npm install -g @ionic/cli
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Ionic
+        env:
+          NUMBERS_STORAGE_BASE_URL: ${{ secrets.NUMBERS_STORAGE_BASE_URL }}
+          NUMBERS_STORAGE_TRUSTED_CLIENT_KEY: ${{ secrets.NUMBERS_STORAGE_TRUSTED_CLIENT_KEY }}
+          NUMBERS_BUBBLE_DB_URL: ${{ secrets.NUMBERS_BUBBLE_DB_URL }}
+          NUMBERS_BUBBLE_IFRAME_URL: ${{ secrets.NUMBERS_BUBBLE_IFRAME_URL }}
+          BUBBLE_API_URL: ${{ secrets.BUBBLE_API_URL }}
+          APPS_FLYER_DEV_KEY: ${{ secrets.APPS_FLYER_DEV_KEY }}
+          GOOGLE_IOS_CLIENT_ID: ${{ secrets.GOOGLE_IOS_CLIENT_ID }}
+          GOOGLE_WEB_CLIENT_ID: ${{ secrets.GOOGLE_WEB_CLIENT_ID }}
+        run: npm run build
+
+      # Run `cap sync ios` which in turn executes `pod install` after copying
+      # the native plugin sources. This produces a fresh Podfile.lock that
+      # matches the current Capacitor 8 plugin constraints.
+      - name: Run Capacitor sync (regenerates Podfile.lock)
+        run: npx cap sync ios
+
+      - name: Show regenerated Podfile.lock summary
+        run: |
+          echo "=== Podfile.lock: Capacitor version pinning ==="
+          grep -E "^\s*-?\s*(Capacitor|CapacitorGeolocation|IONGeolocationLib|CapgoCapacitorWifi|FalconetaCapacitorWifiConnect) " ios/App/Podfile.lock || true
+          echo
+          echo "=== COCOAPODS version ==="
+          tail -n 3 ios/App/Podfile.lock
+
+      - name: Upload Podfile.lock artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Podfile.lock
+          path: ios/App/Podfile.lock
+          if-no-files-found: error
+
+      - name: Commit regenerated Podfile.lock
+        if: ${{ github.event.inputs.commit_back == 'true' }}
+        run: |
+          if git diff --quiet -- ios/App/Podfile.lock; then
+            echo "No changes to Podfile.lock; nothing to commit."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ios/App/Podfile.lock
+          git commit -m "chore(ios): regenerate Podfile.lock via ios-pods workflow"
+          git push origin HEAD:${GITHUB_REF#refs/heads/}

@@ -26,7 +26,7 @@ dependencies {
     implementation project(':capacitor-splash-screen')
     implementation project(':capawesome-capacitor-android-edge-to-edge-support')
     implementation project(':capgo-capacitor-social-login')
-    implementation project(':falconeta-capacitor-wifi-connect')
+    implementation project(':capgo-capacitor-wifi')
     implementation project(':numbersprotocol-preview-camera')
     implementation project(':numbersprotocol-preview-video')
     implementation project(':appsflyer-capacitor-plugin')
