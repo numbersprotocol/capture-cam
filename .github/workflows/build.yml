@@ -117,14 +117,30 @@ jobs:
 
       - name: Commit regenerated Podfile.lock (if updated by cap sync)
         if: github.event_name == 'pull_request'
+        env:
+          HEAD_REF: ${{ github.head_ref }}
         run: |
           if git diff --quiet -- ios/App/Podfile.lock && git ls-files --error-unmatch ios/App/Podfile.lock 2>/dev/null; then
             echo "Podfile.lock unchanged — nothing to commit."
-          else
-            echo "Podfile.lock was added or updated by cap sync — committing back to branch."
-            git config user.name  "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add ios/App/Podfile.lock
-            git commit -m "chore(ios): regenerate Podfile.lock via CI cap sync"
-            git push origin HEAD:${{ github.head_ref }}
+            exit 0
           fi
+          echo "Podfile.lock was added or updated by cap sync — committing back to branch."
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Skip any pre-commit/husky hooks that might block an automated bot commit
+          git -c core.hooksPath=/dev/null add ios/App/Podfile.lock
+          git -c core.hooksPath=/dev/null commit --no-verify \
+            -m "chore(ios): regenerate Podfile.lock via CI cap sync"
+          # Retry push up to 3 times in case the branch advanced while CI was running.
+          for attempt in 1 2 3; do
+            echo "Push attempt $attempt..."
+            if git push origin "HEAD:${HEAD_REF}"; then
+              echo "Push succeeded."
+              exit 0
+            fi
+            echo "Push rejected — fetching latest and rebasing."
+            git fetch origin "${HEAD_REF}"
+            git rebase "origin/${HEAD_REF}" || { git rebase --abort; exit 1; }
+          done
+          echo "Push failed after 3 attempts."
+          exit 1
