@@ -505,12 +505,16 @@ export class DetailsPage {
     combineLatest([
       this.networkConnected$,
       this.activeDetailedCapture$,
-      this.postCreationWorkflowCompleted$,
+      // this.postCreationWorkflowCompleted$ temporarily removed —
+      // only needed for the Network Actions menu entry which is
+      // hidden while NUMBERS_BUBBLE_DB_URL is unsupported.
       this.isCollectedCapture$,
       this.translocoService.selectTranslateObject({
         'details.actions.edit': null,
         'details.actions.unpublish': null,
-        'details.actions.networkActions': null,
+        // 'details.actions.networkActions' temporarily omitted —
+        // NUMBERS_BUBBLE_DB_URL is no longer supported. The Network
+        // Actions entry will be re-wired through the backend later.
         'details.actions.remove': null,
       }),
     ])
@@ -520,14 +524,8 @@ export class DetailsPage {
           ([
             networkConnected,
             activeDetailedCapture,
-            postCreationWorkflowCompleted,
             isCollectedCapture,
-            [
-              editActionText,
-              unpublishActionText,
-              networkActionsText,
-              removeActionText,
-            ],
+            [editActionText, unpublishActionText, removeActionText],
           ]) => {
             const buttons: ActionSheetButton[] = [];
 
@@ -551,12 +549,15 @@ export class DetailsPage {
                 handler: () => this.handleUnpublishAction(),
               });
             }
-            if (networkConnected && postCreationWorkflowCompleted) {
-              buttons.push({
-                text: networkActionsText,
-                handler: () => this.handleOpenNetworkActions(),
-              });
-            }
+            // Network Actions menu entry temporarily hidden —
+            // NUMBERS_BUBBLE_DB_URL deprecated. Will be restored once
+            // the feature is re-wired through the backend.
+            // if (networkConnected && postCreationWorkflowCompleted) {
+            //   buttons.push({
+            //     text: networkActionsText,
+            //     handler: () => this.handleOpenNetworkActions(),
+            //   });
+            // }
             buttons.push({
               text: removeActionText,
               handler: () => this.handleRemoveAction(),
