@@ -6,6 +6,14 @@ updates:
       interval: 'weekly'
     target-branch: 'main'
     open-pull-requests-limit: 10
+    # Skip major-version PRs. Majors for Angular / ngrx / ionic / capacitor etc.
+    # always require coordinated framework migrations that Dependabot cannot
+    # handle on its own, so we'd just end up with PRs that permanently fail CI.
+    # Majors should be handled manually via a dedicated migration branch.
+    ignore:
+      - dependency-name: '*'
+        update-types:
+          - 'version-update:semver-major'
     groups:
       patch-updates:
         update-types:
