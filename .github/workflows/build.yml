@@ -140,7 +140,10 @@ jobs:
             fi
             echo "Push rejected — fetching latest and rebasing."
             git fetch origin "${HEAD_REF}"
-            git rebase "origin/${HEAD_REF}" || { git rebase --abort; exit 1; }
+            # --autostash because `cap sync` also regenerates other native files
+            # (capacitor.build.gradle, capacitor.plugins.json, ...) that remain
+            # unstaged at this point and would otherwise block the rebase.
+            git rebase --autostash "origin/${HEAD_REF}" || { git rebase --abort || true; exit 1; }
           done
           echo "Push failed after 3 attempts."
           exit 1
