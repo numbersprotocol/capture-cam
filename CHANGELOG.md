@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.105.0] - 2026-04-20
+
+### Added
+
+1. Add dependency vulnerability scanning to CI pipeline [#3388](https://github.com/numbersprotocol/capture-lite/pull/3388)
+2. Add Content Security Policy and fix silent error swallowing in subscribe calls [#3387](https://github.com/numbersprotocol/capture-lite/pull/3387)
+
+### Changed
+
+1. Upgrade Capacitor to v8 and migrate WiFi plugin to capgo [#3441](https://github.com/numbersprotocol/capture-lite/pull/3441)
+2. Temporarily hide network action orders [#3442](https://github.com/numbersprotocol/capture-lite/pull/3442)
+3. Performance and error-handling improvements across shared services [#3398](https://github.com/numbersprotocol/capture-lite/pull/3398)
+4. Reduce technical debt: eliminate explicit `any` types and resolve TODO/FIXME markers [#3389](https://github.com/numbersprotocol/capture-lite/pull/3389)
+5. Bump dependencies: `qs`, `@ngneat/until-destroy`, `immutable`, `lodash`, `lodash-es`, `follow-redirects`, `minimatch`, `flatted`, `@types/jasmine`, `node-forge`, `@xmldom/xmldom` [#3428](https://github.com/numbersprotocol/capture-lite/pull/3428) [#3427](https://github.com/numbersprotocol/capture-lite/pull/3427) [#3425](https://github.com/numbersprotocol/capture-lite/pull/3425) [#3422](https://github.com/numbersprotocol/capture-lite/pull/3422) [#3421](https://github.com/numbersprotocol/capture-lite/pull/3421) [#3416](https://github.com/numbersprotocol/capture-lite/pull/3416) [#3411](https://github.com/numbersprotocol/capture-lite/pull/3411) [#3410](https://github.com/numbersprotocol/capture-lite/pull/3410) [#3409](https://github.com/numbersprotocol/capture-lite/pull/3409) [#3408](https://github.com/numbersprotocol/capture-lite/pull/3408) [#3407](https://github.com/numbersprotocol/capture-lite/pull/3407)
+
+### Fixed
+
+1. Fix open redirect vulnerability in action-details via URL allowlist validation [#3397](https://github.com/numbersprotocol/capture-lite/pull/3397)
+2. Fix prefetch race condition, transaction observable leak, and media store getUrl crash [#3396](https://github.com/numbersprotocol/capture-lite/pull/3396)
+3. Fix SafeResourceUrlPipe XSS with BUBBLE_IFRAME_URL allowlist validation [#3386](https://github.com/numbersprotocol/capture-lite/pull/3386)
+
 ## [0.104.2] - 2026-02-26
 
 ### Fixed
@@ -2517,7 +2538,8 @@ This is the first release! _Capture Lite_ is a cross-platform app adapted from [
 - Web - see the demo [here](https://github.com/numbersprotocol/capture-lite#demo-app)
 - Android - the APK file `app-debug.apk` is attached to this release
 
-[unreleased]: https://github.com/numbersprotocol/capture-lite/compare/0.104.2...HEAD
+[unreleased]: https://github.com/numbersprotocol/capture-lite/compare/0.105.0...HEAD
+[0.105.0]: https://github.com/numbersprotocol/capture-lite/compare/0.104.2...0.105.0
 [0.104.2]: https://github.com/numbersprotocol/capture-lite/compare/0.104.1...0.104.2
 [0.104.1]: https://github.com/numbersprotocol/capture-lite/compare/0.104.0...0.104.1
 [0.104.0]: https://github.com/numbersprotocol/capture-lite/compare/0.103.2...0.104.0
