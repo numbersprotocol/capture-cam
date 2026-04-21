@@ -8,6 +8,7 @@ import { OnboardingService } from '../../../../shared/onboarding/onboarding.serv
   selector: 'app-tutorial',
   templateUrl: './tutorial.page.html',
   styleUrls: ['./tutorial.page.scss'],
+  standalone: false,
 })
 export class TutorialPage implements AfterViewInit {
   isLastSlide = false;

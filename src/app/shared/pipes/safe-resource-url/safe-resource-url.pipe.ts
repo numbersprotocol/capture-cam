@@ -4,6 +4,7 @@ import { BUBBLE_IFRAME_URL } from '../../dia-backend/secret';
 
 @Pipe({
   name: 'safeResourceUrl',
+  standalone: false,
 })
 export class SafeResourceUrlPipe implements PipeTransform {
   constructor(private readonly sanitizer: DomSanitizer) {}

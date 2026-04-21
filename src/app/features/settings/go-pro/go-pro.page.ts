@@ -14,6 +14,7 @@ interface GoProWiFiCreds {
   selector: 'app-go-pro',
   templateUrl: './go-pro.page.html',
   styleUrls: ['./go-pro.page.scss'],
+  standalone: false,
 })
 export class GoProPage implements OnInit {
   bluetoothScanResults: ScanResult[] = [];

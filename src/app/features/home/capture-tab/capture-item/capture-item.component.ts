@@ -23,6 +23,7 @@ import { normalizeGeolocation } from '../../details/information/session/informat
   selector: 'app-capture-item',
   templateUrl: './capture-item.component.html',
   styleUrls: ['./capture-item.component.scss'],
+  standalone: false,
 })
 export class CaptureItemComponent {
   private readonly proof$ = new ReplaySubject<Proof>(1);

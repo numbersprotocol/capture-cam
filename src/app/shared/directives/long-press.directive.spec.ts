@@ -13,6 +13,7 @@ import { LongPressDirective } from './long-press.directive';
     [appLongPressDuration]="duration"
     (appLongPress)="onLongPress()"
   ></button>`,
+  standalone: false,
 })
 class TestComponent {
   duration = 500;

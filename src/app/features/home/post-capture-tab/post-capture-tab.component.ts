@@ -15,6 +15,7 @@ import { NetworkService } from '../../../shared/network/network.service';
   selector: 'app-post-capture-tab',
   templateUrl: './post-capture-tab.component.html',
   styleUrls: ['./post-capture-tab.component.scss'],
+  standalone: false,
 })
 export class PostCaptureTabComponent {
   categories: 'photo' | 'series' = 'photo';

@@ -6,6 +6,7 @@ import { UserGuideService } from '../../../shared/user-guide/user-guide.service'
   selector: 'app-user-guide',
   templateUrl: './user-guide.page.html',
   styleUrls: ['./user-guide.page.scss'],
+  standalone: false,
 })
 export class UserGuidePage {
   readonly hasHighlightedCameraTab$ =

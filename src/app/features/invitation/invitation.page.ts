@@ -7,6 +7,7 @@ import { ShareService } from '../../shared/share/share.service';
   selector: 'app-invitation',
   templateUrl: './invitation.page.html',
   styleUrls: ['./invitation.page.scss'],
+  standalone: false,
 })
 export class InvitationPage implements OnInit {
   readonly referralCode$ = this.diaBackendAuthService.referralCode$;

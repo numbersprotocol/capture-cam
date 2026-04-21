@@ -8,6 +8,7 @@ import { AndroidBackButtonService } from '../../android-back-button/android-back
   selector: 'app-friend-invitation-dialog',
   templateUrl: './friend-invitation-dialog.component.html',
   styleUrls: ['./friend-invitation-dialog.component.scss'],
+  standalone: false,
 })
 export class FriendInvitationDialogComponent {
   constructor(

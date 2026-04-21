@@ -6,6 +6,7 @@ import { TranslocoService } from '@jsverse/transloco';
   selector: 'app-transfer-request-sent',
   templateUrl: './transfer-request-sent.component.html',
   styleUrls: ['./transfer-request-sent.component.scss'],
+  standalone: false,
 })
 export class TransferRequestSentComponent {
   mode: 'deposit' | 'withdraw';

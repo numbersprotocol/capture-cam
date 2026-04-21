@@ -6,5 +6,6 @@ import { UntilDestroy } from '@ngneat/until-destroy';
   selector: 'app-about',
   templateUrl: './about.page.html',
   styleUrls: ['./about.page.scss'],
+  standalone: false,
 })
 export class AboutPage {}

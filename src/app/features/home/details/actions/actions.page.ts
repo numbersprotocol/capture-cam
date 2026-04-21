@@ -13,6 +13,7 @@ import { ErrorService } from '../../../../shared/error/error.service';
   selector: 'app-actions',
   templateUrl: './actions.page.html',
   styleUrls: ['./actions.page.scss'],
+  standalone: false,
 })
 export class ActionsPage {
   readonly actions$ = this.actionsService

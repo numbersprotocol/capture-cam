@@ -17,6 +17,7 @@ import { SocialAuthService } from '../social-auth/social-auth.service';
   selector: 'app-social-login-button',
   templateUrl: './social-login-button.component.html',
   styleUrls: ['./social-login-button.component.scss'],
+  standalone: false,
 })
 export class SocialLoginButtonComponent {
   @Input() buttonText = '';

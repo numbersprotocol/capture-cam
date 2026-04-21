@@ -12,6 +12,7 @@ import { NetworkService } from '../../shared/network/network.service';
   selector: 'app-terms-of-use',
   templateUrl: './terms-of-use.page.html',
   styleUrls: ['./terms-of-use.page.scss'],
+  standalone: false,
 })
 export class TermsOfUsePage {
   readonly networkConnected$ = this.networkService.connected$;

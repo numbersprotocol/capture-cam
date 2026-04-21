@@ -7,6 +7,7 @@ import { DiaBackendWalletService } from '../dia-backend/wallet/dia-backend-walle
   selector: 'app-order-detail-dialog',
   templateUrl: './order-detail-dialog.component.html',
   styleUrls: ['./order-detail-dialog.component.scss'],
+  standalone: false,
 })
 export class OrderDetailDialogComponent {
   readonly orderStatus: NetworkAppOrder;

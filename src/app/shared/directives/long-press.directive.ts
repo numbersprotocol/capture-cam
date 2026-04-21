@@ -10,6 +10,7 @@ const DEFAULT_DURATION = 500;
 
 @Directive({
   selector: '[appLongPress]',
+  standalone: false,
 })
 export class LongPressDirective {
   private timeout: ReturnType<typeof setTimeout> | null = null;

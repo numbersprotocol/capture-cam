@@ -11,6 +11,7 @@ export interface OnboardingPopUpDialogData {
   selector: 'app-encourage-take-photo-dialog',
   templateUrl: './onboarding-pop-up-dialog.component.html',
   styleUrls: ['./onboarding-pop-up-dialog.component.scss'],
+  standalone: false,
 })
 export class OnboardingPopUpDialogComponent {
   constructor(

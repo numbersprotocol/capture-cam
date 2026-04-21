@@ -13,6 +13,7 @@ import { InAppStoreService } from '../../../shared/in-app-store/in-app-store.ser
   selector: 'app-buy-num',
   templateUrl: './buy-num.page.html',
   styleUrls: ['./buy-num.page.scss'],
+  standalone: false,
 })
 export class BuyNumPage implements OnInit {
   readonly tmpIcon = '../../../../assets/images/num-icon.svg';

@@ -15,6 +15,7 @@ import { GoProWifiService } from '../services/go-pro-wifi.service';
   selector: 'app-go-pro-media-item-detail-on-camera',
   templateUrl: './go-pro-media-item-detail-on-camera.component.html',
   styleUrls: ['./go-pro-media-item-detail-on-camera.component.scss'],
+  standalone: false,
 })
 export class GoProMediaItemDetailOnCameraComponent implements OnInit {
   mediaFile: GoProFile | undefined;

@@ -39,6 +39,7 @@ import {
   selector: 'app-sending-post-capture',
   templateUrl: './sending-post-capture.page.html',
   styleUrls: ['./sending-post-capture.page.scss'],
+  standalone: false,
 })
 export class SendingPostCapturePage {
   readonly asset$ = this.route.paramMap.pipe(

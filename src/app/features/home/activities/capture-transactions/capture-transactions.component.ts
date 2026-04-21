@@ -10,6 +10,7 @@ import { getStatus } from '../capture-transaction-details/capture-transaction-de
   selector: 'app-capture-transactions',
   templateUrl: './capture-transactions.component.html',
   styleUrls: ['./capture-transactions.component.scss'],
+  standalone: false,
 })
 export class CaptureTransactionsComponent {
   readonly transactionsWithStatus$ =

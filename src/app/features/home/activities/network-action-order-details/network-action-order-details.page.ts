@@ -27,6 +27,7 @@ import { isNonNullable } from '../../../../utils/rx-operators/rx-operators';
   selector: 'app-network-action-order-details',
   templateUrl: './network-action-order-details.page.html',
   styleUrls: ['./network-action-order-details.page.scss'],
+  standalone: false,
 })
 export class NetworkActionOrderDetailsPage {
   readonly orderId$ = this.route.paramMap.pipe(

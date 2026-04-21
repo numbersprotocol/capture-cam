@@ -5,6 +5,7 @@ import { NavController } from '@ionic/angular';
   selector: 'app-capture-back-button',
   templateUrl: './capture-back-button.component.html',
   styleUrls: ['./capture-back-button.component.scss'],
+  standalone: false,
 })
 export class CaptureBackButtonComponent {
   constructor(private readonly navController: NavController) {}

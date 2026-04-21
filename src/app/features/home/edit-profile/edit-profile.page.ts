@@ -16,6 +16,7 @@ import { NetworkService } from '../../../shared/network/network.service';
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.page.html',
   styleUrls: ['./edit-profile.page.scss'],
+  standalone: false,
 })
 export class EditProfilePage {
   readonly networkConnected$ = this.networkService.connected$;

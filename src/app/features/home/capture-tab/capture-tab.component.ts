@@ -54,6 +54,7 @@ import { PrefetchingDialogComponent } from '../onboarding/prefetching-dialog/pre
   templateUrl: './capture-tab.component.html',
   styleUrls: ['./capture-tab.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class CaptureTabComponent implements OnInit {
   /**

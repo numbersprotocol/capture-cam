@@ -12,6 +12,7 @@ import { OnboardingService } from '../../../../shared/onboarding/onboarding.serv
   selector: 'app-prefetching-dialog',
   templateUrl: './prefetching-dialog.component.html',
   styleUrls: ['./prefetching-dialog.component.scss'],
+  standalone: false,
 })
 export class PrefetchingDialogComponent {
   progress = 0;

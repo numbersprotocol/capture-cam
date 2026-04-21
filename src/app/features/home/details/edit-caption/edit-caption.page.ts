@@ -25,6 +25,7 @@ import { InformationSessionService } from '../information/session/information-se
   selector: 'app-edit-caption',
   templateUrl: './edit-caption.page.html',
   styleUrls: ['./edit-caption.page.scss'],
+  standalone: false,
 })
 export class EditCaptionPage {
   private readonly id$ = this.route.paramMap.pipe(

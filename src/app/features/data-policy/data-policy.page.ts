@@ -12,6 +12,7 @@ import { NetworkService } from '../../shared/network/network.service';
   selector: 'app-data-policy',
   templateUrl: './data-policy.page.html',
   styleUrls: ['./data-policy.page.scss'],
+  standalone: false,
 })
 export class DataPolicyPage {
   readonly networkConnected$ = this.networkService.connected$;

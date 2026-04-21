@@ -18,6 +18,7 @@ import { GoProWifiService } from '../services/go-pro-wifi.service';
   selector: 'app-go-pro-media-list-on-camera',
   templateUrl: './go-pro-media-list-on-camera.component.html',
   styleUrls: ['./go-pro-media-list-on-camera.component.scss'],
+  standalone: false,
 })
 export class GoProMediaListOnCameraComponent implements OnInit {
   allMediaFiles: GoProFile[] = [];
