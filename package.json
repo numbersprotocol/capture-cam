@@ -145,6 +145,11 @@
     "stream": false
   },
   "overrides": {
-    "postcss": "8.5.12"
+    "@angular-devkit/build-angular": {
+      "postcss": "8.5.12"
+    },
+    "@angular/build": {
+      "postcss": "8.5.12"
+    }
   }
 }
