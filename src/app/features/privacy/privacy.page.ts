@@ -6,5 +6,6 @@ import { UntilDestroy } from '@ngneat/until-destroy';
   selector: 'app-privacy',
   templateUrl: './privacy.page.html',
   styleUrls: ['./privacy.page.scss'],
+  standalone: false,
 })
 export class PrivacyPage {}

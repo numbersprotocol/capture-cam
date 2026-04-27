@@ -20,6 +20,7 @@ import { EMAIL_REGEXP } from '../../utils/validation';
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
+  standalone: false,
 })
 export class LoginPage {
   readonly form = new UntypedFormGroup({});

@@ -28,6 +28,7 @@ import { DetailedCapture } from '../information/session/information-session.serv
   templateUrl: './capture-details-with-iframe.component.html',
   styleUrls: ['./capture-details-with-iframe.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class CaptureDetailsWithIframeComponent {
   readonly networkConnected$ = this.networkService.connected$;

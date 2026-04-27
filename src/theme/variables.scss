@@ -14,7 +14,8 @@
 // you can delete this line and instead use:
 //   `@include mat.typography-hierarchy(mat.define-typography-config());`
 @include mat.all-component-typographies();
-@include mat.core();
+@include mat.elevation-classes();
+@include mat.app-background();
 
 $capture-primary-light: (
   50: #e0e0fa,

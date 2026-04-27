@@ -7,6 +7,7 @@ import { getAppDownloadLink } from '../../../../utils/url';
   selector: 'app-update-app-dialog',
   templateUrl: './update-app-dialog.component.html',
   styleUrls: ['./update-app-dialog.component.scss'],
+  standalone: false,
 })
 export class UpdateAppDialogComponent {
   constructor(private readonly platform: Platform) {}

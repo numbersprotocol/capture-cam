@@ -8,6 +8,7 @@ import { InformationSessionService } from './session/information-session.service
   selector: 'app-information',
   templateUrl: './information.page.html',
   styleUrls: ['./information.page.scss'],
+  standalone: false,
 })
 export class InformationPage {
   private readonly activatedDetailedCapture$ = defer(

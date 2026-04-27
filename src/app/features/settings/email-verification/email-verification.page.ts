@@ -21,6 +21,7 @@ import { ErrorService } from '../../../shared/error/error.service';
   selector: 'app-email-verification',
   templateUrl: './email-verification.page.html',
   styleUrls: ['./email-verification.page.scss'],
+  standalone: false,
 })
 export class EmailVerificationPage {
   hasSentEmailVerification = false;

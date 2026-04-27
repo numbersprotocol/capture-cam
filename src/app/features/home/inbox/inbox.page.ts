@@ -16,6 +16,7 @@ import { ErrorService } from '../../../shared/error/error.service';
   selector: 'app-inbox',
   templateUrl: './inbox.page.html',
   styleUrls: ['./inbox.page.scss'],
+  standalone: false,
 })
 export class InboxPage {
   readonly receivedTransactions$ =

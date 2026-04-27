@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { PinchZoomModule } from '@meddv/ngx-pinch-zoom';
+import { PinchZoomComponent } from '@meddv/ngx-pinch-zoom';
 import { SharedTestingModule } from '../../shared-testing.module';
 import { MediaViewerPage } from './media-viewer.page';
 
@@ -10,7 +10,7 @@ describe('MediaViewerPage', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [MediaViewerPage],
-      imports: [SharedTestingModule, PinchZoomModule],
+      imports: [SharedTestingModule, PinchZoomComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(MediaViewerPage);

@@ -18,6 +18,7 @@ import { BubbleToIonicPostMessage } from '../../shared/iframe/iframe';
   selector: 'app-wallets',
   templateUrl: './wallets.page.html',
   styleUrls: ['./wallets.page.scss'],
+  standalone: false,
 })
 export class WalletsPage {
   readonly publicKey$ = this.capAppWebCryptoApiSignatureProvider.publicKey$;

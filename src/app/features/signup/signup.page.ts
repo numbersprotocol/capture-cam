@@ -18,6 +18,7 @@ import { EMAIL_REGEXP } from '../../utils/validation';
   selector: 'app-signup',
   templateUrl: './signup.page.html',
   styleUrls: ['./signup.page.scss'],
+  standalone: false,
 })
 export class SignupPage {
   form = new UntypedFormGroup({});

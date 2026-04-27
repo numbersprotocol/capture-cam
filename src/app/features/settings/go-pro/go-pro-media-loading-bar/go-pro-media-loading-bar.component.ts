@@ -4,6 +4,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   selector: 'app-go-pro-media-loading-bar',
   templateUrl: './go-pro-media-loading-bar.component.html',
   styleUrls: ['./go-pro-media-loading-bar.component.scss'],
+  standalone: false,
 })
 export class GoProMediaLoadingBarComponent {
   @Input() loadingText = '';

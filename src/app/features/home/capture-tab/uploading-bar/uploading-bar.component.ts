@@ -8,6 +8,7 @@ import { DiaBackendAssetUploadingService } from '../../../../shared/dia-backend/
   selector: 'app-uploading-bar',
   templateUrl: './uploading-bar.component.html',
   styleUrls: ['./uploading-bar.component.scss'],
+  standalone: false,
 })
 export class UploadingBarComponent {
   pendingTasks$ = this.uploadService.pendingTasks$;

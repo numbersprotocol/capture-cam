@@ -34,6 +34,7 @@ const JPEG_QUALITY = 0.92;
   templateUrl: './pre-publish-mode.component.html',
   styleUrls: ['./pre-publish-mode.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class PrePublishModeComponent {
   private isBlackAndWhiteEnabled = false;

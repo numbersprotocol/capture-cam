@@ -5,6 +5,7 @@ import { DiaBackendAssetUploadingService } from '../../../../shared/dia-backend/
   selector: 'app-details-uploading-bar',
   templateUrl: './details-uploading-bar.component.html',
   styleUrls: ['./details-uploading-bar.component.scss'],
+  standalone: false,
 })
 export class DetailsUploadingBarComponent {
   readonly networkConnected$ = this.uploadService.networkConnected$;

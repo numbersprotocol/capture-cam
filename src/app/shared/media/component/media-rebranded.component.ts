@@ -8,6 +8,7 @@ import { MimeType } from '../../../utils/mime-type';
   selector: 'app-media-rebranded',
   templateUrl: './media-rebranded.component.html',
   styleUrls: ['./media-rebranded.component.scss'],
+  standalone: false,
 })
 export class MediaRebrandedComponent {
   readonly src$ = new ReplaySubject<SafeUrl>(1);

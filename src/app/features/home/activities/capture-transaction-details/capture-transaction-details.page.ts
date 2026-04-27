@@ -14,6 +14,7 @@ import { isNonNullable } from '../../../../utils/rx-operators/rx-operators';
   selector: 'app-capture-transaction-details',
   templateUrl: './capture-transaction-details.page.html',
   styleUrls: ['./capture-transaction-details.page.scss'],
+  standalone: false,
 })
 export class TransactionDetailsPage {
   readonly transaction$ = this.route.paramMap.pipe(

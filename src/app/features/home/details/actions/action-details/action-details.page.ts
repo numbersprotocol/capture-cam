@@ -53,6 +53,7 @@ import { InformationSessionService } from '../../information/session/information
   selector: 'app-action-details',
   templateUrl: './action-details.page.html',
   styleUrls: ['./action-details.page.scss'],
+  standalone: false,
 })
 export class ActionDetailsPage {
   readonly id$ = this.route.paramMap.pipe(

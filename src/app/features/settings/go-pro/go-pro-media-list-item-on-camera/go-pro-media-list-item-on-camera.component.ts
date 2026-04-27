@@ -7,6 +7,7 @@ import { GoProMediaService } from '../services/go-pro-media.service';
   selector: 'app-go-pro-media-list-item-on-camera',
   templateUrl: './go-pro-media-list-item-on-camera.component.html',
   styleUrls: ['./go-pro-media-list-item-on-camera.component.scss'],
+  standalone: false,
 })
 export class GoProMediaListItemOnCameraComponent {
   mediaType: 'unknown' | 'video' | 'image' = 'unknown';

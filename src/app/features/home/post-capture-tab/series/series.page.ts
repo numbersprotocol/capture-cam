@@ -8,6 +8,7 @@ import { isNonNullable } from '../../../../utils/rx-operators/rx-operators';
   selector: 'app-series',
   templateUrl: './series.page.html',
   styleUrls: ['./series.page.scss'],
+  standalone: false,
 })
 export class SeriesPage {
   private readonly id$ = this.route.paramMap.pipe(

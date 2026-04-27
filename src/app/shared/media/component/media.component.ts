@@ -23,6 +23,7 @@ import { ErrorService } from '../../error/error.service';
   selector: 'app-media',
   templateUrl: './media.component.html',
   styleUrls: ['./media.component.scss'],
+  standalone: false,
 })
 export class MediaComponent implements AfterViewInit, OnDestroy {
   readonly src$ = new ReplaySubject<SafeUrl>(1);

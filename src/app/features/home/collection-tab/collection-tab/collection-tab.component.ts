@@ -14,6 +14,7 @@ import { NetworkService } from '../../../../shared/network/network.service';
   selector: 'app-collection-tab',
   templateUrl: './collection-tab.component.html',
   styleUrls: ['./collection-tab.component.scss'],
+  standalone: false,
 })
 export class CollectionTabComponent {
   readonly bubbleIframeUrlWithCachedJWTToke$ = combineLatest([

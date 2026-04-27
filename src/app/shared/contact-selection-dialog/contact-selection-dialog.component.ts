@@ -13,6 +13,7 @@ import { FriendInvitationDialogComponent } from './friend-invitation-dialog/frie
   selector: 'app-contact-selection-dialog',
   templateUrl: './contact-selection-dialog.component.html',
   styleUrls: ['./contact-selection-dialog.component.scss'],
+  standalone: false,
 })
 export class ContactSelectionDialogComponent {
   readonly contacts$ = this.diaBackendContactRepository.all$.pipe(

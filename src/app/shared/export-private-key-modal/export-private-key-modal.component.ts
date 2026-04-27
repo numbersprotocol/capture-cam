@@ -8,6 +8,7 @@ import { TranslocoService } from '@jsverse/transloco';
   selector: 'app-export-private-key-modal',
   templateUrl: './export-private-key-modal.component.html',
   styleUrls: ['./export-private-key-modal.component.scss'],
+  standalone: false,
 })
 export class ExportPrivateKeyModalComponent {
   readonly privateKey: string = '';

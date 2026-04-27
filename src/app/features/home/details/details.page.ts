@@ -72,6 +72,7 @@ import {
   selector: 'app-details',
   templateUrl: './details.page.html',
   styleUrls: ['./details.page.scss'],
+  standalone: false,
 })
 export class DetailsPage {
   captionOn = true;

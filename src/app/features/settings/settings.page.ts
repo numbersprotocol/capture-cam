@@ -38,6 +38,7 @@ import {
   selector: 'app-settings',
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss'],
+  standalone: false,
 })
 export class SettingsPage {
   readonly langauges = this.languageService.languages;

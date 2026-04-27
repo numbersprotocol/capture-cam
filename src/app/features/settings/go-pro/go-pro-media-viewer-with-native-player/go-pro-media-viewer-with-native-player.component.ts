@@ -7,6 +7,7 @@ import { GoProFile } from '../go-pro-media-file';
   selector: 'app-go-pro-media-viewer-with-native-player',
   templateUrl: './go-pro-media-viewer-with-native-player.component.html',
   styleUrls: ['./go-pro-media-viewer-with-native-player.component.scss'],
+  standalone: false,
 })
 export class GoProMediaViewerWithNativePlayerComponent
   implements OnInit, OnDestroy

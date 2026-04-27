@@ -23,6 +23,7 @@ import { DetailedCapture } from '../information/session/information-session.serv
   selector: 'app-capture-details-with-ionic',
   templateUrl: './capture-details-with-ionic.component.html',
   styleUrls: ['./capture-details-with-ionic.component.scss'],
+  standalone: false,
 })
 export class CaptureDetailsWithIonicComponent {
   captionOn = true;

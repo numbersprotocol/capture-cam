@@ -9,6 +9,7 @@ import { isNonNullable } from '../../../utils/rx-operators/rx-operators';
   selector: 'app-media-viewer',
   templateUrl: './media-viewer.page.html',
   styleUrls: ['./media-viewer.page.scss'],
+  standalone: false,
 })
 export class MediaViewerPage {
   readonly src$ = this.route.paramMap.pipe(

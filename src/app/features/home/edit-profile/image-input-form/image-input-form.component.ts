@@ -5,6 +5,7 @@ import { ReplaySubject } from 'rxjs';
   selector: 'app-image-input-form',
   templateUrl: './image-input-form.component.html',
   styleUrls: ['./image-input-form.component.scss'],
+  standalone: false,
 })
 export class ImageInputFormComponent {
   readonly placeholderText$ = new ReplaySubject<string>(1);

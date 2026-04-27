@@ -7,6 +7,7 @@ import { UserGuideService } from '../../../shared/user-guide/user-guide.service'
   selector: 'app-activities',
   templateUrl: './activities.page.html',
   styleUrls: ['./activities.page.scss'],
+  standalone: false,
 })
 export class ActivitiesPage {
   constructor(private readonly userGuideService: UserGuideService) {}

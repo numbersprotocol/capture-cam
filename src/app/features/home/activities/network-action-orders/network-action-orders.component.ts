@@ -14,6 +14,7 @@ import { ErrorService } from '../../../../shared/error/error.service';
   selector: 'app-network-action-orders',
   templateUrl: './network-action-orders.component.html',
   styleUrls: ['./network-action-orders.component.scss'],
+  standalone: false,
 })
 export class NetworkActionOrdersComponent {
   readonly orders$ = new BehaviorSubject<NetworkAppOrderWithThumbnail[]>([]);

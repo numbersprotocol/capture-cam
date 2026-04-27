@@ -57,7 +57,7 @@ PODS:
     - Capacitor
   - CapacitorSplashScreen (8.0.1):
     - Capacitor
-  - CapgoCapacitorSocialLogin (8.3.14):
+  - CapgoCapacitorSocialLogin (8.3.16):
     - Alamofire (~> 5.10.2)
     - Capacitor
     - FBSDKCoreKit (~> 18.0)
@@ -286,7 +286,7 @@ SPEC CHECKSUMS:
   CapacitorPushNotifications: e4437b4ec1b2070685bf032c210f346432214c5f
   CapacitorShare: 0c58305114538568059bfc07111f22dcb9cb2a82
   CapacitorSplashScreen: 4b46c72298db552b3c57ce021ef028b6dc7f1fa7
-  CapgoCapacitorSocialLogin: cc90792978d4d3225aabef8112e696c0a7aa3c12
+  CapgoCapacitorSocialLogin: f84edb55b4bba40e0ada456f9a6398623ddbd1e4
   CapgoCapacitorWifi: a7539ce9a40b9186804f62e75a4da69d816b8b60
   CordovaPlugins: b2433838c7898dcf191e1b960c0652facafcebce
   FBAEMKit: 2a6b529993713c185b02bc36f8c91129bf78dfb0

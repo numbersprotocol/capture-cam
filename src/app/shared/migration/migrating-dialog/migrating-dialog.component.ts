@@ -4,5 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-migrating-dialog',
   templateUrl: './migrating-dialog.component.html',
   styleUrls: ['./migrating-dialog.component.scss'],
+  standalone: false,
 })
 export class MigratingDialogComponent {}
