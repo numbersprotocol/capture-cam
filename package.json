@@ -143,13 +143,5 @@
     "https": false,
     "path": false,
     "stream": false
-  },
-  "overrides": {
-    "@angular-devkit/build-angular": {
-      "postcss": "8.5.12"
-    },
-    "@angular/build": {
-      "postcss": "8.5.12"
-    }
   }
 }
