@@ -20,10 +20,10 @@
 ## Key Discoveries
 
 - Angular 20 migration changed TypeScript `moduleResolution` to `bundler`, added schematic generation defaults, and migrated Angular Material form-field CSS vars from `--mdc-filled-*` to `--mat-form-field-filled-*`.
-- Angular 20 browser support uses Baseline date `2025-04-30`; `.browserslistrc` should use `baseline widely available on 2025-04-30` to avoid unsupported browser warnings.
+- Browser support: because native iOS targets still include iOS 15.0/15.6, `.browserslistrc` intentionally preserves Ionic 8 floors (`Chrome >= 89`, `Firefox >= 75`, `Edge >= 89`, `Safari >= 15`, `iOS >= 15`) instead of Angular 20 Baseline-only; production/test commands warn these browsers are outside Angular 20's official support.
 - Post-Angular-20 audit state without npm overrides: high/critical vulnerabilities are 0; remaining audit findings are moderate/low in `@angular-devkit/build-angular/postcss`, `webpack-dev-server/sockjs/uuid`, Cypress `@cypress/request/uuid`, and `crypto-browserify/elliptic`.
 - Angular 20 checklist verification found no uses of deprecated `afterRender`, `TestBed.flushEffects`, `TestBed.get`, `InjectFlags`, experimental zoneless/checkNoChanges providers, resources/rxResource APIs, or ng-reflect selectors.
 
 ---
 
-_Last system refresh: 2026-04-27 07:16 UTC_
+_Last system refresh: 2026-04-27 09:10 UTC_

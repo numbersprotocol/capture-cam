@@ -5,5 +5,10 @@
 # You can see what browsers were selected by your queries by running:
 #   npx browserslist
 
-# Angular 20 browser support baseline
-baseline widely available on 2025-04-30
+# Ionic 8 minimum browser requirements.
+# Keep these in sync with native deployment targets before raising support floors.
+Chrome >= 89
+Firefox >= 75
+Edge >= 89
+Safari >= 15
+iOS >= 15
