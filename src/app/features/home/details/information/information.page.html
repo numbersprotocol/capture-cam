@@ -26,14 +26,13 @@
 
     <ng-container *ngrxLet="facts$ as facts">
       <div mat-subheader>{{ t('information') }}</div>
-      <mat-list-item
-        class="info-list-item"
-        *ngFor="let fact of facts | keyvalue"
-      >
+      @for (fact of facts | keyvalue; track fact) {
+      <mat-list-item class="info-list-item">
         <mat-icon matListItemIcon>information</mat-icon>
         <div matListItemLine>{{ fact.key }}</div>
         <div matListItemLine>{{ fact.value }}</div>
       </mat-list-item>
+      }
     </ng-container>
 
     <div mat-subheader>{{ t('signature') }}</div>

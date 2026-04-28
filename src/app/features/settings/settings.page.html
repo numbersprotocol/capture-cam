@@ -12,12 +12,11 @@
         (ionChange)="setCurrentLanguage($event)"
         slot="end"
       >
-        <ion-select-option
-          *ngFor="let language of langauges | keyvalue"
-          [value]="language.key"
-        >
+        @for (language of langauges | keyvalue; track language) {
+        <ion-select-option [value]="language.key">
           {{ language.value }}
         </ion-select-option>
+        }
       </ion-select>
     </ion-item>
     <ion-item>
@@ -62,19 +61,15 @@
       </ion-text>
     </ion-item>
 
-    <ion-item
-      *ngIf="showHiddenOption"
-      [routerLink]="['/', 'settings', 'go-pro']"
-    >
+    @if (showHiddenOption) {
+    <ion-item [routerLink]="['/', 'settings', 'go-pro']">
       <ion-label>GoPro</ion-label>
     </ion-item>
-
-    <ion-item
-      *ngIf="showHiddenOption"
-      [routerLink]="['/', 'settings', 'user-guide']"
-    >
+    } @if (showHiddenOption) {
+    <ion-item [routerLink]="['/', 'settings', 'user-guide']">
       <ion-label>User Guide Preferences</ion-label>
     </ion-item>
+    }
 
     <ion-item>
       <ion-label>{{ email$ | async }}</ion-label>

@@ -20,17 +20,16 @@
     </ion-card-header>
   </ion-card>
 
-  <ng-container *ngFor="let action of actions$ | ngrxPush">
-    <ion-card (click)="performAction(action)">
-      <ion-card-header>
-        <div class="header-text">
-          <div class="header-title">{{ action.title_text }}</div>
-          <div class="header-subtitle">{{ action.description_text }}</div>
-        </div>
-        <div class="header-price">{{ action.action_cost_number }} NUM</div>
-      </ion-card-header>
-
-      <ion-img [src]="action.banner_image_url_text"></ion-img>
-    </ion-card>
-  </ng-container>
+  @for (action of actions$ | ngrxPush; track action) {
+  <ion-card (click)="performAction(action)">
+    <ion-card-header>
+      <div class="header-text">
+        <div class="header-title">{{ action.title_text }}</div>
+        <div class="header-subtitle">{{ action.description_text }}</div>
+      </div>
+      <div class="header-price">{{ action.action_cost_number }} NUM</div>
+    </ion-card-header>
+    <ion-img [src]="action.banner_image_url_text"></ion-img>
+  </ion-card>
+  }
 </div>

@@ -2,15 +2,10 @@
   <ion-icon name="arrow-back-outline" slot="icon-only"></ion-icon>
 </ion-button>
 
-<ng-container *ngIf="isImage$ | ngrxPush">
-  <pinch-zoom *ngrxLet="src$ as src">
-    <img decoding="async" loading="lazy" [src]="src" />
-  </pinch-zoom>
-</ng-container>
-
-<video
-  *ngIf="isVideo$ | ngrxPush"
-  [attr.src]="src$ | ngrxPush"
-  controls
-  autoplay
-></video>
+@if (isImage$ | ngrxPush) {
+<pinch-zoom *ngrxLet="src$ as src">
+  <img decoding="async" loading="lazy" [src]="src" />
+</pinch-zoom>
+} @if (isVideo$ | ngrxPush) {
+<video [attr.src]="src$ | ngrxPush" controls autoplay></video>
+}

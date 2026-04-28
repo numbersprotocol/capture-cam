@@ -3,14 +3,11 @@
     <mat-icon>arrow_back</mat-icon>
   </button>
 
-  <button
-    (click)="onConfirm()"
-    class="confirm-button"
-    mat-flat-button
-    *ngIf="(isProcessingImage$ | ngrxPush) === false"
-  >
+  @if ((isProcessingImage$ | ngrxPush) === false) {
+  <button (click)="onConfirm()" class="confirm-button" mat-flat-button>
     {{ 'customCamera.confirmCapture' | transloco }}
   </button>
+  }
 </div>
 
 <div class="preview">
@@ -23,7 +20,8 @@
     "
   ></app-media>
 
-  <div class="image-editor-custom-buttons" *ngIf="isImage$ | ngrxPush">
+  @if (isImage$ | ngrxPush) {
+  <div class="image-editor-custom-buttons">
     <button
       (click)="toggleBlackAndWhiteFilter()"
       class="image-editor-button"
@@ -36,6 +34,9 @@
       ></mat-icon>
     </button>
   </div>
+  }
 </div>
 
-<div class="footer" *ngIf="isVideo$ | ngrxPush"></div>
+@if (isVideo$ | ngrxPush) {
+<div class="footer"></div>
+}

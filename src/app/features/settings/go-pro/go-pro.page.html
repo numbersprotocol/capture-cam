@@ -14,45 +14,39 @@
       {{ bluetoothIsScanning ? 'Scanning' : 'Scan for bluetooth devices' }}
     </ion-button>
 
-    <ng-container *ngIf="bluetoothScanResults.length > 0">
-      <ion-item *ngFor="let scanResult of bluetoothScanResults">
-        <ion-label>
-          <h2>{{ scanResult.device.name }}</h2>
-          <p class="device-id-text">{{ scanResult.device.deviceId }}</p>
-        </ion-label>
-
-        <ion-button
-          *ngIf="
-            scanResult.device.deviceId ===
-            bluetoothConnectedDevice?.device?.deviceId
-          "
-          (click)="disconnectFromBluetoothDevice(scanResult)"
-          color="danger"
-          slot="end"
-        >
-          Disconnect
-        </ion-button>
-
-        <ion-button
-          *ngIf="
-            scanResult.device.deviceId !==
-            bluetoothConnectedDevice?.device?.deviceId
-          "
-          (click)="connectToBluetoothDevice(scanResult)"
-          slot="end"
-          class="connect-to-bluetooth-device-btn"
-        >
-          Connect
-        </ion-button>
-      </ion-item>
-    </ng-container>
+    @if (bluetoothScanResults.length > 0) { @for (scanResult of
+    bluetoothScanResults; track scanResult) {
+    <ion-item>
+      <ion-label>
+        <h2>{{ scanResult.device.name }}</h2>
+        <p class="device-id-text">{{ scanResult.device.deviceId }}</p>
+      </ion-label>
+      @if ( scanResult.device.deviceId ===
+      bluetoothConnectedDevice?.device?.deviceId ) {
+      <ion-button
+        (click)="disconnectFromBluetoothDevice(scanResult)"
+        color="danger"
+        slot="end"
+      >
+        Disconnect
+      </ion-button>
+      } @if ( scanResult.device.deviceId !==
+      bluetoothConnectedDevice?.device?.deviceId ) {
+      <ion-button
+        (click)="connectToBluetoothDevice(scanResult)"
+        slot="end"
+        class="connect-to-bluetooth-device-btn"
+      >
+        Connect
+      </ion-button>
+      }
+    </ion-item>
+    } }
 
     <div class="spacer"></div>
 
-    <ng-container
-      *ngIf="bluetoothConnectedDevice"
-      class="connected-bluetooth-device-container"
-    >
+    @if (bluetoothConnectedDevice) {
+    <ng-container class="connected-bluetooth-device-container">
       <ion-list-header>
         <h4>
           CONNECTED TO:
@@ -60,11 +54,11 @@
           ✅
         </h4>
       </ion-list-header>
-
       <ion-item detail="true" (click)="showFilesOnGoPro()">
         <ion-label>Show files on go pro</ion-label>
       </ion-item>
     </ng-container>
+    }
 
     <div class="spacer-bottom"></div>
   </ion-list>

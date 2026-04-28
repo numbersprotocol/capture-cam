@@ -1,42 +1,25 @@
-<div *ngIf="isCollecting$ | ngrxPush" class="collecting-spinner-container">
+@if (isCollecting$ | ngrxPush) {
+<div class="collecting-spinner-container">
   <ion-spinner></ion-spinner>
 </div>
-<ion-icon
-  *ngIf="isCollecting$ | ngrxPush"
-  name="hourglass-outline"
-  class="collecting"
-></ion-icon>
+} @if (isCollecting$ | ngrxPush) {
+<ion-icon name="hourglass-outline" class="collecting"></ion-icon>
+}
 
 <div class="bottom-left-icons">
-  <ion-icon
-    *ngIf="hasUploaded$ | ngrxPush"
-    src="/assets/images/media-id.svg"
-    class="uploaded"
-  >
-  </ion-icon>
-  <ion-icon
-    *ngIf="hasGeolocation$ | ngrxPush"
-    src="/assets/images/location.svg"
-    class="located"
-  ></ion-icon>
-  <ion-icon
-    *ngIf="hasCaption$ | ngrxPush"
-    name="document-text-outline"
-    class="with-caption"
-  ></ion-icon>
+  @if (hasUploaded$ | ngrxPush) {
+  <ion-icon src="/assets/images/media-id.svg" class="uploaded"> </ion-icon>
+  } @if (hasGeolocation$ | ngrxPush) {
+  <ion-icon src="/assets/images/location.svg" class="located"></ion-icon>
+  } @if (hasCaption$ | ngrxPush) {
+  <ion-icon name="document-text-outline" class="with-caption"></ion-icon>
+  }
 </div>
 
-<ion-icon
-  *ngIf="isVideo$ | ngrxPush"
-  name="videocam"
-  class="is-video"
-></ion-icon>
-<img
-  *ngIf="thumbnailUrl$ | ngrxPush as thumbnailUrl"
-  loading="lazy"
-  decoding="async"
-  [src]="thumbnailUrl"
-/>
-<mat-icon *ngIf="isThumbnailMissing$ | ngrxPush" class="is-thumbnail-missing">
-  broken_image
-</mat-icon>
+@if (isVideo$ | ngrxPush) {
+<ion-icon name="videocam" class="is-video"></ion-icon>
+} @if (thumbnailUrl$ | ngrxPush; as thumbnailUrl) {
+<img loading="lazy" decoding="async" [src]="thumbnailUrl" />
+} @if (isThumbnailMissing$ | ngrxPush) {
+<mat-icon class="is-thumbnail-missing"> broken_image </mat-icon>
+}

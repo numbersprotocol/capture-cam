@@ -6,18 +6,18 @@
 <ion-content>
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
-    <ng-container *ngIf="formIsReady">
-      <app-image-input-form
-        [placeholderText]="'home.editProfile.profilePicture' | transloco"
-        [imagePreview]="avatar$ | async"
-        (imageSelected)="onProfileImageSelected($event)"
-      ></app-image-input-form>
-      <app-image-input-form
-        [placeholderText]="'home.editProfile.profileBackground' | transloco"
-        [imagePreview]="background$ | async"
-        (imageSelected)="onProfileBackgroundSelected($event)"
-      ></app-image-input-form>
-    </ng-container>
+    @if (formIsReady) {
+    <app-image-input-form
+      [placeholderText]="'home.editProfile.profilePicture' | transloco"
+      [imagePreview]="avatar$ | async"
+      (imageSelected)="onProfileImageSelected($event)"
+    ></app-image-input-form>
+    <app-image-input-form
+      [placeholderText]="'home.editProfile.profileBackground' | transloco"
+      [imagePreview]="background$ | async"
+      (imageSelected)="onProfileBackgroundSelected($event)"
+    ></app-image-input-form>
+    }
   </form>
 </ion-content>
 

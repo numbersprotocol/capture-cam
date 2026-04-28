@@ -1,19 +1,18 @@
 <mat-toolbar color="primary" *transloco="let t">
-  <ng-template [ngIf]="!multiSelectMode" [ngIfElse]="multiSelectBlock">
-    <button (click)="goBack()" mat-icon-button>
-      <mat-icon>arrow_back</mat-icon>
-    </button>
-    <span>{{ t('gopro.goProMediaOnCamera') }}</span>
-  </ng-template>
-
-  <ng-template #multiSelectBlock>
-    <button (click)="exitMultiSelectMode()" mat-icon-button>
-      <mat-icon>close</mat-icon>
-    </button>
-    <span *ngIf="multiSelectMode">
-      {{ t('gopro.filesSelected', { count: selectedGoProFiles.length }) }}
-    </span>
-  </ng-template>
+  @if (!multiSelectMode) {
+  <button (click)="goBack()" mat-icon-button>
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <span>{{ t('gopro.goProMediaOnCamera') }}</span>
+  } @else {
+  <button (click)="exitMultiSelectMode()" mat-icon-button>
+    <mat-icon>close</mat-icon>
+  </button>
+  @if (multiSelectMode) {
+  <span>
+    {{ t('gopro.filesSelected', { count: selectedGoProFiles.length }) }}
+  </span>
+  } }
 
   <button (click)="fetchFilesFromGoProWiFi()" mat-icon-button>
     <mat-icon>refresh</mat-icon>
@@ -23,47 +22,47 @@
 <div class="wifi-state-container" *transloco="let t">
   <h4>{{ t('gopro.connectedWiFi') }}: {{ connectedWifiSSID }}</h4>
 
+  @if (!isConnectedToGoProWifi) {
   <ion-button
-    *ngIf="!isConnectedToGoProWifi"
     (click)="connectToGoProWifi()"
     [disabled]="isConnectingToGoProWifi"
     class="connect-to-go-pro-wifi-btn"
   >
     {{ t('gopro.connectToGoProWiFi') }}
   </ion-button>
-
+  } @if (multiSelectMode) {
   <ion-button
-    *ngIf="multiSelectMode"
     [disabled]="selectedGoProFiles.length === 0"
     (click)="uploadSelectedFiles()"
     class="multi-select-mode-btn"
   >
     {{ t('gopro.uploadToCapture') }}
   </ion-button>
-
-  <h4 *ngIf="shouldConnectToWiFi" class="should-connect-to-wifi-text">
+  } @if (shouldConnectToWiFi) {
+  <h4 class="should-connect-to-wifi-text">
     {{ t('gopro.makeSureYouAreConnectedToGoProWiFiFirst') }}
   </h4>
-
-  <h4 *ngIf="fetchingFilesError">
+  } @if (fetchingFilesError) {
+  <h4>
     {{ fetchingFilesError }}
     <br />
     {{ t('gopro.hintClickTheRefreshButtonAtTheTopRight') }}
   </h4>
-
-  <h4 *ngIf="fetchingFiles">{{ t('gopro.fetchingFiles') }}...</h4>
-
-  <span *ngIf="uploadInProgress" class="upload-in-progress-info">
+  } @if (fetchingFiles) {
+  <h4>{{ t('gopro.fetchingFiles') }}...</h4>
+  } @if (uploadInProgress) {
+  <span class="upload-in-progress-info">
     <ion-icon name="information-circle-outline"></ion-icon>
     {{
       t('gopro.stayOnThisScreenWithTheAppOpenToEnsureYourDownloadsAreComplete')
     }}
   </span>
+  }
 </div>
 
 <ng-template *transloco="let t">
+  @if (uploadInProgress) {
   <app-go-pro-media-loading-bar
-    *ngIf="uploadInProgress"
     [loadingText]="
       t('gopro.loadingFilesForUploadToCapture', {
         count: filesToUpload.length + 1
@@ -71,6 +70,7 @@
     "
     (uploadCancel)="onUploadCancel()"
   ></app-go-pro-media-loading-bar>
+  }
 </ng-template>
 
 <ion-content
@@ -80,10 +80,8 @@
 >
   <div class="go-pro-container">
     <mat-grid-list cols="3" gutterSize="8px">
-      <mat-grid-tile
-        *ngFor="let mediaFile of allMediaFiles"
-        class="go-pro-item"
-      >
+      @for (mediaFile of allMediaFiles; track mediaFile) {
+      <mat-grid-tile class="go-pro-item">
         <app-go-pro-media-list-item-on-camera
           appLongPress
           (appLongPress)="enterMultiSelectMode(mediaFile)"
@@ -93,6 +91,7 @@
         >
         </app-go-pro-media-list-item-on-camera>
       </mat-grid-tile>
+      }
     </mat-grid-list>
   </div>
 </ion-content>

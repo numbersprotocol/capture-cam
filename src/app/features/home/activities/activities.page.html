@@ -16,15 +16,15 @@
       </ion-label>
     </ion-segment-button>
     <!--
-      Temporarily hidden: Network Action Orders tab.
-      NUMBERS_BUBBLE_DB_URL is no longer supported; this will be
-      re-wired through the backend in a future iteration.
+    Temporarily hidden: Network Action Orders tab.
+    NUMBERS_BUBBLE_DB_URL is no longer supported; this will be
+    re-wired through the backend in a future iteration.
     <ion-segment-button
       value="networkActionOrders"
       joyrideStep="highlightNetworkActionsTab"
       [title]="t('userGuide.activityPage2')"
       [text]="t('userGuide.viewNetworkActionsHistory')"
-    >
+      >
       <ion-label>
         {{ t('orders') }}
       </ion-label>
@@ -33,11 +33,13 @@
   </ion-segment>
 
   <div class="page-content">
-    <div *ngIf="segment.value === 'transactions'">
+    @if (segment.value === 'transactions') {
+    <div>
       <app-capture-transactions></app-capture-transactions>
     </div>
+    }
     <!--
-      Temporarily hidden together with the "Orders" segment above.
+    Temporarily hidden together with the "Orders" segment above.
     <div *ngIf="segment.value === 'networkActionOrders'">
       <app-network-action-orders></app-network-action-orders>
     </div>

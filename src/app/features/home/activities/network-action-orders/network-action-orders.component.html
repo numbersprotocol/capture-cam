@@ -1,50 +1,46 @@
 <div *transloco="let t">
   <mat-list *ngrxLet="orders$ as networkActionOrders">
-    <h5 id="empty-orders-msg" *ngIf="isOrdersEmpty$ | async">
+    @if (isOrdersEmpty$ | async) {
+    <h5 id="empty-orders-msg">
       {{ t('noNetworkActionOrdersFound') }}
     </h5>
-    <ng-container
-      *ngFor="
-        let order of networkActionOrders;
-        last as isLast;
-        trackBy: trackByNetworkActionOrder
-      "
+    } @for ( order of networkActionOrders; track
+    trackByNetworkActionOrder($index, order); let isLast = $last) {
+    <mat-list-item
+      class="order-list-item"
+      [routerLink]="['network-action-order-details', { order_id: order.id }]"
     >
-      <mat-list-item
-        class="order-list-item"
-        [routerLink]="['network-action-order-details', { order_id: order.id }]"
+      <img
+        decoding="async"
+        loading="lazy"
+        matListItemAvatar
+        [src]="
+          (order.assetThumbnailUrl$ | ngrxPush) ||
+          '/assets/images/image-placeholder.png'
+        "
+      />
+      <div matListItemLine>{{ order.network_app_name }}</div>
+      <div matListItemLine>
+        {{ order.action_args.nid || order.action_args.cid }}
+      </div>
+      <div matListItemLine>{{ order.created_at | date : 'short' }}</div>
+      <button
+        [class]="order.status"
+        mat-stroked-button
+        disableRipple
+        matListItemMeta
       >
-        <img
-          decoding="async"
-          loading="lazy"
-          matListItemAvatar
-          [src]="
-            (order.assetThumbnailUrl$ | ngrxPush) ||
-            '/assets/images/image-placeholder.png'
-          "
-        />
-        <div matListItemLine>{{ order.network_app_name }}</div>
-        <div matListItemLine>
-          {{ order.action_args.nid || order.action_args.cid }}
-        </div>
-        <div matListItemLine>{{ order.created_at | date : 'short' }}</div>
-        <button
-          [class]="order.status"
-          mat-stroked-button
-          disableRipple
-          matListItemMeta
-        >
-          {{ t('networkActionOrderState.' + order.status) }}
-        </button>
-      </mat-list-item>
-      <mat-divider *ngIf="!isLast"></mat-divider>
-    </ng-container>
+        {{ t('networkActionOrderState.' + order.status) }}
+      </button>
+    </mat-list-item>
+    @if (!isLast) {
+    <mat-divider></mat-divider>
+    } }
   </mat-list>
 </div>
 
-<ion-infinite-scroll
-  *ngIf="!(isOrdersEmpty$ | ngrxPush)"
-  (ionInfinite)="loadData($event)"
->
+@if (!(isOrdersEmpty$ | ngrxPush)) {
+<ion-infinite-scroll (ionInfinite)="loadData($event)">
   <mat-spinner diameter="30"></mat-spinner>
 </ion-infinite-scroll>
+}

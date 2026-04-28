@@ -5,24 +5,27 @@
 
 <ion-content *transloco="let t">
   <ion-list lines="none">
-    <ion-list-header *ngIf="(totalProducts$ | ngrxPush) === 0">
+    @if ((totalProducts$ | ngrxPush) === 0) {
+    <ion-list-header>
       {{
         t('wallets.buyCredits.inAppProductsNotAvailableYetPleaseTryAgainLater')
       }}
     </ion-list-header>
-
-    <ion-card *ngFor="let product of inAppProducts$ | async; let first = first">
+    } @for (product of inAppProducts$ | async; track product; let first =
+    $first) {
+    <ion-card>
       <ion-item>
         <ion-label>
           <div class="in-app-product-description">
             <div class="title-text">
               {{ product.inAppProduct.title }}
+              @if (first) {
               <ion-icon
                 class="num-point-info"
-                *ngIf="first"
                 (click)="showNumPointsQuantity(product.numPoints)"
                 name="alert-circle-outline"
               ></ion-icon>
+              }
             </div>
             <div class="subtitle-text">
               {{ product.inAppProduct.pricing?.price }}
@@ -41,5 +44,6 @@
         </ion-button>
       </ion-item>
     </ion-card>
+    }
   </ion-list>
 </ion-content>

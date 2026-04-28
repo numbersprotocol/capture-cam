@@ -1,14 +1,13 @@
 <h1 *transloco="let t" mat-dialog-title>{{ t('selectContact') }}</h1>
 
 <div *transloco="let t" mat-dialog-content>
-  <mat-spinner
-    *ngIf="(contacts$ | ngrxPush)?.length === 0 && (isFetching$ | ngrxPush)"
-    diameter="24"
-  ></mat-spinner>
+  @if ((contacts$ | ngrxPush)?.length === 0 && (isFetching$ | ngrxPush)) {
+  <mat-spinner diameter="24"></mat-spinner>
+  }
   <mat-action-list>
+    @for (contact of contacts$ | ngrxPush; track contact) {
     <mat-list-item
       class="contact-list-item"
-      *ngFor="let contact of contacts$ | ngrxPush"
       [mat-dialog-close]="contact.contact_email"
     >
       <img
@@ -28,6 +27,7 @@
         }}
       </div>
     </mat-list-item>
+    }
     <mat-list-item
       class="contact-list-item"
       (click)="openFriendInvitationDialog()"

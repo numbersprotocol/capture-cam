@@ -12,13 +12,11 @@
     "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "ES2022",
-    "lib": ["ES2022", "dom"],
     "strict": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "paths": {
       "assert": ["node_modules/assert"],
-      "crypto": ["node_modules/crypto-browserify"],
       "http": ["node_modules/stream-http"],
       "https": ["node_modules/https-browserify"],
       "os": ["node_modules/os-browserify"],

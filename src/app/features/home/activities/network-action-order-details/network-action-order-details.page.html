@@ -1,20 +1,11 @@
-<ng-container *ngIf="isOffline$ | ngrxPush; else onlineTemplate">
-  <mat-toolbar *transloco="let t">
-    <app-capture-back-button></app-capture-back-button>
-    <span>{{ t('networkActionOrderDetails') }}</span>
-  </mat-toolbar>
-</ng-container>
-
-<ng-template #onlineTemplate>
-  <ng-container *ngIf="iframeUrl$ | ngrxPush as iframeUrl">
-    <iframe
-      [src]="iframeUrl | safeResourceUrl"
-      allow="accelerometer; gyroscope"
-    >
-    </iframe>
-  </ng-container>
-  <ion-spinner
-    *ngIf="(iframeLoaded$ | async) !== true"
-    name="lines-sharp"
-  ></ion-spinner>
-</ng-template>
+@if (isOffline$ | ngrxPush) {
+<mat-toolbar *transloco="let t">
+  <app-capture-back-button></app-capture-back-button>
+  <span>{{ t('networkActionOrderDetails') }}</span>
+</mat-toolbar>
+} @else { @if (iframeUrl$ | ngrxPush; as iframeUrl) {
+<iframe [src]="iframeUrl | safeResourceUrl" allow="accelerometer; gyroscope">
+</iframe>
+} @if ((iframeLoaded$ | async) !== true) {
+<ion-spinner name="lines-sharp"></ion-spinner>
+} }

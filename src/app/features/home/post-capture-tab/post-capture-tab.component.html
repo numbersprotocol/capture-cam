@@ -1,4 +1,4 @@
-<div class="segments" [ngSwitch]="categories" *transloco="let t">
+<div class="segments" *transloco="let t">
   <ion-segment mode="ios" [(ngModel)]="categories">
     <ion-segment-button
       value="photo"
@@ -18,45 +18,40 @@
       <ion-icon src="/assets/images/series.svg" class="segment"></ion-icon>
     </ion-segment-button>
   </ion-segment>
-  <p *ngIf="(networkConnected$ | ngrxPush) === false" class="network-status">
+  @if ((networkConnected$ | ngrxPush) === false) {
+  <p class="network-status">
     {{ 'message.networkNotConnected' | transloco }}
   </p>
-  <div class="post-captures" *ngSwitchCase="'photo'">
+  } @switch (categories) { @case ('photo') {
+  <div class="post-captures">
     <mat-grid-list cols="3" gutterSize="8px">
+      @for (postCapture of postCaptures$ | ngrxPush; track
+      trackPostCapture($index, postCapture)) {
       <mat-grid-tile
-        *ngFor="
-          let postCapture of postCaptures$ | ngrxPush;
-          trackBy: trackPostCapture
-        "
         [routerLink]="['details', { type: 'post-capture', id: postCapture.id }]"
       >
-        <ng-container *ngIf="postCapture.asset_file_mime_type as mimeType">
-          <ion-icon
-            *ngIf="mimeType | startsWith : 'video'"
-            name="videocam"
-            class="is-video"
-          ></ion-icon>
-        </ng-container>
-        <ion-icon
-          *ngIf="postCapture.source_type === 'store'"
-          name="storefront"
-          class="is-from-store"
-        ></ion-icon>
+        @if (postCapture.asset_file_mime_type; as mimeType) { @if (mimeType |
+        startsWith: 'video') {
+        <ion-icon name="videocam" class="is-video"></ion-icon>
+        } } @if (postCapture.source_type === 'store') {
+        <ion-icon name="storefront" class="is-from-store"></ion-icon>
+        }
         <ion-img [src]="postCapture.asset_file_thumbnail"></ion-img>
       </mat-grid-tile>
+      }
     </mat-grid-list>
   </div>
-
-  <div class="series" *ngSwitchCase="'series'">
-    <ion-card
-      *ngFor="let series of collectedSeriesList$ | ngrxPush"
-      [routerLink]="['series', { id: series.id }]"
-    >
+  } @case ('series') {
+  <div class="series">
+    @for (series of collectedSeriesList$ | ngrxPush; track series) {
+    <ion-card [routerLink]="['series', { id: series.id }]">
       <ion-img
         [src]="
           series.cover_image || '/assets/images/series-cover-placeholder.png'
         "
       ></ion-img>
     </ion-card>
+    }
   </div>
+  } }
 </div>

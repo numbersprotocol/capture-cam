@@ -51,11 +51,12 @@
     <mat-card-header>
       <mat-card-title>
         {{ profileName$ | ngrxPush }}
+        @if (networkConnected$ | async) {
         <ion-icon
           src="assets/images/icons/edit.svg"
-          *ngIf="networkConnected$ | async"
           routerLink="edit-profile"
         ></ion-icon>
+        }
       </mat-card-title>
       <div class="vertical-space-8"></div>
       <mat-card-subtitle
@@ -67,7 +68,7 @@
   </mat-card>
   <app-uploading-bar></app-uploading-bar>
 
-  <div [ngSwitch]="segment">
+  <div>
     <ion-segment mode="md" [(ngModel)]="segment">
       <ion-segment-button [value]="captureTabSegments.VERIFIED">
         <ion-label>{{ 'home.profileTab.verified' | transloco }}</ion-label>
@@ -77,15 +78,13 @@
       </ion-segment-button>
     </ion-segment>
 
-    <div *ngSwitchCase="captureTabSegments.VERIFIED">
+    @switch (segment) { @case (captureTabSegments.VERIFIED) {
+    <div>
       <div class="capture-container" *transloco="let t">
         <mat-grid-list cols="2" gutterSize="16px">
+          @for (proof of validatedTabItems$ | ngrxPush; track
+          trackCaptureItem($index, proof); let isFirstProof = $first) {
           <mat-grid-tile
-            *ngFor="
-              let proof of validatedTabItems$ | ngrxPush;
-              first as isFirstProof;
-              trackBy: trackCaptureItem
-            "
             class="capture-item"
             [joyrideStep]="isFirstProof ? 'highlightFirstCapture' : 'notFirst'"
             [title]="t('userGuide.capturedItem')"
@@ -93,25 +92,24 @@
           >
             <app-capture-item [proof]="proof"></app-capture-item>
           </mat-grid-tile>
+          }
         </mat-grid-list>
       </div>
     </div>
-
-    <div *ngSwitchCase="captureTabSegments.DRAFT">
+    } @case (captureTabSegments.DRAFT) {
+    <div>
       <div class="capture-container" *transloco="let t">
         <mat-grid-list cols="2" gutterSize="16px">
-          <mat-grid-tile
-            *ngFor="
-              let proof of draftTabItems$ | ngrxPush;
-              trackBy: trackCaptureItem
-            "
-            class="capture-item"
-          >
+          @for (proof of draftTabItems$ | ngrxPush; track
+          trackCaptureItem($index, proof)) {
+          <mat-grid-tile class="capture-item">
             <app-capture-item [proof]="proof"></app-capture-item>
           </mat-grid-tile>
+          }
         </mat-grid-list>
       </div>
     </div>
+    } }
   </div>
 
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMoreItems($event)">

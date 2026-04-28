@@ -1,9 +1,11 @@
 <ion-content *transloco="let t">
   <div class="top-section">
     <ion-img src="/assets/images/icons/capture-rebrand-wordmark.svg"> </ion-img>
-    <button *ngIf="!isLastSlide" (click)="skipSlides()" mat-stroked-button>
+    @if (!isLastSlide) {
+    <button (click)="skipSlides()" mat-stroked-button>
       {{ t('onboarding.skip') }}
     </button>
+    }
   </div>
   <swiper-container #swiper [pagination]="!isLastSlide">
     <swiper-slide>

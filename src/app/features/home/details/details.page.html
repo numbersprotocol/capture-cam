@@ -2,17 +2,18 @@
   <app-capture-back-button></app-capture-back-button>
   <div class="toolbar-spacer"></div>
   <ng-container *ngrxLet="activeDetailedCapture$ as activeDetailedCapture">
+    @if (activeDetailedCapture.id) {
     <button
-      *ngIf="activeDetailedCapture.id"
       (click)="openShareMenu()"
       mat-mini-fab
       class="capture-rebranded-button"
     >
       <mat-icon svgIcon="capture-rebrand-share"></mat-icon>
     </button>
+    }
   </ng-container>
+  @if ((isFromSeriesPage$ | ngrxPush) === false) {
   <button
-    *ngIf="(isFromSeriesPage$ | ngrxPush) === false"
     (click)="openOptionsMenuWithAvailableOptions()"
     mat-mini-fab
     class="capture-rebranded-button"
@@ -22,6 +23,7 @@
   >
     <mat-icon svgIcon="capture-rebrand-more-horiz"></mat-icon>
   </button>
+  }
 </mat-toolbar>
 
 <div class="content" *ngrxLet="detailedCaptures$ as detailedCaptures">
@@ -35,30 +37,26 @@
     observe-parents="true"
     class="swiper"
   >
-    <swiper-slide
-      *ngFor="
-        let detailedCapture of detailedCaptures;
-        let i = index;
-        trackBy: trackDetailedCapture
-      "
-    >
+    @for ( detailedCapture of detailedCaptures; track trackDetailedCapture(i,
+    detailedCapture); let i = $index) {
+    <swiper-slide>
       <div class="slide">
         <!-- Show capture details with Ionic when capture is not uploaded or the network is disconnected -->
+        @if ((showCaptureDetailsInIframe$ | ngrxPush) === false) {
         <app-capture-details-with-ionic
-          *ngIf="(showCaptureDetailsInIframe$ | ngrxPush) === false"
           [detailedCapture]="detailedCapture"
         ></app-capture-details-with-ionic>
-
+        }
         <!-- Show capture details with an iframe only for active slide (and adjacent slides for smoother swiping) -->
+        @if ( (showCaptureDetailsInIframe$ | ngrxPush) === true &&
+        isSlideNearActive(i) ) {
         <app-capture-details-with-iframe
-          *ngIf="
-            (showCaptureDetailsInIframe$ | ngrxPush) === true &&
-            isSlideNearActive(i)
-          "
           [detailedCapture]="detailedCapture"
           [slideIsActive]="activeSlideIndex === i"
         ></app-capture-details-with-iframe>
+        }
       </div>
     </swiper-slide>
+    }
   </swiper-container>
 </div>
