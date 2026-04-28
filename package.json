@@ -20,6 +20,10 @@
     "cypress:run": "npm run preconfig && cypress run"
   },
   "private": true,
+  "engines": {
+    "node": "^22.13.0",
+    "npm": ">=10.9.0"
+  },
   "dependencies": {
     "@angular/animations": "^21.2.10",
     "@angular/cdk": "^21.2.8",

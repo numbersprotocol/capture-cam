@@ -14,7 +14,7 @@
 ## Environment & Tools
 
 - capture-cam upgraded to Angular 21: Angular core 21.2.10, Angular CLI/build 21.2.8, Material/CDK 21.2.8, angular-eslint 21.3.1, NgRx 21.1.0, TypeScript 5.9.3.
-- Local runtime observed: Node 20.20.2 and npm 10.8.2; Angular 21 compatibility verified against official Node/TypeScript/RxJS matrix, but npm install warns Capacitor CLI 8.3.1 declares Node >=22.
+- Local runtime for Angular 21 / Capacitor 8 is Node 22.13.0 with npm 10.9.2 installed under `$HOME/.n` and loaded from `.profile`; `capture-cam/.nvmrc` and `package.json` engines require Node `^22.13.0` and npm `>=10.9.0`.
 - Local test setup: `puppeteer` is a devDependency and `karma.conf.js` sets `CHROME_BIN` from Puppeteer when unset, so `npm run test.ci` can run ChromeHeadlessCI without system Chrome.
 
 ## Key Discoveries
@@ -25,4 +25,4 @@
 
 ---
 
-_Last system refresh: 2026-04-28 06:14 UTC_
+_Last system refresh: 2026-04-28 06:19 UTC_
