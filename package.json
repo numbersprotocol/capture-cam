@@ -65,7 +65,7 @@
     "@numbersprotocol/preview-video": "github:numbersprotocol/preview-video#0.0.7",
     "angularx-qrcode": "^20.0.0",
     "appsflyer-capacitor-plugin": "^6.17.91",
-    "async-mutex": "^0.3.2",
+    "async-mutex": "^0.5.0",
     "buffer": "^5.7.1",
     "capacitor-blob-writer": "^1.1.20",
     "capacitor-native-settings": "^8.1.0",
@@ -84,10 +84,10 @@
     "swiper": "^12.1.2",
     "tslib": "^2.3.1",
     "web3": "^4.15.0",
-    "zone.js": "^0.15.1"
+    "zone.js": "^0.16.1"
   },
   "devDependencies": {
-    "@angular-devkit/architect": "^0.2003.24",
+    "@angular-devkit/architect": "^0.2102.8",
     "@angular-devkit/build-angular": "^20.3.24",
     "@angular-eslint/builder": "^20.7.0",
     "@angular-eslint/eslint-plugin": "^20.7.0",
@@ -111,14 +111,14 @@
     "crypto-browserify": "^3.12.0",
     "cypress": "^13.15.0",
     "eslint": "^8.57.0",
-    "eslint-plugin-import": "2.25.2",
+    "eslint-plugin-import": "2.32.0",
     "eslint-plugin-prefer-arrow": "^1.2.3",
     "https-browserify": "^1.0.0",
     "husky": "^7.0.2",
     "jasmine-core": "^3.9.0",
     "jasmine-spec-reporter": "^7.0.0",
     "karma": "^6.3.16",
-    "karma-chrome-launcher": "~3.1.0",
+    "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "^2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.6.0",
@@ -127,10 +127,10 @@
     "prettier": "^2.3.2",
     "puppeteer": "^24.42.0",
     "stream-http": "^3.2.0",
-    "stylelint": "^17.1.1",
+    "stylelint": "^17.9.1",
     "stylelint-config-standard-scss": "^17.0.0",
     "ts-node": "^10.2.1",
-    "typescript": "~5.8.3"
+    "typescript": "~5.9.3"
   },
   "description": "Capture lite app.",
   "lint-staged": {
