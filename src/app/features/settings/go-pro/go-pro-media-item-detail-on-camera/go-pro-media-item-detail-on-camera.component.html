@@ -7,25 +7,22 @@
 </mat-toolbar>
 
 <ion-content *transloco="let t">
-  <div *ngIf="showTutorialForMobileDataOnlyApps === false">
-    <ion-img
-      *ngIf="mediaType === 'image'"
-      [src]="mediaFile!.url"
-      decoding="async"
-      loading="lazy"
-    ></ion-img>
-
+  @if (showTutorialForMobileDataOnlyApps === false) {
+  <div>
+    @if (mediaType === 'image') {
+    <ion-img [src]="mediaFile!.url" decoding="async" loading="lazy"></ion-img>
+    }
     <div class="video-placeholder" (click)="playVideoFullScreen()">
       <div class="play-icon"></div>
+      @if (mediaType === 'video') {
       <ion-img
-        *ngIf="mediaType === 'video'"
         [src]="mediaFile!.thumbnailUrl"
         decoding="async"
         loading="lazy"
       ></ion-img>
+      }
       <mat-icon class="play-icon">play_circle_outline</mat-icon>
     </div>
-
     <div class="spacer"></div>
     <ion-button
       (click)="uploadToCapture()"
@@ -35,12 +32,8 @@
       {{ t('gopro.uploadToCapture') }}
     </ion-button>
   </div>
-
-  <swiper-container
-    #swiper
-    pagination="true"
-    *ngIf="showTutorialForMobileDataOnlyApps"
-  >
+  } @if (showTutorialForMobileDataOnlyApps) {
+  <swiper-container #swiper pagination="true">
     <swiper-slide>
       <ng-container>
         <svg
@@ -191,7 +184,6 @@
         {{ t('next') }}
       </button>
     </swiper-slide>
-
     <swiper-slide>
       <ion-item lines="none">
         <ion-checkbox
@@ -206,4 +198,5 @@
       </button>
     </swiper-slide>
   </swiper-container>
+  }
 </ion-content>

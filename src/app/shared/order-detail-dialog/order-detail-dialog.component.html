@@ -28,13 +28,15 @@
       </ion-item>
     </ion-list>
 
-    <ion-row *ngIf="asset_wallet_mainnet_num_balance < num_charged">
+    @if (asset_wallet_mainnet_num_balance < num_charged) {
+    <ion-row>
       <ion-col style="padding-top: 0; padding-bottom: 0" align="end">
         <ion-label style="color: red; font-size: 15px">{{
           t('insufficientNum')
         }}</ion-label>
       </ion-col>
     </ion-row>
+    }
 
     <div class="card-action-buttons">
       <ion-row>

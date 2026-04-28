@@ -6,8 +6,8 @@
   <h1>{{ t('verification.emailVerification') }}</h1>
   <p>{{ t('verification.emailVerificationInstruction') }}</p>
   <p class="email">{{ email$ | ngrxPush }}</p>
+  @if (!hasSentEmailVerification) {
   <button
-    *ngIf="!hasSentEmailVerification"
     mat-raised-button
     type="submit"
     class="submit-button"
@@ -16,8 +16,8 @@
   >
     {{ t('send') }}
   </button>
+  } @if (secondsRemained !== 0) {
   <button
-    *ngIf="secondsRemained !== 0"
     mat-raised-button
     disabled="true"
     type="submit"
@@ -26,8 +26,8 @@
   >
     {{ t('resendIn', { secondsRemained: secondsRemained }) }}
   </button>
+  } @if (secondsRemained === 0 && hasSentEmailVerification) {
   <button
-    *ngIf="secondsRemained === 0 && hasSentEmailVerification"
     mat-raised-button
     type="submit"
     color="primary"
@@ -36,4 +36,5 @@
   >
     {{ t('resend') }}
   </button>
+  }
 </div>

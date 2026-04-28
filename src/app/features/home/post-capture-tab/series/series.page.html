@@ -10,22 +10,23 @@
     ></ion-img>
   </ion-card>
   <mat-grid-list cols="3" gutterSize="8px">
-    <ng-container *ngFor="let collection of series.collections">
-      <mat-grid-tile *ngFor="let asset of collection.assets">
-        <div [ngClass]="collection.collection_type">
-          <ion-img
-            *ngIf="asset.collected; else notCollected"
-            [routerLink]="['../details', { type: 'series', id: asset.id }]"
-            [src]="asset.asset_file_thumbnail"
-          ></ion-img>
-          <ng-template #notCollected>
-            <ion-img
-              src="/assets/images/question-mark-circle.png"
-              class="missing"
-            ></ion-img>
-          </ng-template>
-        </div>
-      </mat-grid-tile>
-    </ng-container>
+    @for (collection of series.collections; track collection) { @for (asset of
+    collection.assets; track asset) {
+    <mat-grid-tile>
+      <div [ngClass]="collection.collection_type">
+        @if (asset.collected) {
+        <ion-img
+          [routerLink]="['../details', { type: 'series', id: asset.id }]"
+          [src]="asset.asset_file_thumbnail"
+        ></ion-img>
+        } @else {
+        <ion-img
+          src="/assets/images/question-mark-circle.png"
+          class="missing"
+        ></ion-img>
+        }
+      </div>
+    </mat-grid-tile>
+    } }
   </mat-grid-list>
 </div>

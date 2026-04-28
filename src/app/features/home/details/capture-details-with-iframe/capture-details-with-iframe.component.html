@@ -1,17 +1,16 @@
 <!-- Display content if the network is connected -->
-<ng-container *ngIf="networkConnected$ | ngrxPush; else noNetworkText">
-  <!-- Display iframe if the iframeUrl is available -->
-  <ng-container *ngIf="iframeUrl$ | ngrxPush as iframeUrl">
-    <iframe [src]="iframeUrl" allow="accelerometer; gyroscope"></iframe>
-  </ng-container>
-  <!-- Display spinner while iframe is loading -->
-  <ion-spinner *ngIf="!(iframeLoaded$ | ngrxPush)" name="lines-sharp">
-  </ion-spinner>
-</ng-container>
+@if (networkConnected$ | ngrxPush) {
+<!-- Display iframe if the iframeUrl is available -->
+@if (iframeUrl$ | ngrxPush; as iframeUrl) {
+<iframe [src]="iframeUrl" allow="accelerometer; gyroscope"></iframe>
+}
+<!-- Display spinner while iframe is loading -->
+@if (!(iframeLoaded$ | ngrxPush)) {
+<ion-spinner name="lines-sharp"> </ion-spinner>
+} } @else {
+<div class="no-network-text">
+  {{ 'message.networkNotConnected' | transloco }}
+</div>
+}
 
 <!-- Display no network text when the network is not connected -->
-<ng-template #noNetworkText>
-  <div class="no-network-text">
-    {{ 'message.networkNotConnected' | transloco }}
-  </div>
-</ng-template>

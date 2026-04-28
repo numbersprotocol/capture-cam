@@ -1,31 +1,29 @@
-<div class="wrapper" *ngIf="isLoading$ | ngrxPush">
+@if (isLoading$ | ngrxPush) {
+<div class="wrapper">
   <div class="loading-spinner-container">
     <ion-spinner></ion-spinner>
   </div>
 </div>
+}
 <ng-container *ngrxLet="src$ as src">
-  <img
-    decoding="async"
-    loading="lazy"
-    *ngIf="isImage$ | ngrxPush"
-    [src]="src"
-    (load)="onImageLoaded()"
-  />
+  @if (isImage$ | ngrxPush) {
+  <img decoding="async" loading="lazy" [src]="src" (load)="onImageLoaded()" />
+  }
 
   <!-- Plays video with Android Native Player -->
-  <ng-container *ngIf="(playWithAndroidNativePlayer$ | async) === true">
-    <preview-video [id]="previewVideoId" #previewVideo></preview-video>
-  </ng-container>
+  @if ((playWithAndroidNativePlayer$ | async) === true) {
+  <preview-video [id]="previewVideoId" #previewVideo></preview-video>
+  }
 
   <!-- Plays video with HTML video tag -->
-  <ng-container *ngIf="(playWithAndroidNativePlayer$ | async) === false">
-    <video
-      *ngIf="isVideo$ | ngrxPush"
-      [src]="src"
-      autoplay
-      [muted]="'muted'"
-      playsinline
-      (loadeddata)="onVideoLoaded()"
-    ></video>
-  </ng-container>
+  @if ((playWithAndroidNativePlayer$ | async) === false) { @if (isVideo$ |
+  ngrxPush) {
+  <video
+    [src]="src"
+    autoplay
+    [muted]="'muted'"
+    playsinline
+    (loadeddata)="onVideoLoaded()"
+  ></video>
+  } }
 </ng-container>

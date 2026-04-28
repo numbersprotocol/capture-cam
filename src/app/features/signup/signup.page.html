@@ -17,10 +17,11 @@
     </button>
   </form>
 
+  @if (!isIOS) {
   <app-social-login-button
-    *ngIf="!isIOS"
     [buttonText]="t('continueWithGoogle')"
   ></app-social-login-button>
+  }
 
   <button
     routerLink="/login"

@@ -1,24 +1,21 @@
-<ng-container *ngIf="(networkConnected$ | async) === false; else bubbleIframe">
-  <mat-toolbar>
-    <app-capture-back-button></app-capture-back-button>
-    <span>{{ 'wallets.wallets' | transloco }}</span>
-  </mat-toolbar>
-  <div class="no-network-text">
-    {{ 'message.networkNotConnected' | transloco }}
-  </div>
-</ng-container>
-
-<ng-template #bubbleIframe>
-  <ng-container *ngIf="(iframeLoaded$ | ngrxPush) !== true">
-    <mat-toolbar>
-      <app-capture-back-button></app-capture-back-button>
-      <span>{{ 'wallets.wallets' | transloco }}</span>
-    </mat-toolbar>
-    <ion-spinner name="lines-sharp"></ion-spinner>
-  </ng-container>
-  <iframe
-    [src]="iframeUrl$ | async | safeResourceUrl"
-    class="bubble-iframe"
-    allow="accelerometer; gyroscope"
-  ></iframe>
-</ng-template>
+@if ((networkConnected$ | async) === false) {
+<mat-toolbar>
+  <app-capture-back-button></app-capture-back-button>
+  <span>{{ 'wallets.wallets' | transloco }}</span>
+</mat-toolbar>
+<div class="no-network-text">
+  {{ 'message.networkNotConnected' | transloco }}
+</div>
+} @else { @if ((iframeLoaded$ | ngrxPush) !== true) {
+<mat-toolbar>
+  <app-capture-back-button></app-capture-back-button>
+  <span>{{ 'wallets.wallets' | transloco }}</span>
+</mat-toolbar>
+<ion-spinner name="lines-sharp"></ion-spinner>
+}
+<iframe
+  [src]="iframeUrl$ | async | safeResourceUrl"
+  class="bubble-iframe"
+  allow="accelerometer; gyroscope"
+></iframe>
+}

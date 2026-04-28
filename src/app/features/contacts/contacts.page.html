@@ -5,9 +5,9 @@
 
 <ion-content>
   <ion-list lines="none">
-    <ion-item
-      *ngFor="let contact of contacts$ | ngrxPush; trackBy: trackContact"
-    >
+    @for (contact of contacts$ | ngrxPush; track trackContact($index, contact))
+    {
+    <ion-item>
       <ion-avatar slot="start">
         <img
           decoding="async"
@@ -32,5 +32,6 @@
         <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-item>
+    }
   </ion-list>
 </ion-content>

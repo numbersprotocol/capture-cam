@@ -1,34 +1,39 @@
-<mat-spinner diameter="30" *ngIf="isFetching$ | ngrxPush"></mat-spinner>
+@if (isFetching$ | ngrxPush) {
+<mat-spinner diameter="30"></mat-spinner>
+}
 
 <div *transloco="let t">
   <mat-list *ngrxLet="transactionsWithStatus$ as transactions">
-    <h5 id="empty-transaction-msg" *ngIf="transactions.length === 0">
+    @if (transactions.length === 0) {
+    <h5 id="empty-transaction-msg">
       {{ t('noTransactionsFound') }}
     </h5>
-    <ng-container *ngFor="let transaction of transactions; last as isLast">
-      <mat-list-item
-        class="transaction-list-item"
-        [routerLink]="['capture-transaction-details', { id: transaction.id }]"
+    } @for (transaction of transactions; track transaction; let isLast = $last)
+    {
+    <mat-list-item
+      class="transaction-list-item"
+      [routerLink]="['capture-transaction-details', { id: transaction.id }]"
+    >
+      <img
+        decoding="async"
+        loading="lazy"
+        matListItemAvatar
+        [src]="transaction.asset.asset_file_thumbnail"
+      />
+      <div matListItemLine>{{ transaction.asset.id }}</div>
+      <div matListItemLine>{{ transaction.created_at | date : 'short' }}</div>
+      <button
+        *ngrxLet="transaction.status as status"
+        [class]="status"
+        mat-stroked-button
+        disableRipple
+        matListItemMeta
       >
-        <img
-          decoding="async"
-          loading="lazy"
-          matListItemAvatar
-          [src]="transaction.asset.asset_file_thumbnail"
-        />
-        <div matListItemLine>{{ transaction.asset.id }}</div>
-        <div matListItemLine>{{ transaction.created_at | date : 'short' }}</div>
-        <button
-          *ngrxLet="transaction.status as status"
-          [class]="status"
-          mat-stroked-button
-          disableRipple
-          matListItemMeta
-        >
-          {{ t('transactionState.' + status) }}
-        </button>
-      </mat-list-item>
-      <mat-divider *ngIf="!isLast"></mat-divider>
-    </ng-container>
+        {{ t('transactionState.' + status) }}
+      </button>
+    </mat-list-item>
+    @if (!isLast) {
+    <mat-divider></mat-divider>
+    } }
   </mat-list>
 </div>

@@ -28,21 +28,26 @@ describe('LongPressDirective', () => {
   let component: TestComponent;
   let button: HTMLButtonElement;
 
+  function detectChanges(): void {
+    fixture.detectChanges();
+    button = fixture.nativeElement.querySelector('button');
+  }
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [LongPressDirective, TestComponent],
     });
     fixture = TestBed.createComponent(TestComponent);
     component = fixture.componentInstance;
-    button = fixture.nativeElement.querySelector('button');
-    fixture.detectChanges();
   });
 
   it('should create', () => {
+    detectChanges();
     expect(component).toBeTruthy();
   });
 
   it('should emit appLongPress after holding for duration', fakeAsync(() => {
+    detectChanges();
     button.dispatchEvent(new PointerEvent('pointerdown'));
     expect(component.longPressTriggered).toBeFalse();
 
@@ -51,6 +56,7 @@ describe('LongPressDirective', () => {
   }));
 
   it('should not emit if released before duration', fakeAsync(() => {
+    detectChanges();
     button.dispatchEvent(new PointerEvent('pointerdown'));
     tick(200);
     button.dispatchEvent(new PointerEvent('pointerup'));
@@ -60,6 +66,7 @@ describe('LongPressDirective', () => {
   }));
 
   it('should not emit if pointer leaves before duration', fakeAsync(() => {
+    detectChanges();
     button.dispatchEvent(new PointerEvent('pointerdown'));
     tick(200);
     button.dispatchEvent(new PointerEvent('pointerleave'));
@@ -70,7 +77,7 @@ describe('LongPressDirective', () => {
 
   it('should respect custom duration', fakeAsync(() => {
     component.duration = 1000;
-    fixture.detectChanges();
+    detectChanges();
 
     button.dispatchEvent(new PointerEvent('pointerdown'));
     tick(500);

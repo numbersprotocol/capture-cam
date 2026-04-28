@@ -1,17 +1,14 @@
-<ion-icon
-  *ngIf="mediaFile?.type === 'video'"
-  name="videocam"
-  class="is-video"
-></ion-icon>
+@if (mediaFile?.type === 'video') {
+<ion-icon name="videocam" class="is-video"></ion-icon>
+} @if (mediaFile?.thumbnailUrl) {
 <img
-  *ngIf="mediaFile?.thumbnailUrl"
   [src]="mediaFile!.thumbnailUrl"
   loading="lazy"
   decoding="async"
   [ngStyle]="{ border: selected ? '2px solid black' : '' }"
 />
-<mat-icon *ngIf="!mediaFile?.thumbnailUrl" class="is-thumbnail-missing">
-  broken_image
-</mat-icon>
+} @if (!mediaFile?.thumbnailUrl) {
+<mat-icon class="is-thumbnail-missing"> broken_image </mat-icon>
+}
 
 <div [class.selected]="selected"></div>

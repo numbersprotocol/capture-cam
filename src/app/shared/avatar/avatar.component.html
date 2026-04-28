@@ -1,21 +1,11 @@
-<ng-container *ngIf="networkConnected$ | ngrxPush; else offline">
-  <ion-img
-    *ngIf="avatar$ | ngrxPush as avatar; else placeholder"
-    [src]="avatar"
-    (click)="selectAvatar()"
-  ></ion-img>
-  <ng-template #placeholder>
-    <mat-icon *ngIf="editable" (click)="selectAvatar()"> add_a_photo </mat-icon>
-    <mat-icon *ngIf="!editable" class="view-only"> account_circle </mat-icon>
-  </ng-template>
-
-  <input
-    #input
-    (change)="uploadAvatar($event)"
-    type="file"
-    accept="image/jpeg"
-  />
-</ng-container>
-<ng-template #offline>
-  <mat-icon>cloud_off</mat-icon>
-</ng-template>
+@if (networkConnected$ | ngrxPush) { @if (avatar$ | ngrxPush; as avatar) {
+<ion-img [src]="avatar" (click)="selectAvatar()"></ion-img>
+} @else { @if (editable) {
+<mat-icon (click)="selectAvatar()"> add_a_photo </mat-icon>
+} @if (!editable) {
+<mat-icon class="view-only"> account_circle </mat-icon>
+} }
+<input #input (change)="uploadAvatar($event)" type="file" accept="image/jpeg" />
+} @else {
+<mat-icon>cloud_off</mat-icon>
+}

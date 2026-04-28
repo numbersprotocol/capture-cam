@@ -13,17 +13,16 @@
 
 ## Environment & Tools
 
-- capture-cam upgraded to Angular 20: Angular core 20.3.19, Angular CLI/build 20.3.24, Material/CDK 20.2.14, angular-eslint 20.7.0, NgRx 20.1.0.
-- Local runtime observed: Node 20.20.2 and npm 10.8.2; Angular 20 compatibility verified against official Node/TypeScript/RxJS matrix.
+- capture-cam upgraded to Angular 21: Angular core 21.2.10, Angular CLI/build 21.2.8, Material/CDK 21.2.8, angular-eslint 21.3.1, NgRx 21.1.0, TypeScript 5.9.3.
+- Local runtime for Angular 21 / Capacitor 8 is Node 22.13.0 with npm 10.9.2 installed under `$HOME/.n` and loaded from `.profile`; `capture-cam/.nvmrc` and `package.json` engines require Node `^22.13.0` and npm `>=10.9.0`.
 - Local test setup: `puppeteer` is a devDependency and `karma.conf.js` sets `CHROME_BIN` from Puppeteer when unset, so `npm run test.ci` can run ChromeHeadlessCI without system Chrome.
 
 ## Key Discoveries
 
-- Angular 20 migration changed TypeScript `moduleResolution` to `bundler`, added schematic generation defaults, and migrated Angular Material form-field CSS vars from `--mdc-filled-*` to `--mat-form-field-filled-*`.
-- Browser support: because native iOS targets still include iOS 15.0/15.6, `.browserslistrc` intentionally preserves Ionic 8 floors (`Chrome >= 89`, `Firefox >= 75`, `Edge >= 89`, `Safari >= 15`, `iOS >= 15`) instead of Angular 20 Baseline-only; production/test commands warn these browsers are outside Angular 20's official support.
-- Post-Angular-20 audit state without npm overrides: high/critical vulnerabilities are 0; remaining audit findings are moderate/low in `@angular-devkit/build-angular/postcss`, `webpack-dev-server/sockjs/uuid`, Cypress `@cypress/request/uuid`, and `crypto-browserify/elliptic`.
-- Angular 20 checklist verification found no uses of deprecated `afterRender`, `TestBed.flushEffects`, `TestBed.get`, `InjectFlags`, experimental zoneless/checkNoChanges providers, resources/rxResource APIs, or ng-reflect selectors.
+- Angular 21 migration added `provideZoneChangeDetection()` in `src/main.ts`, updated `tsconfig.json` target libs, migrated most templates to built-in control flow, and required fixing `long-press.directive.spec.ts` setup to avoid NG0100 after stricter test checks.
+- Browser support: because native iOS targets still include iOS 15.0/15.6, `.browserslistrc` intentionally preserves Ionic 8 floors (`Chrome >= 89`, `Firefox >= 75`, `Edge >= 89`, `Safari >= 15`, `iOS >= 15`) instead of Angular 21 Baseline-only; production/test commands warn these browsers are outside Angular 21's official support.
+- Post-Angular-21 audit state without npm overrides: production audit is 0 vulnerabilities; full dev audit remains 9 moderate from Angular devkit `postcss`/`webpack-dev-server`/`sockjs` and Cypress `@cypress/request`/`uuid`, with no non-downgrade fix available upstream.
 
 ---
 
-_Last system refresh: 2026-04-28 03:45 UTC_
+_Last system refresh: 2026-04-28 06:19 UTC_

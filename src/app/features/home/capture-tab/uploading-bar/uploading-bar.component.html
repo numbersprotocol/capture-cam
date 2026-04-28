@@ -1,22 +1,19 @@
 <mat-toolbar color="background" class="thin-upload-bar" id="thin-upload-bar">
   <ng-container *ngrxLet="uploadingBarState$ as uploadingBarState">
-    <span class="text spacer-text" *ngIf="uploadingBarState.spacer">{{
-      uploadingBarState.text
-    }}</span>
-    <span class="text" *ngIf="!uploadingBarState.spacer">{{
-      uploadingBarState.text
-    }}</span>
-    <span class="spacer" *ngIf="uploadingBarState.spacer">
-      <mat-progress-bar
-        *ngIf="uploadingBarState.showProgressBar"
-        mode="indeterminate"
-      ></mat-progress-bar>
+    @if (uploadingBarState.spacer) {
+    <span class="text spacer-text">{{ uploadingBarState.text }}</span>
+    } @if (!uploadingBarState.spacer) {
+    <span class="text">{{ uploadingBarState.text }}</span>
+    } @if (uploadingBarState.spacer) {
+    <span class="spacer">
+      @if (uploadingBarState.showProgressBar) {
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      }
     </span>
-    <mat-icon *ngIf="uploadingBarState.showPauseButton" (click)="pause()"
-      >pause</mat-icon
-    >
-    <mat-icon *ngIf="uploadingBarState.showResumeButton" (click)="resume()"
-      >publish</mat-icon
-    >
+    } @if (uploadingBarState.showPauseButton) {
+    <mat-icon (click)="pause()">pause</mat-icon>
+    } @if (uploadingBarState.showResumeButton) {
+    <mat-icon (click)="resume()">publish</mat-icon>
+    }
   </ng-container>
 </mat-toolbar>

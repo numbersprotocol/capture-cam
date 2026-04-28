@@ -13,10 +13,11 @@
     </button>
   </form>
 
+  @if (!isIOS) {
   <app-social-login-button
-    *ngIf="!isIOS"
     [buttonText]="t('continueWithGoogle')"
   ></app-social-login-button>
+  }
 
   <button
     (click)="forgotPassword()"
@@ -36,12 +37,9 @@
     {{ t('createAnAccount') }}
   </button>
 
-  <button
-    *ngIf="showResendEmailButton"
-    (click)="resendEmail()"
-    mat-stroked-button
-    color="primary"
-  >
+  @if (showResendEmailButton) {
+  <button (click)="resendEmail()" mat-stroked-button color="primary">
     {{ t('resendActivationEmail') }}
   </button>
+  }
 </div>
