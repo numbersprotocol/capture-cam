@@ -5,7 +5,8 @@
 # You can see what browsers were selected by your queries by running:
 #   npx browserslist
 
-# Ionic 8 minimum browser requirements
+# Ionic 8 minimum browser requirements.
+# Keep these in sync with native deployment targets before raising support floors.
 Chrome >= 89
 Firefox >= 75
 Edge >= 89

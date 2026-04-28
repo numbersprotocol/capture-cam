@@ -51,6 +51,7 @@
         ],
         "@typescript-eslint/no-empty-object-type": "off",
         "@typescript-eslint/no-require-imports": "off",
+        "@angular-eslint/prefer-inject": "off",
         "@angular-eslint/prefer-standalone": "off",
         "@typescript-eslint/array-type": "error",
         "no-constant-condition": "off",
