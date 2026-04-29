@@ -25,9 +25,9 @@ PODS:
     - GCDWebServer (~> 3.0)
   - CapacitorBrowser (8.0.3):
     - Capacitor
-  - CapacitorCamera (8.1.0):
+  - CapacitorCamera (8.2.0):
     - Capacitor
-    - IONCameraLib (~> 1.0.0)
+    - IONCameraLib (~> 1.0.4)
   - CapacitorClipboard (8.0.1):
     - Capacitor
   - CapacitorCommunityAdvertisingId (8.0.0):
@@ -139,7 +139,7 @@ PODS:
     - AppAuth/Core (~> 2.0)
     - GTMSessionFetcher/Core (< 4.0, >= 3.3)
   - GTMSessionFetcher/Core (3.5.0)
-  - IONCameraLib (1.0.0)
+  - IONCameraLib (1.0.4)
   - IONFilesystemLib (1.1.2)
   - IONGeolocationLib (2.1.0)
   - nanopb (3.30910.0):
@@ -271,7 +271,7 @@ SPEC CHECKSUMS:
   CapacitorApp: 449ffe26375e96f8aaaee625ac6e01e5c57c8650
   CapacitorBlobWriter: d709e5d22ab9989afd730eb4773873d1ded5fd08
   CapacitorBrowser: c987c73d09d8bd3b5ec13f06338b1e14d5d2be69
-  CapacitorCamera: 6e43e76d276ba69b45639a4e61365e3d56324c6c
+  CapacitorCamera: 41840ec394f762059f3577e86cd532a6c246973e
   CapacitorClipboard: c75fdaa6e622111119f35e7914ecfc67b05efecb
   CapacitorCommunityAdvertisingId: ea9b956faa71f5903d282205a6c9e0b3a89ca862
   CapacitorCommunityBluetoothLe: ab4b04474c7c13315cd591dee0995f1adce73c98
@@ -304,7 +304,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: 00c88b9a86066ef77f0da2fab05f65d7768ed8e1
   GTMAppAuth: 217a876b249c3c585a54fd6f73e6b58c4f5c4238
   GTMSessionFetcher: 5aea5ba6bd522a239e236100971f10cb71b96ab6
-  IONCameraLib: ad9a0f93e5fe35cbaae86bed8ac7dac9320d7516
+  IONCameraLib: f2349804460bd9e3f892e42109b8d996ab3fa19d
   IONFilesystemLib: 21a63377696b2d8fab5632ecfb7d2ac67bddb68a
   IONGeolocationLib: 6a7b6f76063fb1b01cfb14fae7d0f526e3c9b271
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275

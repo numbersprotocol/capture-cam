@@ -20,7 +20,8 @@
 
 - PR 3454 updates `@capgo/capacitor-social-login` to 8.3.20 and `cordova-plugin-purchase` to 13.15.4; social login cancellation now rejects with `code === 'USER_CANCELLED'`, so app code should handle that without showing an error toast.
 - capture-cam in-app purchase code registers consumable products only; the `cordova-plugin-purchase` 13.15.4 StoreKit 2 intro-offer eligibility fix does not require app code changes for the current product setup.
+- PR 3456 iOS CI failed because `@capacitor/camera@8.2.0` requires `IONCameraLib ~> 1.0.4`, while `ios/App/Podfile.lock` still pinned `CapacitorCamera 8.1.0` and `IONCameraLib 1.0.0`; updating the pod lock resolves the CocoaPods compatibility error.
 
 ---
 
-_Last system refresh: 2026-04-29 03:59 UTC_
+_Last system refresh: 2026-04-29 05:03 UTC_
