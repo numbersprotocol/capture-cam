@@ -6,6 +6,11 @@ updates:
       interval: 'weekly'
     target-branch: 'main'
     open-pull-requests-limit: 10
+    # Only automate production dependency updates. Development/build toolchain
+    # advisories are reviewed manually because they often require coordinated
+    # framework upgrades or upstream fixes.
+    allow:
+      - dependency-type: 'production'
     # Skip major-version PRs. Majors for Angular / ngrx / ionic / capacitor etc.
     # always require coordinated framework migrations that Dependabot cannot
     # handle on its own, so we'd just end up with PRs that permanently fail CI.
