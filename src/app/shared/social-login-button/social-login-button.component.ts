@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslocoService } from '@jsverse/transloco';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { combineLatest, Observable } from 'rxjs';
+import { combineLatest, EMPTY, Observable } from 'rxjs';
 import { catchError, concatMap, tap } from 'rxjs/operators';
 import { LanguageService } from '../../shared/language/service/language.service';
 import { BlockingActionService } from '../blocking-action/blocking-action.service';
@@ -32,6 +32,17 @@ export class SocialLoginButtonComponent {
     private readonly router: Router,
     private readonly translocoService: TranslocoService
   ) {}
+
+  private static isSocialLoginUserCancelledError(
+    err: unknown
+  ): err is { code: 'USER_CANCELLED' } {
+    return (
+      typeof err === 'object' &&
+      err !== null &&
+      'code' in err &&
+      err.code === 'USER_CANCELLED'
+    );
+  }
 
   /**
    * Login or register with Google
@@ -67,12 +78,17 @@ export class SocialLoginButtonComponent {
           return this.blockingActionService.run$(action$);
         }),
         concatMap(() => this.router.navigate(['home'], { replaceUrl: true })),
+        catchError((err: unknown) => this.handleSocialLoginError$(err)),
         untilDestroyed(this)
       )
       .subscribe();
   }
 
   private handleSocialLoginError$(err: unknown): Observable<never> {
+    if (SocialLoginButtonComponent.isSocialLoginUserCancelledError(err)) {
+      return EMPTY;
+    }
+
     if (err instanceof HttpErrorResponse) {
       const errorType = err.error.error?.type;
       if (
