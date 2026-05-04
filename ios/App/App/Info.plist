@@ -69,6 +69,8 @@
 	</array>
 	<key>UIStatusBarHidden</key>
 	<false/>
+	<key>CAPACITOR_DEBUG</key>
+	<string>$(CAPACITOR_DEBUG)</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
