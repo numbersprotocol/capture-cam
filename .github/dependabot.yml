@@ -11,11 +11,9 @@ updates:
     # framework upgrades or upstream fixes.
     allow:
       - dependency-type: 'production'
-      # Angular runtime packages require compiler packages to move in lockstep,
-      # even though the compiler packages are dev dependencies.
-      - dependency-name: '@angular/compiler'
-      - dependency-name: '@angular/compiler-cli'
-      - dependency-name: '@angular/language-service'
+      # Angular runtime, compiler, and CLI packages should move in lockstep,
+      # even when some of them are development dependencies.
+      - dependency-name: '@angular/*'
     # Skip major-version PRs. Majors for Angular / ngrx / ionic / capacitor etc.
     # always require coordinated framework migrations that Dependabot cannot
     # handle on its own, so we'd just end up with PRs that permanently fail CI.
