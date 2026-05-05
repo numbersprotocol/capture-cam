@@ -15,6 +15,7 @@
     "test.ci": "npm run preconfig && ng test --no-watch --no-progress --source-map=false --browsers=ChromeHeadlessCI",
     "lint": "npm run preconfig && prettier --check . && stylelint \"**/*.{css,scss,sass}\" && node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng lint",
     "e2e": "npm run preconfig && ng e2e",
+    "postinstall": "node scripts/ensure-ios-spm-packages.js",
     "prepare": "husky install",
     "cypress:open": "npm run preconfig && cypress open",
     "cypress:run": "npm run preconfig && cypress run"
@@ -65,8 +66,8 @@
     "@ngrx/store": "^21.1.0",
     "@ngx-formly/core": "^7.1.0",
     "@ngx-formly/material": "^7.1.0",
-    "@numbersprotocol/preview-camera": "github:numbersprotocol/preview-camera#0.0.22",
-    "@numbersprotocol/preview-video": "github:numbersprotocol/preview-video#0.0.7",
+    "@numbersprotocol/preview-camera": "github:numbersprotocol/preview-camera#0.0.23",
+    "@numbersprotocol/preview-video": "github:numbersprotocol/preview-video#0.0.8",
     "angularx-qrcode": "^21.0.5",
     "appsflyer-capacitor-plugin": "^6.17.91",
     "async-mutex": "^0.5.0",
