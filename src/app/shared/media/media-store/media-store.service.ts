@@ -52,11 +52,20 @@ export class MediaStore {
         path: '',
       });
       if (!dirs.files.find(f => f.name.includes(this.rootDir))) {
-        await this.filesystemPlugin.mkdir({
-          directory: this.directory,
-          path: this.rootDir,
-          recursive: true,
-        });
+        try {
+          await this.filesystemPlugin.mkdir({
+            directory: this.directory,
+            path: this.rootDir,
+            recursive: true,
+          });
+        } catch (error: unknown) {
+          if (
+            !(error instanceof Error) ||
+            error.message !== 'Current directory does already exist.'
+          ) {
+            throw error;
+          }
+        }
       }
       this.hasInitialized = true;
     });
