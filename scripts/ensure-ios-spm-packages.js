@@ -48,6 +48,7 @@ const packages = [
       ['setPartnerData', 'promise'],
       ['logInvite', 'promise'],
       ['setSharingFilterForPartners', 'promise'],
+      ['setDisableNetworkData', 'none'],
       ['enableTCFDataCollection', 'none'],
       ['setConsentData', 'none'],
       ['startSDK', 'promise'],

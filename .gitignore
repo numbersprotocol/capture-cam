@@ -21,6 +21,7 @@ npm-debug.log*
 /android/.idea/
 /.idea
 /.ionic
+/.omni
 /.sass-cache
 /.sourcemaps
 /.versions
