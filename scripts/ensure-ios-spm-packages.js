@@ -143,6 +143,7 @@ function patchPluginClass(source, config) {
       '#if canImport(FacebookCore)',
       '#if canImport(FBSDKCoreKit)'
     );
+    source = source.replace('FBSDKAppLinkUtility.self', 'AppLinkUtility.self');
   }
 
   const classPrefix = `public class ${config.className}: `;
