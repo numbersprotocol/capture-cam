@@ -58,10 +58,12 @@ const packages = [
       ['validateAndLogInAppPurchaseV2', 'promise'],
     ],
     dependencies: [
-      '        .package(url: "https://github.com/AppsFlyerSDK/AppsFlyerFramework.git", exact: "6.17.9")',
+      '        .package(url: "https://github.com/AppsFlyerSDK/AppsFlyerFramework-Static.git", from: "6.17.9")',
+      '        .package(url: "https://github.com/facebook/facebook-ios-sdk.git", .upToNextMajor(from: "18.0.3"))',
     ],
     products: [
-      '                .product(name: "AppsFlyerLib", package: "AppsFlyerFramework")',
+      '                .product(name: "AppsFlyerLib-Static", package: "AppsFlyerFramework-Static")',
+      '                .product(name: "FacebookCore", package: "facebook-ios-sdk")',
     ],
   },
 ];
@@ -129,6 +131,20 @@ ${methods}
 }
 
 function patchPluginClass(source, config) {
+  if (
+    config.packageName === 'appsflyer-capacitor-plugin' &&
+    !source.includes('import FBSDKCoreKit')
+  ) {
+    source = source.replace(
+      'import AppsFlyerLib\n',
+      'import AppsFlyerLib\n#if canImport(FBSDKCoreKit)\nimport FBSDKCoreKit\n#endif\n'
+    );
+    source = source.replace(
+      '#if canImport(FacebookCore)',
+      '#if canImport(FBSDKCoreKit)'
+    );
+  }
+
   const classPrefix = `public class ${config.className}: `;
   const classIndex = source.indexOf(classPrefix);
   if (classIndex === -1 || source.includes('CAPBridgedPlugin')) {
