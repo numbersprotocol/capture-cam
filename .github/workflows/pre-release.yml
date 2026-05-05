@@ -11,9 +11,9 @@ jobs:
     timeout-minutes: 60
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: '22'
 
@@ -37,7 +37,7 @@ jobs:
           npm run build
 
       - name: Set up JDK 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: 'temurin' # https://github.com/actions/setup-java#supported-distributions
           java-version: '21'
@@ -49,13 +49,13 @@ jobs:
           ./gradlew assembleDebug
 
       - name: Upload debug APK and metadata to Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: app-debug.apk
           path: ./android/app/build/outputs/apk/debug/app-debug.apk
 
       - name: Upload debug metadata to Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: output-metadata.json
           path: ./android/app/build/outputs/apk/debug/output-metadata.json
@@ -64,20 +64,20 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-android-qa
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Download debug APK
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: app-debug.apk
 
       - name: Download debug metadata
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: output-metadata.json
 
       - name: Upload debug APK and metadata to release assets
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v3.0.0
         with:
           files: |
             ./app-debug.apk
@@ -88,9 +88,9 @@ jobs:
     timeout-minutes: 120
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: '22'
 
@@ -114,7 +114,7 @@ jobs:
           npm run build
 
       - name: Set up JDK 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: 'temurin' # https://github.com/actions/setup-java#supported-distributions
           java-version: '21'
@@ -126,16 +126,24 @@ jobs:
           ./gradlew bundleRelease
 
       - name: Sign release AAB
-        uses: r0adkll/sign-android-release@v1.0.4
-        with:
-          releaseDirectory: ./android/app/build/outputs/bundle/release
-          signingKeyBase64: ${{ secrets.ANDROID_KEYSTORE_FILE }}
-          alias: ${{ secrets.ANDROID_KEY_ALIAS }}
-          keyStorePassword: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        env:
+          ANDROID_KEYSTORE_FILE: ${{ secrets.ANDROID_KEYSTORE_FILE }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          set -euo pipefail
+          KEYSTORE_PATH="${RUNNER_TEMP}/android-keystore.jks"
+          AAB_PATH="$(find ./android/app/build/outputs/bundle/release -name '*.aab' -print -quit)"
+          printf '%s' "$ANDROID_KEYSTORE_FILE" | base64 --decode > "$KEYSTORE_PATH"
+          jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
+            -keystore "$KEYSTORE_PATH" \
+            -storepass "$ANDROID_KEYSTORE_PASSWORD" \
+            -keypass "$ANDROID_KEY_PASSWORD" \
+            "$AAB_PATH" "$ANDROID_KEY_ALIAS"
 
       - name: Upload release AAB to Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: app-release.aab
           path: ./android/app/build/outputs/bundle/release/app-release.aab
@@ -146,10 +154,10 @@ jobs:
     timeout-minutes: 120
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Download release AAB
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: app-release.aab
 
@@ -157,7 +165,7 @@ jobs:
         run: echo '${{ secrets.PLAY_CONSOLE_SERVICE_ACCOUNT_JSON }}' > service_account.json
 
       - name: Deploy to Play Store (closed alpha track)
-        uses: r0adkll/upload-google-play@v1.1.1
+        uses: r0adkll/upload-google-play@v1.1.5
         with:
           serviceAccountJson: service_account.json
           packageName: io.numbersprotocol.capturelite
@@ -170,19 +178,19 @@ jobs:
     continue-on-error: true
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Setup Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: '26.2'
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: '22'
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.11'
 
@@ -206,13 +214,13 @@ jobs:
           npm run build
 
       - name: Import the Code-Signing PKCS12 Certificate
-        uses: apple-actions/import-codesign-certs@v1
+        uses: apple-actions/import-codesign-certs@v7
         with:
           p12-file-base64: ${{ secrets.CERTIFICATES_P12 }}
           p12-password: ${{ secrets.CERTIFICATES_P12_PASSWORD }}
 
       - name: Download provisioning profiles
-        uses: Apple-Actions/download-provisioning-profiles@v1
+        uses: Apple-Actions/download-provisioning-profiles@v6
         with:
           bundle-id: io.numbersprotocol.capturelite
           profile-type: 'IOS_APP_STORE'
@@ -221,10 +229,8 @@ jobs:
           api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
 
       - name: Get current time
-        uses: 1466587594/get-current-time@v2
         id: current-time
-        with:
-          format: YYYYMMDDHHmmss
+        run: echo "formattedTime=$(date -u +'%Y%m%d%H%M%S')" >> "$GITHUB_OUTPUT"
 
       - name: Build iOS Xcode Archive
         env:
@@ -240,7 +246,7 @@ jobs:
           xcodebuild -exportArchive -archivePath build/App.xcarchive -exportPath build -exportOptionsPlist ios/App/ExportOptions.plist -allowProvisioningUpdates
 
       - name: Upload IPA
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: App.ipa
           path: build/App.ipa
@@ -250,7 +256,7 @@ jobs:
           echo ${{ steps.current-time.outputs.formattedTime }} > build/ios-build-number.txt
 
       - name: Upload iOS build number
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ios-build-number.txt
           path: build/ios-build-number.txt
@@ -262,7 +268,7 @@ jobs:
     continue-on-error: true
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Setup Xcode
         uses: maxim-lobanov/setup-xcode@v1
@@ -270,12 +276,12 @@ jobs:
           xcode-version: '26.2'
 
       - name: Download IPA
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: App.ipa
 
       - name: Upload IPA to App Store (Testflight)
-        uses: Apple-Actions/upload-testflight-build@master
+        uses: Apple-Actions/upload-testflight-build@v5
         with:
           app-path: ./App.ipa
           issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
@@ -286,10 +292,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: deploy-app-store
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Download iOS build number
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: ios-build-number.txt
 
@@ -302,7 +308,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [deploy-play-store, get-ios-build-number]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Get release version
         id: version_check
@@ -310,7 +316,7 @@ jobs:
 
       - name: Create GitHub prerelease
         id: create_release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v3.0.0
         if: startsWith(github.ref, 'refs/tags/')
         with:
           body: Thanks for following along! For more information check out the [CHANGELOG](https://github.com/numbersprotocol/capture-lite/blob/main/CHANGELOG.md).
