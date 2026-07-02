@@ -1,0 +1,92 @@
+name: dependabot-lockfile-normalize
+
+on:
+  pull_request_target:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+    paths:
+      - package.json
+      - package-lock.json
+
+permissions:
+  contents: write
+  pull-requests: read
+
+concurrency:
+  group: dependabot-lockfile-normalize-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  normalize:
+    name: Normalize npm lockfile
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: >-
+      ${{
+        github.event.pull_request.user.login == 'dependabot[bot]' &&
+        github.event.pull_request.head.repo.full_name == github.repository &&
+        startsWith(github.event.pull_request.head.ref, 'dependabot/npm_and_yarn/')
+      }}
+
+    steps:
+      - name: Checkout Dependabot branch
+        uses: actions/checkout@v7
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+          persist-credentials: false
+
+      - name: Use Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+
+      - name: Verify Dependabot branch guard
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+        run: |
+          if [ "$PR_AUTHOR" != "dependabot[bot]" ]; then
+            echo "Refusing to run on non-Dependabot PR."
+            exit 1
+          fi
+
+          if [ "$HEAD_REPO" != "$GITHUB_REPOSITORY" ]; then
+            echo "Refusing to run on fork PR."
+            exit 1
+          fi
+
+          case "$HEAD_REF" in
+            dependabot/npm_and_yarn/*) ;;
+            *)
+              echo "Refusing to run on non-npm Dependabot branch: $HEAD_REF"
+              exit 1
+              ;;
+          esac
+
+      - name: Normalize package lock
+        run: npm install --package-lock-only --ignore-scripts
+
+      - name: Commit normalized package lock
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        run: |
+          if git diff --quiet -- package-lock.json; then
+            echo "package-lock.json is already normalized."
+            exit 0
+          fi
+
+          changed_files="$(git diff --name-only)"
+          if [ "$changed_files" != "package-lock.json" ]; then
+            echo "Unexpected files changed:"
+            printf '%s\n' "$changed_files"
+            exit 1
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package-lock.json
+          git commit -m "chore(deps): normalize package lock"
+          git -c http.extraheader="AUTHORIZATION: bearer ${GITHUB_TOKEN}" push origin "HEAD:${HEAD_REF}"
