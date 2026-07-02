@@ -21,7 +21,7 @@ jobs:
         run: npm install -g @ionic/cli
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Build Ionic
         env:
@@ -50,7 +50,7 @@ jobs:
   ios:
     runs-on: macos-26
     timeout-minutes: 60
-    if: github.actor != 'dependabot[bot]'
+    if: github.actor != 'dependabot[bot]' && github.event.pull_request.user.login != 'dependabot[bot]'
     permissions:
       contents: write
 
@@ -78,7 +78,7 @@ jobs:
         run: npm install -g @ionic/cli
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Build Ionic
         env:
