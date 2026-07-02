@@ -50,7 +50,7 @@ jobs:
   ios:
     runs-on: macos-26
     timeout-minutes: 60
-    if: github.actor != 'dependabot[bot]'
+    if: github.actor != 'dependabot[bot]' && github.event.pull_request.user.login != 'dependabot[bot]'
     permissions:
       contents: write
 
