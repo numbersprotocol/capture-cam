@@ -25,7 +25,7 @@ jobs:
           GOOGLE_WEB_CLIENT_ID: ${{ secrets.GOOGLE_WEB_CLIENT_ID }}
         run: |
           npm install -g @ionic/cli
-          npm install
+          npm ci
           npm run build
 
       - name: Build APKs
