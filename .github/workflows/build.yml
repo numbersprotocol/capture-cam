@@ -5,7 +5,42 @@ on:
     branches: [main]
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      app_changed: ${{ steps.changed-files.outputs.app_changed }}
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Check changed files
+        id: changed-files
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          changed_files="$(git diff --name-only "$BASE_SHA" "$HEAD_SHA")"
+          app_changed=false
+
+          while IFS= read -r file; do
+            [ -n "$file" ] || continue
+
+            case "$file" in
+              .github/*|.omni/*) ;;
+              *) app_changed=true ;;
+            esac
+          done <<EOF
+          $changed_files
+          EOF
+
+          echo "app_changed=$app_changed" >> "$GITHUB_OUTPUT"
+
   android:
+    needs: changes
+    if: needs.changes.outputs.app_changed == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 60
 
@@ -48,9 +83,10 @@ jobs:
           ./gradlew assembleDebug
 
   ios:
+    needs: changes
     runs-on: macos-26
     timeout-minutes: 60
-    if: github.actor != 'dependabot[bot]' && github.event.pull_request.user.login != 'dependabot[bot]'
+    if: needs.changes.outputs.app_changed == 'true' && github.actor != 'dependabot[bot]' && github.event.pull_request.user.login != 'dependabot[bot]'
     permissions:
       contents: write
 
