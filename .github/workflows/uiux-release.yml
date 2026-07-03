@@ -5,6 +5,9 @@ on:
     branches:
       - uiux
 
+permissions:
+  contents: read
+
 jobs:
   upload-google-drive:
     runs-on: ubuntu-latest
