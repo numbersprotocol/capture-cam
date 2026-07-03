@@ -18,6 +18,9 @@ on:
         required: false
         type: string
 
+permissions:
+  contents: read
+
 jobs:
   distribute-android:
     runs-on: ubuntu-latest

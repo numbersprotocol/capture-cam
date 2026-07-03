@@ -5,6 +5,9 @@ on:
     tags:
       - '[0-9]+.[0-9]+.[0-9]+*'
 
+permissions:
+  contents: read
+
 jobs:
   build-android-qa:
     runs-on: ubuntu-latest
@@ -63,6 +66,9 @@ jobs:
   upload-android-qa:
     runs-on: ubuntu-latest
     needs: build-android-qa
+    permissions:
+      contents: write
+
     steps:
       - uses: actions/checkout@v6
 
@@ -307,6 +313,9 @@ jobs:
   create-github-release:
     runs-on: ubuntu-latest
     needs: [deploy-play-store, get-ios-build-number]
+    permissions:
+      contents: write
+
     steps:
       - uses: actions/checkout@v6
 
