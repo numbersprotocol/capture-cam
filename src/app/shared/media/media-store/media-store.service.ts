@@ -155,10 +155,7 @@ export class MediaStore {
          * So we can silently ignore "File does not exist" error
          * while deleting capture from FileSystem only.
          */
-        if (
-          !(error instanceof Error) ||
-          error.message !== 'File does not exist'
-        ) {
+        if (!isFileDoesNotExistError(error)) {
           throw error;
         }
       }
@@ -371,6 +368,14 @@ interface Thumbnail extends Tuple {
 export const enum OnWriteExistStrategy {
   IGNORE,
   REPLACE,
+}
+
+function isFileDoesNotExistError(error: unknown) {
+  return (
+    error instanceof Error &&
+    (error.message === 'File does not exist' ||
+      error.message === 'File does not exist.')
+  );
 }
 
 async function makeImageThumbnail({
