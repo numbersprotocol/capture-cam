@@ -9,6 +9,7 @@ on:
       - package-lock.json
 
 permissions:
+  actions: write
   contents: write
   pull-requests: read
 
@@ -33,7 +34,7 @@ jobs:
         uses: actions/checkout@v7
         with:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
-          ref: ${{ github.event.pull_request.head.ref }}
+          ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
 
       - name: Use Node.js
@@ -43,6 +44,7 @@ jobs:
 
       - name: Verify Dependabot branch guard
         env:
+          EXPECTED_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
           HEAD_REF: ${{ github.event.pull_request.head.ref }}
           HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
           PR_AUTHOR: ${{ github.event.pull_request.user.login }}
@@ -65,17 +67,41 @@ jobs:
               ;;
           esac
 
+          if [ "$(git rev-parse HEAD)" != "$EXPECTED_HEAD_SHA" ]; then
+            echo "Checked out an unexpected commit."
+            exit 1
+          fi
+
       - name: Normalize package lock
         run: npm install --package-lock-only --ignore-scripts
 
       - name: Commit normalized package lock
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ github.token }}
           HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
           if git diff --quiet -- package-lock.json; then
             echo "package-lock.json is already normalized."
             exit 0
+          fi
+
+          unexpected_pr_files=""
+          while IFS= read -r file; do
+            case "$file" in
+              package.json|package-lock.json) ;;
+              *) unexpected_pr_files="${unexpected_pr_files}${unexpected_pr_files:+$'\n'}${file}" ;;
+            esac
+          done < <(
+            gh api --paginate \
+              "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}/files" \
+              --jq '.[].filename'
+          )
+
+          if [ -n "$unexpected_pr_files" ]; then
+            echo "Refusing to approve a Dependabot PR with unexpected files:"
+            printf '%s\n' "$unexpected_pr_files"
+            exit 1
           fi
 
           changed_files="$(git diff --name-only)"
@@ -89,5 +115,46 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add package-lock.json
           git commit -m "chore(deps): normalize package lock"
-          auth_header="$(printf 'x-access-token:%s' "$GITHUB_TOKEN" | base64 | tr -d '\n')"
+          normalized_sha="$(git rev-parse HEAD)"
+          auth_header="$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 | tr -d '\n')"
           git -c http.extraheader="AUTHORIZATION: basic ${auth_header}" push origin "HEAD:${HEAD_REF}"
+
+          # GITHUB_TOKEN pushes do not trigger push workflows, so dispatch tests
+          # explicitly against the normalized Dependabot branch.
+          gh workflow run test.yml --ref "$HEAD_REF"
+
+          # GitHub creates pull_request workflows from GITHUB_TOKEN updates in
+          # an approval-required state. Approve only build.yml for this exact SHA.
+          build_run_found=false
+          for attempt in $(seq 1 15); do
+            build_run="$(
+              gh api --method GET \
+                "repos/${GITHUB_REPOSITORY}/actions/runs" \
+                -f event=pull_request \
+                -f head_sha="$normalized_sha" \
+                -f per_page=100 \
+                --jq '.workflow_runs[] | select(.path == ".github/workflows/build.yml") | [.id, .status, (.conclusion // "")] | @tsv' \
+                | head -n 1
+            )"
+
+            if [ -n "$build_run" ]; then
+              build_run_found=true
+              IFS=$'\t' read -r build_run_id build_run_status build_run_conclusion <<< "$build_run"
+
+              if [ "$build_run_conclusion" = "action_required" ]; then
+                gh api --method POST \
+                  "repos/${GITHUB_REPOSITORY}/actions/runs/${build_run_id}/approve"
+                echo "Approved build workflow run ${build_run_id}."
+              else
+                echo "Build workflow run ${build_run_id} is ${build_run_status}/${build_run_conclusion:-pending}."
+              fi
+              break
+            fi
+
+            sleep 2
+          done
+
+          if [ "$build_run_found" != "true" ]; then
+            echo "No build workflow run appeared for normalized commit ${normalized_sha}."
+            exit 1
+          fi
