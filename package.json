@@ -75,7 +75,7 @@
     "capacitor-blob-writer": "^1.1.20",
     "capacitor-native-settings": "^8.1.0",
     "compressorjs": "^1.0.7",
-    "cordova-plugin-purchase": "^13.17.2",
+    "cordova-plugin-purchase": "^13.18.0",
     "ethers": "^6.17.0",
     "hammerjs": "^2.0.8",
     "immutable": "^5.1.9",
