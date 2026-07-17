@@ -58,6 +58,10 @@ jobs:
       - name: Install Ionic CLI
         run: npm install -g @ionic/cli
 
+      - name: Normalize Dependabot package lock
+        if: github.event.pull_request.user.login == 'dependabot[bot]'
+        run: npm install --package-lock-only --ignore-scripts
+
       - name: Install dependencies
         run: npm ci
 
