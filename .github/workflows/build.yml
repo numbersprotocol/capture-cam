@@ -13,6 +13,7 @@ jobs:
     timeout-minutes: 5
     outputs:
       app_changed: ${{ steps.changed-files.outputs.app_changed }}
+      ios_changed: ${{ steps.changed-files.outputs.ios_changed }}
 
     steps:
       - uses: actions/checkout@v6
@@ -27,19 +28,25 @@ jobs:
         run: |
           changed_files="$(git diff --name-only "$BASE_SHA" "$HEAD_SHA")"
           app_changed=false
+          ios_changed=false
 
           while IFS= read -r file; do
             [ -n "$file" ] || continue
 
             case "$file" in
               .github/*|.omni/*) ;;
-              *) app_changed=true ;;
+              package-lock.json) app_changed=true ;;
+              *)
+                app_changed=true
+                ios_changed=true
+                ;;
             esac
           done <<EOF
           $changed_files
           EOF
 
           echo "app_changed=$app_changed" >> "$GITHUB_OUTPUT"
+          echo "ios_changed=$ios_changed" >> "$GITHUB_OUTPUT"
 
   android:
     needs: changes
@@ -93,7 +100,7 @@ jobs:
     needs: changes
     runs-on: macos-26
     timeout-minutes: 60
-    if: needs.changes.outputs.app_changed == 'true' && github.actor != 'dependabot[bot]' && github.event.pull_request.user.login != 'dependabot[bot]'
+    if: needs.changes.outputs.ios_changed == 'true' && github.actor != 'dependabot[bot]' && github.event.pull_request.user.login != 'dependabot[bot]'
     permissions:
       contents: write
 

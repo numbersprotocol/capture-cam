@@ -2,6 +2,9 @@ name: test
 
 on:
   push:
+    branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -24,7 +27,11 @@ jobs:
         run: npm install -g @ionic/cli
 
       - name: Normalize Dependabot package lock
-        if: startsWith(github.ref_name, 'dependabot/npm_and_yarn/')
+        if: >-
+          ${{
+            startsWith(github.ref_name, 'dependabot/npm_and_yarn/') ||
+            github.event.pull_request.user.login == 'dependabot[bot]'
+          }}
         run: npm install --package-lock-only --ignore-scripts
 
       - name: Install dependencies
@@ -49,7 +56,11 @@ jobs:
         run: npm install -g @ionic/cli
 
       - name: Normalize Dependabot package lock
-        if: startsWith(github.ref_name, 'dependabot/npm_and_yarn/')
+        if: >-
+          ${{
+            startsWith(github.ref_name, 'dependabot/npm_and_yarn/') ||
+            github.event.pull_request.user.login == 'dependabot[bot]'
+          }}
         run: npm install --package-lock-only --ignore-scripts
 
       - name: Install dependencies
@@ -60,7 +71,7 @@ jobs:
 
       - name: Upload coverage reports
         uses: codacy/codacy-coverage-reporter-action@master
-        if: github.actor != 'dependabot[bot]'
+        if: github.actor != 'dependabot[bot]' && github.event.pull_request.user.login != 'dependabot[bot]'
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           coverage-reports: ./coverage/cobertura-coverage.xml
