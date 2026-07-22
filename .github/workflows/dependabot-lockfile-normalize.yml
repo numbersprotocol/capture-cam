@@ -119,42 +119,44 @@ jobs:
           auth_header="$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 | tr -d '\n')"
           git -c http.extraheader="AUTHORIZATION: basic ${auth_header}" push origin "HEAD:${HEAD_REF}"
 
-          # GITHUB_TOKEN pushes do not trigger push workflows, so dispatch tests
-          # explicitly against the normalized Dependabot branch.
-          gh workflow run test.yml --ref "$HEAD_REF"
+          # GITHUB_TOKEN pushes create approval-required pull_request runs.
+          # Approve only the expected workflows for this exact normalized SHA.
+          for workflow_path in \
+            ".github/workflows/build.yml" \
+            ".github/workflows/test.yml"
+          do
+            workflow_run_found=false
 
-          # GitHub creates pull_request workflows from GITHUB_TOKEN updates in
-          # an approval-required state. Approve only build.yml for this exact SHA.
-          build_run_found=false
-          for attempt in $(seq 1 15); do
-            build_run="$(
-              gh api --method GET \
-                "repos/${GITHUB_REPOSITORY}/actions/runs" \
-                -f event=pull_request \
-                -f head_sha="$normalized_sha" \
-                -f per_page=100 \
-                --jq '.workflow_runs[] | select(.path == ".github/workflows/build.yml") | [.id, .status, (.conclusion // "")] | @tsv' \
-                | head -n 1
-            )"
+            for attempt in $(seq 1 15); do
+              workflow_run="$(
+                gh api --method GET \
+                  "repos/${GITHUB_REPOSITORY}/actions/runs" \
+                  -f event=pull_request \
+                  -f head_sha="$normalized_sha" \
+                  -f per_page=100 \
+                  --jq ".workflow_runs[] | select(.path == \"${workflow_path}\") | [.id, .status, (.conclusion // \"\")] | @tsv" \
+                  | head -n 1
+              )"
 
-            if [ -n "$build_run" ]; then
-              build_run_found=true
-              IFS=$'\t' read -r build_run_id build_run_status build_run_conclusion <<< "$build_run"
+              if [ -n "$workflow_run" ]; then
+                workflow_run_found=true
+                IFS=$'\t' read -r workflow_run_id workflow_run_status workflow_run_conclusion <<< "$workflow_run"
 
-              if [ "$build_run_conclusion" = "action_required" ]; then
-                gh api --method POST \
-                  "repos/${GITHUB_REPOSITORY}/actions/runs/${build_run_id}/approve"
-                echo "Approved build workflow run ${build_run_id}."
-              else
-                echo "Build workflow run ${build_run_id} is ${build_run_status}/${build_run_conclusion:-pending}."
+                if [ "$workflow_run_conclusion" = "action_required" ]; then
+                  gh api --method POST \
+                    "repos/${GITHUB_REPOSITORY}/actions/runs/${workflow_run_id}/approve"
+                  echo "Approved ${workflow_path} run ${workflow_run_id}."
+                else
+                  echo "${workflow_path} run ${workflow_run_id} is ${workflow_run_status}/${workflow_run_conclusion:-pending}."
+                fi
+                break
               fi
-              break
+
+              sleep 2
+            done
+
+            if [ "$workflow_run_found" != "true" ]; then
+              echo "No ${workflow_path} run appeared for normalized commit ${normalized_sha}."
+              exit 1
             fi
-
-            sleep 2
           done
-
-          if [ "$build_run_found" != "true" ]; then
-            echo "No build workflow run appeared for normalized commit ${normalized_sha}."
-            exit 1
-          fi
