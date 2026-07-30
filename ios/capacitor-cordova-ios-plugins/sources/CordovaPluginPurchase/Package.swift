@@ -21,7 +21,10 @@ let package = Package(
                 .product(name: "Cordova", package: "capacitor-swift-pm")
             ],
             path: ".",
-            publicHeadersPath: "."
+            publicHeadersPath: ".",
+            linkerSettings: [
+                .linkedFramework("StoreKit")
+            ]
         )
     ]
 )
