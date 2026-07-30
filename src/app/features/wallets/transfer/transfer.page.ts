@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
@@ -22,6 +22,7 @@ import { TransferRequestSentComponent } from './transfer-request-sent/transfer-r
   selector: 'app-transfer',
   templateUrl: './transfer.page.html',
   styleUrls: ['./transfer.page.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class TransferPage {

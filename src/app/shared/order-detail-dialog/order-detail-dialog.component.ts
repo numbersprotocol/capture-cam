@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NetworkAppOrder } from '../dia-backend/store/dia-backend-store.service';
 import { DiaBackendWalletService } from '../dia-backend/wallet/dia-backend-wallet.service';
@@ -7,6 +7,7 @@ import { DiaBackendWalletService } from '../dia-backend/wallet/dia-backend-walle
   selector: 'app-order-detail-dialog',
   templateUrl: './order-detail-dialog.component.html',
   styleUrls: ['./order-detail-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class OrderDetailDialogComponent {

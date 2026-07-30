@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { Clipboard } from '@capacitor/clipboard';
@@ -27,6 +27,7 @@ import { isNonNullable } from '../../../../utils/rx-operators/rx-operators';
   selector: 'app-network-action-order-details',
   templateUrl: './network-action-order-details.page.html',
   styleUrls: ['./network-action-order-details.page.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class NetworkActionOrderDetailsPage {

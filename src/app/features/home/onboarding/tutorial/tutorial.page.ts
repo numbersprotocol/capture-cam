@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  ViewChild,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { OnboardingService } from '../../../../shared/onboarding/onboarding.service';
@@ -8,6 +14,7 @@ import { OnboardingService } from '../../../../shared/onboarding/onboarding.serv
   selector: 'app-tutorial',
   templateUrl: './tutorial.page.html',
   styleUrls: ['./tutorial.page.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class TutorialPage implements AfterViewInit {

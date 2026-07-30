@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { DiaBackendSeriesRepository } from '../../../../shared/dia-backend/series/dia-backend-series-repository.service';
@@ -8,6 +8,7 @@ import { isNonNullable } from '../../../../utils/rx-operators/rx-operators';
   selector: 'app-series',
   templateUrl: './series.page.html',
   styleUrls: ['./series.page.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class SeriesPage {

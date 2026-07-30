@@ -4,6 +4,7 @@ import {
   Component,
   ElementRef,
   ViewChild,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -72,6 +73,7 @@ import {
   selector: 'app-details',
   templateUrl: './details.page.html',
   styleUrls: ['./details.page.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class DetailsPage {

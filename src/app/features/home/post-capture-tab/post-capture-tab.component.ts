@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { EMPTY, iif } from 'rxjs';
 import { catchError, pluck, switchMap } from 'rxjs/operators';
@@ -15,6 +15,7 @@ import { NetworkService } from '../../../shared/network/network.service';
   selector: 'app-post-capture-tab',
   templateUrl: './post-capture-tab.component.html',
   styleUrls: ['./post-capture-tab.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class PostCaptureTabComponent {

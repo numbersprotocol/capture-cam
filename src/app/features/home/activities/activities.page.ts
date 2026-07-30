@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { UserGuideService } from '../../../shared/user-guide/user-guide.service';
 
@@ -7,6 +7,7 @@ import { UserGuideService } from '../../../shared/user-guide/user-guide.service'
   selector: 'app-activities',
   templateUrl: './activities.page.html',
   styleUrls: ['./activities.page.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ActivitiesPage {

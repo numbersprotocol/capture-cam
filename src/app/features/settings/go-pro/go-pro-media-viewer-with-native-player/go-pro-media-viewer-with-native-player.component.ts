@@ -1,4 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { PluginListenerHandle } from '@capacitor/core';
 import { NavController, Platform } from '@ionic/angular';
 import { GoProFile } from '../go-pro-media-file';
@@ -7,6 +12,7 @@ import { GoProFile } from '../go-pro-media-file';
   selector: 'app-go-pro-media-viewer-with-native-player',
   templateUrl: './go-pro-media-viewer-with-native-player.component.html',
   styleUrls: ['./go-pro-media-viewer-with-native-player.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class GoProMediaViewerWithNativePlayerComponent

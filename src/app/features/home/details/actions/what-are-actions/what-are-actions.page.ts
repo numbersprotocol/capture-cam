@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
 
 @UntilDestroy()
@@ -6,6 +6,7 @@ import { UntilDestroy } from '@ngneat/until-destroy';
   selector: 'app-what-are-actions',
   templateUrl: './what-are-actions.page.html',
   styleUrls: ['./what-are-actions.page.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class WhatAreActionsPage {}

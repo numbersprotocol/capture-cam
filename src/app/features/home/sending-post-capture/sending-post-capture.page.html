@@ -52,7 +52,10 @@
         {{ asset.source_transaction?.sender }}
       </mat-card-title>
       <mat-card-subtitle>
-        {{ asset.source_transaction?.fulfilled_at | date : 'short' }}
+        {{
+          $safeNavigationMigration(asset.source_transaction?.fulfilled_at)
+            | date : 'short'
+        }}
       </mat-card-subtitle>
     </mat-card-header>
     <app-media

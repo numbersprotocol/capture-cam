@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, UntypedFormGroup } from '@angular/forms';
 import { NavController } from '@ionic/angular';
 import { TranslocoService } from '@jsverse/transloco';
@@ -16,6 +16,7 @@ import { NetworkService } from '../../../shared/network/network.service';
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.page.html',
   styleUrls: ['./edit-profile.page.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class EditProfilePage {

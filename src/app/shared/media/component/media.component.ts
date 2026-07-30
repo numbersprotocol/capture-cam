@@ -7,6 +7,7 @@ import {
   OnDestroy,
   Renderer2,
   ViewChild,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Capacitor } from '@capacitor/core';
@@ -23,6 +24,7 @@ import { ErrorService } from '../../error/error.service';
   selector: 'app-media',
   templateUrl: './media.component.html',
   styleUrls: ['./media.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class MediaComponent implements AfterViewInit, OnDestroy {

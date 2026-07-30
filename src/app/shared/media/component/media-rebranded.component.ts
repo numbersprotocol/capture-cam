@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { BehaviorSubject, ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -8,6 +8,7 @@ import { MimeType } from '../../../utils/mime-type';
   selector: 'app-media-rebranded',
   templateUrl: './media-rebranded.component.html',
   styleUrls: ['./media-rebranded.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class MediaRebrandedComponent {

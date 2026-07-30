@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AlertController } from '@ionic/angular';
 import { TranslocoService } from '@jsverse/transloco';
@@ -12,6 +12,7 @@ import { OnboardingService } from '../../../../shared/onboarding/onboarding.serv
   selector: 'app-prefetching-dialog',
   templateUrl: './prefetching-dialog.component.html',
   styleUrls: ['./prefetching-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class PrefetchingDialogComponent {

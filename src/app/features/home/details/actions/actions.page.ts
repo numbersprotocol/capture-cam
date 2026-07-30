@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { catchError } from 'rxjs/operators';
@@ -13,6 +13,7 @@ import { ErrorService } from '../../../../shared/error/error.service';
   selector: 'app-actions',
   templateUrl: './actions.page.html',
   styleUrls: ['./actions.page.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ActionsPage {

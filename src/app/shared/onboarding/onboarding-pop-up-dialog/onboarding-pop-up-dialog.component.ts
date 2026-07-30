@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 export interface OnboardingPopUpDialogData {
@@ -11,6 +11,7 @@ export interface OnboardingPopUpDialogData {
   selector: 'app-encourage-take-photo-dialog',
   templateUrl: './onboarding-pop-up-dialog.component.html',
   styleUrls: ['./onboarding-pop-up-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class OnboardingPopUpDialogComponent {

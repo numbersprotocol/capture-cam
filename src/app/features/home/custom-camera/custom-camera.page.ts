@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { CameraSource } from '@capacitor/camera';
 import { Capacitor } from '@capacitor/core';
@@ -62,6 +68,7 @@ interface PinchGestureEvent extends Event {
   selector: 'app-custom-camera',
   templateUrl: './custom-camera.page.html',
   styleUrls: ['./custom-camera.page.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class CustomCameraPage implements OnInit, OnDestroy {

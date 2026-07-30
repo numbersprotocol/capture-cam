@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { BehaviorSubject, of } from 'rxjs';
 import { catchError, finalize, map, shareReplay, take } from 'rxjs/operators';
 import { DiaBackendAuthService } from '../../../../shared/dia-backend/auth/dia-backend-auth.service';
@@ -10,6 +10,7 @@ import { getStatus } from '../capture-transaction-details/capture-transaction-de
   selector: 'app-capture-transactions',
   templateUrl: './capture-transactions.component.html',
   styleUrls: ['./capture-transactions.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class CaptureTransactionsComponent {

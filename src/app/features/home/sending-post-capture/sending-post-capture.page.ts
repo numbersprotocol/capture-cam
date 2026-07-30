@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { TranslocoService } from '@jsverse/transloco';
@@ -39,6 +39,7 @@ import {
   selector: 'app-sending-post-capture',
   templateUrl: './sending-post-capture.page.html',
   styleUrls: ['./sending-post-capture.page.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class SendingPostCapturePage {

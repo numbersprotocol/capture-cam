@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Browser } from '@capacitor/browser';
 import { TranslocoService } from '@jsverse/transloco';
@@ -23,6 +23,7 @@ import { DetailedCapture } from '../information/session/information-session.serv
   selector: 'app-capture-details-with-ionic',
   templateUrl: './capture-details-with-ionic.component.html',
   styleUrls: ['./capture-details-with-ionic.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class CaptureDetailsWithIonicComponent {
