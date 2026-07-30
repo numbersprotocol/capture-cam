@@ -222,30 +222,32 @@ ion-button {
   background-color: transparent;
 }
 
-// styling for ngx-joyride START
-.joyride-step__container {
+// styling for ngx-ui-tour START
+.capture-tour-popover ion-card {
   border-radius: 15px;
   max-height: 200px;
+  overflow-y: auto;
 }
 
-.joyride-button {
-  background-color: #0000d8 !important; /* stylelint-disable-line declaration-no-important */
-  border-radius: 15px;
+.capture-tour-popover ion-button:not(.close) {
+  --background: #0000d8;
+  --border-radius: 15px;
+  --color: white;
 }
 
-.joyride-step__close {
+.capture-tour-popover ion-button.close {
   display: none;
 }
 
-.joyride-step__header {
+.capture-tour-popover ion-card-header {
   padding: 0 8px 8px !important; /* stylelint-disable-line declaration-no-important */
 }
 
-.joyride-step__title {
+.capture-tour-popover ion-card-title {
   color: #0000d8 !important; /* stylelint-disable-line declaration-no-important */
 }
 
-.joyride-step__body {
+.capture-tour-popover ion-card-content {
   padding: 0 8px 10px !important; /* stylelint-disable-line declaration-no-important */
 }
-// styling for ngx-joyride END
+// styling for ngx-ui-tour END

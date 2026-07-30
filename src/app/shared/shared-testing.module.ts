@@ -6,7 +6,7 @@ import { CapacitorPluginsTestingModule } from './capacitor-plugins/capacitor-plu
 import { getTranslocoTestingModule } from './language/transloco/transloco-testing.module';
 import { MaterialTestingModule } from './material/material-testing.module';
 import { SharedModule } from './shared.module';
-import { getJoyrideModuleForRoot } from './user-guide/user-guide.module';
+import { provideUserGuideTour } from './user-guide/user-guide.module';
 
 @NgModule({
   imports: [
@@ -16,8 +16,8 @@ import { getJoyrideModuleForRoot } from './user-guide/user-guide.module';
     getTranslocoTestingModule(),
     MaterialTestingModule,
     CapacitorPluginsTestingModule,
-    getJoyrideModuleForRoot(),
   ],
+  providers: [provideUserGuideTour()],
   exports: [
     SharedModule,
     RouterTestingModule,

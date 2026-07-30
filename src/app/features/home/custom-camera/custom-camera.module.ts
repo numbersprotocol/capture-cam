@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { NgCircleProgressModule } from 'ng-circle-progress';
-import { JoyrideModule } from 'ngx-joyride';
 import { SharedModule } from '../../../shared/shared.module';
 import { CustomCameraPageRoutingModule } from './custom-camera-routing.module';
 import { CustomCameraPage } from './custom-camera.page';
@@ -12,7 +11,6 @@ import { PrePublishModeComponent } from './pre-publish-mode/pre-publish-mode.com
     SharedModule,
     CustomCameraPageRoutingModule,
     NgCircleProgressModule.forRoot({}),
-    JoyrideModule.forChild(),
   ],
   providers: [CustomCameraService],
   declarations: [CustomCameraPage, PrePublishModeComponent],

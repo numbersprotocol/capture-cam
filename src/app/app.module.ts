@@ -6,12 +6,12 @@ import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
-import { JoyrideModule } from 'ngx-joyride';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HammerModule } from './shared/hammer/hammer.module';
 import { TranslocoRootModule } from './shared/language/transloco/transloco-root.module';
 import { SharedModule } from './shared/shared.module';
+import { provideUserGuideTour } from './shared/user-guide/user-guide.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,10 +24,10 @@ import { SharedModule } from './shared/shared.module';
     TranslocoRootModule,
     FormlyModule.forRoot({ extras: { lazyRender: true } }),
     FormlyMaterialModule,
-    JoyrideModule.forRoot(),
     HammerModule,
   ],
   providers: [
+    provideUserGuideTour(),
     {
       provide: RouteReuseStrategy,
       useClass: IonicRouteStrategy,

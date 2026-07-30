@@ -86,9 +86,7 @@
           trackCaptureItem($index, proof); let isFirstProof = $first) {
           <mat-grid-tile
             class="capture-item"
-            [joyrideStep]="isFirstProof ? 'highlightFirstCapture' : 'notFirst'"
-            [title]="t('userGuide.capturedItem')"
-            [text]="t('userGuide.openToSeeDetailsAndMoreActionItems')"
+            [tourAnchor]="isFirstProof ? 'highlightFirstCapture' : 'notFirst'"
           >
             <app-capture-item [proof]="proof"></app-capture-item>
           </mat-grid-tile>

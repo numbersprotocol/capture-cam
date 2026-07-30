@@ -28,6 +28,7 @@ import { OrderDetailDialogComponent } from './order-detail-dialog/order-detail-d
 import { SafeResourceUrlPipe } from './pipes/safe-resource-url/safe-resource-url.pipe';
 import { StartsWithPipe } from './pipes/starts-with/starts-with.pipe';
 import { SocialLoginButtonComponent } from './social-login-button/social-login-button.component';
+import { UserGuideModule } from './user-guide/user-guide.module';
 import { UserGuideService } from './user-guide/user-guide.service';
 
 const declarations = [
@@ -61,6 +62,7 @@ const imports = [
   MatDialogModule,
   FormlyModule,
   FormlyMaterialModule,
+  UserGuideModule,
 ];
 
 const providers = [
