@@ -73,7 +73,7 @@ jobs:
           fi
 
       - name: Normalize package lock
-        run: npm install --package-lock-only --ignore-scripts
+        run: npx --yes npm@10.9.2 install --package-lock-only --ignore-scripts
 
       - name: Commit normalized package lock
         env:

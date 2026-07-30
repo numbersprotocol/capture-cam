@@ -67,7 +67,7 @@ jobs:
 
       - name: Normalize Dependabot package lock
         if: github.event.pull_request.user.login == 'dependabot[bot]'
-        run: npm install --package-lock-only --ignore-scripts
+        run: npx --yes npm@10.9.2 install --package-lock-only --ignore-scripts
 
       - name: Install dependencies
         run: npm ci
