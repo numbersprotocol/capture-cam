@@ -92,11 +92,11 @@
     "zone.js": "^0.16.2"
   },
   "devDependencies": {
-    "@angular-devkit/architect": "^0.2201.0",
-    "@angular-devkit/build-angular": "^22.1.0",
+    "@angular-devkit/architect": "^0.2201.2",
+    "@angular-devkit/build-angular": "^22.1.2",
     "@angular-eslint/builder": "^22.1.0",
     "@angular-eslint/schematics": "^22.1.0",
-    "@angular/cli": "^22.1.0",
+    "@angular/cli": "^22.1.2",
     "@angular/compiler": "^22.1.0",
     "@angular/compiler-cli": "^22.1.0",
     "@angular/language-service": "^22.1.0",
