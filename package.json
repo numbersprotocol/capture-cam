@@ -13,7 +13,7 @@
     "build.android": "npm run build && cap sync android",
     "build.ios": "npm run build && cap sync ios",
     "test": "npm run preconfig && ng test",
-    "test.ci": "npm run preconfig && ng test --no-watch --no-progress --source-map=false --browsers=ChromeHeadlessCI",
+    "test.ci": "npm run preconfig && ng test --no-watch --no-progress --browsers=ChromeHeadlessCI",
     "lint": "npm run preconfig && prettier --check . && stylelint \"**/*.{css,scss,sass}\" && node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng lint",
     "e2e": "npm run preconfig && ng e2e",
     "postinstall": "node scripts/ensure-ios-spm-packages.js",
@@ -93,7 +93,7 @@
   },
   "devDependencies": {
     "@angular-devkit/architect": "^0.2201.2",
-    "@angular-devkit/build-angular": "^22.1.2",
+    "@angular/build": "^22.1.2",
     "@angular-eslint/builder": "^22.1.0",
     "@angular-eslint/schematics": "^22.1.0",
     "@angular/cli": "^22.1.2",
