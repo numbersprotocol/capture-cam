@@ -16,13 +16,15 @@ import { TranslocoRootModule } from './shared/language/transloco/transloco-root.
 import { SharedModule } from './shared/shared.module';
 import { provideUserGuideTour } from './shared/user-guide/user-guide.module';
 
+const ionicConfig: IonicConfig = { mode: 'md' };
+
 function initializeIonicStandaloneRuntime(doc: Document, zone: NgZone) {
   return () => {
     doc.documentElement.classList.add('ion-ce');
     initialize({
-      mode: 'md',
+      ...ionicConfig,
       _zoneGate: (handler: () => unknown) => zone.run(handler),
-    } as IonicConfig);
+    });
   };
 }
 
@@ -32,7 +34,7 @@ function initializeIonicStandaloneRuntime(doc: Document, zone: NgZone) {
     SharedModule,
     BrowserModule,
     BrowserAnimationsModule,
-    IonicModule.forRoot({ mode: 'md' }),
+    IonicModule.forRoot(ionicConfig),
     AppRoutingModule,
     TranslocoRootModule,
     FormlyModule.forRoot({ extras: { lazyRender: true } }),
