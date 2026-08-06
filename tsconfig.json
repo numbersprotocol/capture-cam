@@ -3,6 +3,7 @@
   "compilerOptions": {
     "skipLibCheck": true,
     "outDir": "./dist/out-tsc",
+    "esModuleInterop": true,
     "sourceMap": true,
     "declaration": false,
     "experimentalDecorators": true,
@@ -12,7 +13,6 @@
     "target": "ES2022",
     "strict": true,
     "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
     "paths": {
       "assert": ["./node_modules/assert"],
       "http": ["./node_modules/stream-http"],
