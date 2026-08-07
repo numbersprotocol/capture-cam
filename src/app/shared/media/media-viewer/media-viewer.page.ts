@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
@@ -9,6 +9,7 @@ import { isNonNullable } from '../../../utils/rx-operators/rx-operators';
   selector: 'app-media-viewer',
   templateUrl: './media-viewer.page.html',
   styleUrls: ['./media-viewer.page.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class MediaViewerPage {

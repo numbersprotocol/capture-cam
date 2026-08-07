@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { DiaBackendAuthService } from '../../shared/dia-backend/auth/dia-backend-auth.service';
 import { ShareService } from '../../shared/share/share.service';
@@ -7,6 +7,7 @@ import { ShareService } from '../../shared/share/share.service';
   selector: 'app-invitation',
   templateUrl: './invitation.page.html',
   styleUrls: ['./invitation.page.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class InvitationPage implements OnInit {

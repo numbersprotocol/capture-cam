@@ -9,6 +9,7 @@ import { MaterialTestingModule } from './shared/material/material-testing.module
 import {
   provideHttpClient,
   withInterceptorsFromDi,
+  withXhr,
 } from '@angular/common/http';
 
 describe('AppComponent', () => {
@@ -34,7 +35,7 @@ describe('AppComponent', () => {
       ],
       providers: [
         { provide: Platform, useValue: platformSpy },
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(withXhr(), withInterceptorsFromDi()),
         provideHttpClientTesting(),
       ],
     }).compileComponents();

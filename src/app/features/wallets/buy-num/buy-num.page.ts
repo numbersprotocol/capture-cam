@@ -1,4 +1,9 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { TranslocoService } from '@jsverse/transloco';
 import { UntilDestroy } from '@ngneat/until-destroy';
@@ -13,6 +18,7 @@ import { InAppStoreService } from '../../../shared/in-app-store/in-app-store.ser
   selector: 'app-buy-num',
   templateUrl: './buy-num.page.html',
   styleUrls: ['./buy-num.page.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class BuyNumPage implements OnInit {

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { GoProFile } from '../go-pro-media-file';
 import { GoProMediaService } from '../services/go-pro-media.service';
@@ -7,6 +7,7 @@ import { GoProMediaService } from '../services/go-pro-media.service';
   selector: 'app-go-pro-media-list-item-on-camera',
   templateUrl: './go-pro-media-list-item-on-camera.component.html',
   styleUrls: ['./go-pro-media-list-item-on-camera.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class GoProMediaListItemOnCameraComponent {

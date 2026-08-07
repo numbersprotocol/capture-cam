@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
@@ -25,6 +25,7 @@ import { InformationSessionService } from '../information/session/information-se
   selector: 'app-edit-caption',
   templateUrl: './edit-caption.page.html',
   styleUrls: ['./edit-caption.page.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class EditCaptionPage {

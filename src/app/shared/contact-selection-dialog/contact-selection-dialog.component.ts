@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { catchError, pluck } from 'rxjs/operators';
@@ -13,6 +13,7 @@ import { FriendInvitationDialogComponent } from './friend-invitation-dialog/frie
   selector: 'app-contact-selection-dialog',
   templateUrl: './contact-selection-dialog.component.html',
   styleUrls: ['./contact-selection-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ContactSelectionDialogComponent {

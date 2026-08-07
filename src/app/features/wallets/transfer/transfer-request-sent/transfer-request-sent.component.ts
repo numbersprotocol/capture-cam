@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TranslocoService } from '@jsverse/transloco';
 
@@ -6,6 +6,7 @@ import { TranslocoService } from '@jsverse/transloco';
   selector: 'app-transfer-request-sent',
   templateUrl: './transfer-request-sent.component.html',
   styleUrls: ['./transfer-request-sent.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class TransferRequestSentComponent {

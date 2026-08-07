@@ -2,11 +2,10 @@
   "compileOnSave": false,
   "compilerOptions": {
     "skipLibCheck": true,
-    "baseUrl": "./",
     "outDir": "./dist/out-tsc",
+    "esModuleInterop": true,
     "sourceMap": true,
     "declaration": false,
-    "downlevelIteration": true,
     "experimentalDecorators": true,
     "module": "ES2022",
     "moduleResolution": "bundler",
@@ -14,14 +13,13 @@
     "target": "ES2022",
     "strict": true,
     "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
     "paths": {
-      "assert": ["node_modules/assert"],
-      "http": ["node_modules/stream-http"],
-      "https": ["node_modules/https-browserify"],
-      "os": ["node_modules/os-browserify"],
-      "stream": ["node_modules/stream-browserify"],
-      "process": ["node_modules/process"]
+      "assert": ["./node_modules/assert"],
+      "http": ["./node_modules/stream-http"],
+      "https": ["./node_modules/https-browserify"],
+      "os": ["./node_modules/os-browserify"],
+      "stream": ["./node_modules/stream-browserify"],
+      "process": ["./node_modules/process"]
     },
     "useDefineForClassFields": false
   },

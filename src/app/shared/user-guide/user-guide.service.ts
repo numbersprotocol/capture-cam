@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { TranslocoService } from '@jsverse/transloco';
-import { JoyrideService } from 'ngx-joyride';
+import { IStepOption, TourService } from 'ngx-ui-tour-ionic';
 import { PreferenceManager } from '../preference-manager/preference-manager.service';
 
 @Injectable({
@@ -17,7 +17,7 @@ export class UserGuideService {
 
   constructor(
     private readonly preferenceManager: PreferenceManager,
-    private readonly joyrideService: JoyrideService,
+    private readonly tourService: TourService,
     private readonly translocoService: TranslocoService,
     private readonly platform: Platform
   ) {}
@@ -28,10 +28,35 @@ export class UserGuideService {
   }
 
   private get customTexts() {
-    const done = this.translocoService.translate('userGuide.okIGotIt');
-    const prev = this.translocoService.translate('userGuide.previous');
-    const next = this.translocoService.translate('userGuide.next');
-    return { prev, next, done };
+    return {
+      endBtnTitle: this.translocoService.translate('userGuide.okIGotIt'),
+      prevBtnTitle: this.translocoService.translate('userGuide.previous'),
+      nextBtnTitle: this.translocoService.translate('userGuide.next'),
+    };
+  }
+
+  private startTour(
+    anchorIds: readonly UserGuideAnchorId[],
+    showProgress = true
+  ) {
+    const controls = this.customTexts;
+    const steps = anchorIds.map((anchorId): IStepOption => {
+      const copy = USER_GUIDE_STEP_COPY[anchorId];
+      return {
+        anchorId,
+        title: copy.translate
+          ? this.translocoService.translate(copy.title)
+          : copy.title,
+        content: copy.translate
+          ? this.translocoService.translate(copy.content)
+          : copy.content,
+        showProgress,
+        ...controls,
+      };
+    });
+
+    this.tourService.initialize(steps);
+    this.tourService.start();
   }
 
   async showUserGuidesOnHomePage() {
@@ -42,41 +67,25 @@ export class UserGuideService {
 
     if ((await this.hasHighlightedCameraTab()) === false) {
       await this.delayBeforeStartTour();
-      this.joyrideService.startTour({
-        steps: ['highlightCaptureButton'],
-        showCounter: this.showCounter,
-        customTexts: this.customTexts,
-      });
+      this.startTour(['highlightCaptureButton'], this.showCounter);
       this.setHasHighlightedCameraTab(true);
     } else if ((await this.hasHighlightedFirstCapture()) === false) {
       await this.delayBeforeStartTour();
-      this.joyrideService.startTour({
-        steps: ['highlightFirstCapture'],
-        showCounter: this.showCounter,
-        customTexts: this.customTexts,
-      });
+      this.startTour(['highlightFirstCapture'], this.showCounter);
       this.setHasHighlightedFirstCapture(true);
     } else if (
       (await this.hasClickedDetailsPageOptionsMenu()) === true &&
       (await this.hasHighligtedActivityButton()) === false
     ) {
       await this.delayBeforeStartTour();
-      this.joyrideService.startTour({
-        steps: ['highlightActivityButton'],
-        showCounter: this.showCounter,
-        customTexts: this.customTexts,
-      });
+      this.startTour(['highlightActivityButton'], this.showCounter);
       this.setHasHighligtedActivityButton(true);
     } else if (
       (await this.hasOpenedActivitiesPage()) === true &&
       (await this.hasHightlightedInboxTab()) === false
     ) {
       await this.delayBeforeStartTour();
-      this.joyrideService.startTour({
-        steps: ['highlightInboxTab'],
-        showCounter: this.showCounter,
-        customTexts: this.customTexts,
-      });
+      this.startTour(['highlightInboxTab'], this.showCounter);
       this.setHasHightlightedInboxTab(true);
     }
   }
@@ -90,14 +99,11 @@ export class UserGuideService {
     if ((await this.hasOpenedCustomCameraPage()) === false) {
       const avarageTimeToGetCameraPermissions = 1400;
       await this.delayBeforeStartTour(avarageTimeToGetCameraPermissions);
-      this.joyrideService.startTour({
-        steps: [
-          'highlightCustomCameraCaptureButton',
-          'highlightCustomCameraFlipButton',
-          'highlightCustomCameraCloseButton',
-        ],
-        customTexts: this.customTexts,
-      });
+      this.startTour([
+        'highlightCustomCameraCaptureButton',
+        'highlightCustomCameraFlipButton',
+        'highlightCustomCameraCloseButton',
+      ]);
     }
   }
 
@@ -109,13 +115,10 @@ export class UserGuideService {
 
     if ((await this.hasOpenedActivitiesPage()) === false) {
       await this.delayBeforeStartTour();
-      this.joyrideService.startTour({
-        customTexts: this.customTexts,
-        steps: [
-          'highlightCaptureTransactionsTab',
-          'highlightNetworkActionsTab',
-        ],
-      });
+      this.startTour([
+        'highlightCaptureTransactionsTab',
+        'highlightNetworkActionsTab',
+      ]);
     }
   }
 
@@ -127,11 +130,7 @@ export class UserGuideService {
 
     if ((await this.hasClickedDetailsPageOptionsMenu()) === false) {
       await this.delayBeforeStartTour();
-      this.joyrideService.startTour({
-        customTexts: this.customTexts,
-        steps: ['highlightDetailsPageOptionsMenu'],
-        showCounter: this.showCounter,
-      });
+      this.startTour(['highlightDetailsPageOptionsMenu'], this.showCounter);
     }
   }
 
@@ -143,10 +142,7 @@ export class UserGuideService {
 
     if ((await this.hasOpenedInboxTab()) === false) {
       await this.delayBeforeStartTour();
-      this.joyrideService.startTour({
-        customTexts: this.customTexts,
-        steps: ['highlightImageView', 'highlightCollectionView'],
-      });
+      this.startTour(['highlightImageView', 'highlightCollectionView']);
     }
   }
 
@@ -391,11 +387,82 @@ export interface UserGuideBasicCaptureFlow {
 }
 
 export interface UserGuide {
-  joyrideStep: string;
+  tourAnchor: string;
   title: string;
   text: string;
   expectedUrlPath: string;
 }
+
+const USER_GUIDE_STEP_COPY = {
+  highlightCaptureButton: {
+    title: 'userGuide.capture',
+    content: 'userGuide.createCapturesByTakingPhotosOrRecordingVideos',
+    translate: true,
+  },
+  highlightFirstCapture: {
+    title: 'userGuide.capturedItem',
+    content: 'userGuide.openToSeeDetailsAndMoreActionItems',
+    translate: true,
+  },
+  highlightActivityButton: {
+    title: 'userGuide.activities',
+    content:
+      'userGuide.viewTheHistoryOfYourCaptureAndNetworkActionTransactions',
+    translate: true,
+  },
+  highlightInboxTab: {
+    title: 'userGuide.inboxTab',
+    content: 'userGuide.visitInboxForPurchasedItemsAndGiftsReceived',
+    translate: true,
+  },
+  highlightCustomCameraCaptureButton: {
+    title: 'userGuide.cameraUsageGuide',
+    content: 'userGuide.tapToTakeAPhotoAndLongPressToRecordVideo',
+    translate: true,
+  },
+  highlightCustomCameraFlipButton: {
+    title: 'userGuide.cameraUsageGuide',
+    content: 'userGuide.flipTheCameraToSwitchBetweenFrontAndBackCameras',
+    translate: true,
+  },
+  highlightCustomCameraCloseButton: {
+    title: 'userGuide.cameraUsageGuide',
+    content: 'userGuide.afterTakingPhotosOrRecordingVideosCloseAndGoBackHome',
+    translate: true,
+  },
+  highlightCaptureTransactionsTab: {
+    title: 'userGuide.activityPage',
+    content: 'userGuide.viewYourCaptureTransactions',
+    translate: true,
+  },
+  highlightNetworkActionsTab: {
+    title: 'userGuide.activityPage2',
+    content: 'userGuide.viewNetworkActionsHistory',
+    translate: true,
+  },
+  highlightDetailsPageOptionsMenu: {
+    title: 'userGuide.optionsMenu',
+    content: 'userGuide.clickTheOptionsMenuToUseNetworkActions',
+    translate: true,
+  },
+  highlightImageView: {
+    title: 'userGuide.galleryView',
+    content: 'userGuide.browseInGalleryView',
+    translate: true,
+  },
+  highlightCollectionView: {
+    title: 'userGuide.collectionView',
+    content: 'userGuide.browseInCollectionView',
+    translate: true,
+  },
+  highlightHomeTab: {
+    title: 'Home Tab',
+    content: 'View created captures',
+    translate: false,
+  },
+} as const;
+
+type UserGuideAnchorId = keyof typeof USER_GUIDE_STEP_COPY;
 
 const enum PrefKeys {
   HAS_HIGHLIGHTED_CAMERA_TAB = 'HAS_HIGHLIGHTED_CAMERA_TAB',

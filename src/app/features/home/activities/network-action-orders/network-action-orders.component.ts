@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { InfiniteScrollCustomEvent } from '@ionic/angular';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { BehaviorSubject, combineLatest } from 'rxjs';
@@ -14,6 +14,7 @@ import { ErrorService } from '../../../../shared/error/error.service';
   selector: 'app-network-action-orders',
   templateUrl: './network-action-orders.component.html',
   styleUrls: ['./network-action-orders.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class NetworkActionOrdersComponent {

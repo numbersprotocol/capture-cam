@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import {
   ComponentFixture,
   TestBed,
@@ -13,6 +13,7 @@ import { LongPressDirective } from './long-press.directive';
     [appLongPressDuration]="duration"
     (appLongPress)="onLongPress()"
   ></button>`,
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 class TestComponent {

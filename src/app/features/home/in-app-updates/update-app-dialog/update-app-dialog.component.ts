@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Browser } from '@capacitor/browser';
 import { Platform } from '@ionic/angular';
 import { getAppDownloadLink } from '../../../../utils/url';
@@ -7,6 +7,7 @@ import { getAppDownloadLink } from '../../../../utils/url';
   selector: 'app-update-app-dialog',
   templateUrl: './update-app-dialog.component.html',
   styleUrls: ['./update-app-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class UpdateAppDialogComponent {

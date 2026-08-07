@@ -1,10 +1,17 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 
 @Component({
   selector: 'app-image-input-form',
   templateUrl: './image-input-form.component.html',
   styleUrls: ['./image-input-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ImageInputFormComponent {

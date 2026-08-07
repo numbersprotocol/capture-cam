@@ -1,9 +1,15 @@
-import { JoyrideModule } from 'ngx-joyride';
+import { NgModule } from '@angular/core';
+import { provideUiTour, TourIonPopover } from 'ngx-ui-tour-ionic';
 
-export function getJoyrideModuleForRoot() {
-  return JoyrideModule.forRoot();
-}
+@NgModule({
+  imports: [...TourIonPopover],
+  exports: [...TourIonPopover],
+})
+export class UserGuideModule {}
 
-export function getJoyrideModuleForChild() {
-  return JoyrideModule.forChild();
+export function provideUserGuideTour() {
+  return provideUiTour({
+    duplicateAnchorHandling: 'registerFirst',
+    popoverClass: 'capture-tour-popover',
+  });
 }

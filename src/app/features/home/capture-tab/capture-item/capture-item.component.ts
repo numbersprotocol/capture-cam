@@ -1,4 +1,9 @@
-import { Component, HostListener, Input } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  Input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -23,6 +28,7 @@ import { normalizeGeolocation } from '../../details/information/session/informat
   selector: 'app-capture-item',
   templateUrl: './capture-item.component.html',
   styleUrls: ['./capture-item.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class CaptureItemComponent {

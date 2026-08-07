@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -53,6 +53,7 @@ import { InformationSessionService } from '../../information/session/information
   selector: 'app-action-details',
   templateUrl: './action-details.page.html',
   styleUrls: ['./action-details.page.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ActionDetailsPage {

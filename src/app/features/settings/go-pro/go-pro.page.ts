@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ScanResult } from '@capacitor-community/bluetooth-le';
 import { CapacitorWifi } from '@capgo/capacitor-wifi';
@@ -14,6 +14,7 @@ interface GoProWiFiCreds {
   selector: 'app-go-pro',
   templateUrl: './go-pro.page.html',
   styleUrls: ['./go-pro.page.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class GoProPage implements OnInit {

@@ -4,7 +4,7 @@ import PackageDescription
 
 let package = Package(
     name: "CordovaPluginPurchase",
-    platforms: [.iOS(.v15)],
+    platforms: [.iOS(.v17)],
     products: [
         .library(
             name: "CordovaPluginPurchase",
@@ -21,7 +21,10 @@ let package = Package(
                 .product(name: "Cordova", package: "capacitor-swift-pm")
             ],
             path: ".",
-            publicHeadersPath: "."
+            publicHeadersPath: ".",
+            linkerSettings: [
+                .linkedFramework("StoreKit")
+            ]
         )
     ]
 )

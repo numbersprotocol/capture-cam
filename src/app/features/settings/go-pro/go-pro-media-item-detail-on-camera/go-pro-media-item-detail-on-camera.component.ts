@@ -1,5 +1,11 @@
 import { Location } from '@angular/common';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import {
   AlertController,
@@ -15,6 +21,7 @@ import { GoProWifiService } from '../services/go-pro-wifi.service';
   selector: 'app-go-pro-media-item-detail-on-camera',
   templateUrl: './go-pro-media-item-detail-on-camera.component.html',
   styleUrls: ['./go-pro-media-item-detail-on-camera.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class GoProMediaItemDetailOnCameraComponent implements OnInit {

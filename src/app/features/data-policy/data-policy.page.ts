@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BehaviorSubject, fromEvent } from 'rxjs';
@@ -12,6 +12,7 @@ import { NetworkService } from '../../shared/network/network.service';
   selector: 'app-data-policy',
   templateUrl: './data-policy.page.html',
   styleUrls: ['./data-policy.page.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class DataPolicyPage {

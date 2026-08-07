@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { catchError, map, shareReplay, switchMap } from 'rxjs/operators';
@@ -14,6 +14,7 @@ import { isNonNullable } from '../../../../utils/rx-operators/rx-operators';
   selector: 'app-capture-transaction-details',
   templateUrl: './capture-transaction-details.page.html',
   styleUrls: ['./capture-transaction-details.page.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class TransactionDetailsPage {

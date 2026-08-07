@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Clipboard } from '@capacitor/clipboard';
@@ -8,6 +8,7 @@ import { TranslocoService } from '@jsverse/transloco';
   selector: 'app-export-private-key-modal',
   templateUrl: './export-private-key-modal.component.html',
   styleUrls: ['./export-private-key-modal.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ExportPrivateKeyModalComponent {

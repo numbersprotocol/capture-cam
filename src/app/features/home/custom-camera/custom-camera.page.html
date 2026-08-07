@@ -33,11 +33,7 @@
         class="close-camera-button"
         [ngClass]="customOrientation$ | ngrxPush"
         (click)="leaveCustomCamera()"
-        joyrideStep="highlightCustomCameraCloseButton"
-        [title]="t('userGuide.cameraUsageGuide')"
-        [text]="
-          t('userGuide.afterTakingPhotosOrRecordingVideosCloseAndGoBackHome')
-        "
+        tourAnchor="highlightCustomCameraCloseButton"
       >
         close
       </mat-icon>
@@ -119,11 +115,7 @@
         <mat-icon
           (click)="flipCamera()"
           [ngClass]="customOrientation$ | ngrxPush"
-          joyrideStep="highlightCustomCameraFlipButton"
-          [title]="t('userGuide.cameraUsageGuide')"
-          [text]="
-            t('userGuide.flipTheCameraToSwitchBetweenFrontAndBackCameras')
-          "
+          tourAnchor="highlightCustomCameraFlipButton"
         >
           flip_camera_android
         </mat-icon>

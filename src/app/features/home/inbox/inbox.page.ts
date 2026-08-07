@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
   catchError,
@@ -16,6 +16,7 @@ import { ErrorService } from '../../../shared/error/error.service';
   selector: 'app-inbox',
   templateUrl: './inbox.page.html',
   styleUrls: ['./inbox.page.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class InboxPage {

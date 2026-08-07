@@ -7,9 +7,7 @@
   <ion-segment #segment value="transactions">
     <ion-segment-button
       value="transactions"
-      joyrideStep="highlightCaptureTransactionsTab"
-      [title]="t('userGuide.activityPage')"
-      [text]="t('userGuide.viewYourCaptureTransactions')"
+      tourAnchor="highlightCaptureTransactionsTab"
     >
       <ion-label>
         {{ t('captureTransactions') }}
@@ -21,9 +19,7 @@
     re-wired through the backend in a future iteration.
     <ion-segment-button
       value="networkActionOrders"
-      joyrideStep="highlightNetworkActionsTab"
-      [title]="t('userGuide.activityPage2')"
-      [text]="t('userGuide.viewNetworkActionsHistory')"
+      tourAnchor="highlightNetworkActionsTab"
       >
       <ion-label>
         {{ t('orders') }}

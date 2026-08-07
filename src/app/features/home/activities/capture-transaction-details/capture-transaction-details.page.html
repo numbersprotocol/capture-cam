@@ -4,7 +4,10 @@
 </mat-toolbar>
 <div *transloco="let t" class="page-content">
   <h4 class="datetime">
-    {{ (transaction$ | ngrxPush)?.created_at | date : 'short' }}
+    {{
+      $safeNavigationMigration((transaction$ | ngrxPush)?.created_at)
+        | date : 'short'
+    }}
   </h4>
   <mat-card appearance="outlined" class="transaction-card">
     <mat-card-content class="row wrap-text">
@@ -16,7 +19,11 @@
     <img
       decoding="async"
       loading="lazy"
-      [src]="(transaction$ | ngrxPush)?.asset?.asset_file_thumbnail"
+      [src]="
+        $safeNavigationMigration(
+          (transaction$ | ngrxPush)?.asset?.asset_file_thumbnail
+        )
+      "
     />
     <mat-card-content class="column wrap-text">
       <mat-label>

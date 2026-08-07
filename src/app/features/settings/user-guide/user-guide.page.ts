@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CheckboxCustomEvent } from '@ionic/angular';
 import { UserGuideService } from '../../../shared/user-guide/user-guide.service';
 
@@ -6,6 +6,7 @@ import { UserGuideService } from '../../../shared/user-guide/user-guide.service'
   selector: 'app-user-guide',
   templateUrl: './user-guide.page.html',
   styleUrls: ['./user-guide.page.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class UserGuidePage {

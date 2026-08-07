@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { timer } from 'rxjs';
@@ -21,6 +21,7 @@ import { ErrorService } from '../../../shared/error/error.service';
   selector: 'app-email-verification',
   templateUrl: './email-verification.page.html',
   styleUrls: ['./email-verification.page.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class EmailVerificationPage {

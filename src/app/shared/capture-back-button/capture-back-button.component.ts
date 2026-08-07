@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-capture-back-button',
   templateUrl: './capture-back-button.component.html',
   styleUrls: ['./capture-back-button.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class CaptureBackButtonComponent {
