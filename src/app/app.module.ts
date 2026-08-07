@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { APP_INITIALIZER, NgModule, NgZone } from '@angular/core';
+import { inject, NgModule, NgZone, provideAppInitializer } from '@angular/core';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,14 +18,14 @@ import { provideUserGuideTour } from './shared/user-guide/user-guide.module';
 
 const ionicConfig: IonicConfig = { mode: 'md' };
 
-function initializeIonicStandaloneRuntime(doc: Document, zone: NgZone) {
-  return () => {
-    doc.documentElement.classList.add('ion-ce');
-    initialize({
-      ...ionicConfig,
-      _zoneGate: (handler: () => unknown) => zone.run(handler),
-    });
-  };
+function initializeIonicStandaloneRuntime() {
+  const doc = inject(DOCUMENT);
+  const zone = inject(NgZone);
+  doc.documentElement.classList.add('ion-ce');
+  initialize({
+    ...ionicConfig,
+    _zoneGate: (handler: () => unknown) => zone.run(handler),
+  });
 }
 
 @NgModule({
@@ -43,12 +43,7 @@ function initializeIonicStandaloneRuntime(doc: Document, zone: NgZone) {
   ],
   providers: [
     provideUserGuideTour(),
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeIonicStandaloneRuntime,
-      multi: true,
-      deps: [DOCUMENT, NgZone],
-    },
+    provideAppInitializer(initializeIonicStandaloneRuntime),
     {
       provide: RouteReuseStrategy,
       useClass: IonicRouteStrategy,
