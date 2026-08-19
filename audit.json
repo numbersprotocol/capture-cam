@@ -1,0 +1,94 @@
+{
+  "auditReportVersion": 2,
+  "vulnerabilities": {
+    "@puppeteer/browsers": {
+      "name": "@puppeteer/browsers",
+      "severity": "high",
+      "isDirect": false,
+      "via": ["extract-zip"],
+      "effects": ["puppeteer", "puppeteer-core"],
+      "range": "<=2.13.2",
+      "nodes": ["node_modules/@puppeteer/browsers"],
+      "fixAvailable": {
+        "name": "puppeteer",
+        "version": "19.8.0",
+        "isSemVerMajor": true
+      }
+    },
+    "extract-zip": {
+      "name": "extract-zip",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1139346,
+          "name": "extract-zip",
+          "dependency": "extract-zip",
+          "title": "extract-zip unvalidated symlink path traversal",
+          "url": "https://github.com/advisories/GHSA-jmr9-qjv8-65gv",
+          "severity": "high",
+          "cwe": ["CWE-22"],
+          "cvss": {
+            "score": 8.1,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:N"
+          },
+          "range": "<=2.0.1"
+        }
+      ],
+      "effects": ["@puppeteer/browsers"],
+      "range": "*",
+      "nodes": ["node_modules/extract-zip"],
+      "fixAvailable": {
+        "name": "puppeteer",
+        "version": "19.8.0",
+        "isSemVerMajor": true
+      }
+    },
+    "puppeteer": {
+      "name": "puppeteer",
+      "severity": "high",
+      "isDirect": true,
+      "via": ["@puppeteer/browsers", "puppeteer-core"],
+      "effects": [],
+      "range": "19.8.1 - 24.43.1",
+      "nodes": ["node_modules/puppeteer"],
+      "fixAvailable": {
+        "name": "puppeteer",
+        "version": "19.8.0",
+        "isSemVerMajor": true
+      }
+    },
+    "puppeteer-core": {
+      "name": "puppeteer-core",
+      "severity": "high",
+      "isDirect": false,
+      "via": ["@puppeteer/browsers"],
+      "effects": ["puppeteer"],
+      "range": "19.8.4 - 24.43.1",
+      "nodes": ["node_modules/puppeteer-core"],
+      "fixAvailable": {
+        "name": "puppeteer",
+        "version": "19.8.0",
+        "isSemVerMajor": true
+      }
+    }
+  },
+  "metadata": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 4,
+      "critical": 0,
+      "total": 4
+    },
+    "dependencies": {
+      "prod": 217,
+      "dev": 1176,
+      "optional": 189,
+      "peer": 40,
+      "peerOptional": 0,
+      "total": 1402
+    }
+  }
+}
