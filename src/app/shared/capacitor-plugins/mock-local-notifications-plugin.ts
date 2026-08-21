@@ -3,6 +3,9 @@
 import { PluginListenerHandle } from '@capacitor/core';
 import {
   DeliveredNotifications,
+  GetAllOptions,
+  GetByIdsOptions,
+  GetNotificationsResult,
   LocalNotificationSchema as LocalNotification,
   ActionPerformed as LocalNotificationActionPerformed,
   ActionType as LocalNotificationActionType,
@@ -13,6 +16,7 @@ import {
   Channel as NotificationChannel,
   ListChannelsResult as NotificationChannelList,
   PermissionStatus,
+  RemoveByIdsOptions,
   SettingsPermissionStatus,
 } from '@capacitor/local-notifications';
 
@@ -27,6 +31,12 @@ export class MockLocalNotificationsPlugin implements LocalNotificationsPlugin {
     };
   }
 
+  async update(options: {
+    notifications: LocalNotification[];
+  }): Promise<LocalNotificationScheduleResult> {
+    return this.schedule(options);
+  }
+
   async getPending(): Promise<LocalNotificationPendingList> {
     throw new Error('Method not implemented.');
   }
@@ -38,6 +48,10 @@ export class MockLocalNotificationsPlugin implements LocalNotificationsPlugin {
   }
 
   async cancel(_: LocalNotificationPendingList): Promise<void> {
+    return;
+  }
+
+  async cancelAll(): Promise<void> {
     return;
   }
 
@@ -98,7 +112,18 @@ export class MockLocalNotificationsPlugin implements LocalNotificationsPlugin {
   async removeDeliveredNotifications(_: DeliveredNotifications): Promise<void> {
     throw new Error('Method not implemented.');
   }
+  async removeDeliveredNotificationsById(_: RemoveByIdsOptions): Promise<void> {
+    return;
+  }
   async removeAllDeliveredNotifications(): Promise<void> {
     throw new Error('Method not implemented.');
+  }
+
+  async getByIds(_: GetByIdsOptions): Promise<GetNotificationsResult> {
+    return { notifications: [] };
+  }
+
+  async getAll(_: GetAllOptions = {}): Promise<GetNotificationsResult> {
+    return { notifications: [] };
   }
 }
