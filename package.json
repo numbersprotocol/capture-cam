@@ -55,7 +55,7 @@
     "@capacitor/share": "^8.0.1",
     "@capacitor/splash-screen": "^8.0.2",
     "@capawesome/capacitor-android-edge-to-edge-support": "^8.0.8",
-    "@capgo/capacitor-social-login": "^8.4.4",
+    "@capgo/capacitor-social-login": "^8.4.5",
     "@capgo/capacitor-wifi": "^8.5.2",
     "@ionic/angular": "^8.8.19",
     "@ionic/core": "^8.7.17",
