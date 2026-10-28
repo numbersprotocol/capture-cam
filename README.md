@@ -17,7 +17,7 @@ For rapid development environment setup, use this prompt with Claude or other AI
 ```
 I need to set up the development environment for the Numbers Protocol Capture Cam mobile app from scratch. This is an Angular/Ionic mobile application with the following requirements:
 
-- Node.js v20.11.1+ (v20.11.1 or higher)
+- Node.js 22.23.4 or a newer 22.x release
 - NPM (comes with Node.js)
 - Git for cloning the repository
 
@@ -42,7 +42,7 @@ Setup steps needed:
 - Download builds via Firebase App Distribution for device testing
 
 Please help me:
-1. Verify/install the correct Node.js version (v20.11.1+)
+1. Verify/install the correct Node.js version (22.23.4 or a newer 22.x release)
 2. Clone the repository and set up code editing environment
 3. Understand the codebase structure for effective development
 4. Guide me through the GitHub Actions testing workflow
@@ -51,13 +51,20 @@ Please help me:
 
 ### Manual Setup
 
-Node.js v20.11.1+ is required (v20.11.1 or higher recommended).
+Node.js 22.23.4 or a newer 22.x release is required. The `.nvmrc` file pins the version used by local development and GitHub Actions.
 
 Clone the repository:
 
 ```bash
 git clone https://github.com/numbersprotocol/capture-lite.git
 cd capture-lite
+```
+
+If you use nvm, install and select the pinned version:
+
+```bash
+nvm install
+nvm use
 ```
 
 Install the dependencies:
