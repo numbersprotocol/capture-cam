@@ -95,7 +95,7 @@
     "@angular-eslint/builder": "^22.1.0",
     "@angular-eslint/schematics": "^22.1.0",
     "@angular/build": "^22.1.7",
-    "@angular/cli": "^22.1.7",
+    "@angular/cli": "^22.2.5",
     "@angular/compiler": "^22.1.6",
     "@angular/compiler-cli": "^22.1.6",
     "@angular/language-service": "^22.1.6",
